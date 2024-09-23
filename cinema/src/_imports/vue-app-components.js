@@ -1,0 +1,5 @@
+export { default as Header } from '@/components/HeaderSection/HeaderSection.vue'
+export { default as Footer } from '@/components/FooterSection/FooterSection.vue'
+export { default as CardItem } from '@/components/CardItem/CardItem.vue'
+export { default as CardLists } from '@/components/CardLists/CardLists.vue'
+export { default as MovieDetails } from '@/components/MovieDetails/MovieDetails.vue'

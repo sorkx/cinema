@@ -1,0 +1,53 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+	margin: 0;
+	min-width: 375px;
+	position: relative;
+	cursor: default;
+	// color: $darkGrey;
+	// font-family: $fMontserrat;
+	// font-weight: $fMedium;
+	font-weight: 500;
+	background-color: var(--page-background);
+	&.overlay-open {
+		overflow-y: hidden;
+		padding-right: 0px;
+  }
+}
+
+.app {
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100 * (var(--vh)));
+	padding: 2rem;
+}
+
+  .main-page {
+	display: flex;
+	flex-direction: column;
+	padding-right: 32px;
+	padding-left: 32px;
+	// width: 1408px;
+	min-height: calc(100% - 170px);
+	// margin: 0 auto;
+  
+	&--wrapper {
+	  display: flex;
+	  flex-direction: column;
+	  flex-grow: 1;
+	}
+	&--section {
+	  display: flex;
+	  justify-content: space-between;
+	  flex-direction: column;
+	  padding-top: 0.7rem;
+	  border-radius: 12px;
+	}
+  }
