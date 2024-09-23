@@ -24,8 +24,6 @@
 
 		const { 
 			items,
-			total,
-			totalPage, 
 		} = await res.json()
 
 		cards.value = items.map((item) => ({
