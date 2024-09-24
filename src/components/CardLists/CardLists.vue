@@ -25,7 +25,7 @@ const fetchMovies = () => {
 	movieStore.fetchData()
 }
 
-const opneDetails = () => {
+const opneDetails = (id) => {
 	movieStore.openMovieDetails(id)
 }
 
