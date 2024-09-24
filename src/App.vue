@@ -1,12 +1,12 @@
 <script setup>
-	import { 
-		defineAsyncComponent, 
-		shallowRef,
-	} from 'vue'
+import { 
+    defineAsyncComponent, 
+    shallowRef,
+} from 'vue'
 
-	const DefaultLayouts = defineAsyncComponent(() => import('@/components/layouts/DefaultLayouts/DefaultLayouts.vue'))
+const DefaultLayouts = defineAsyncComponent(() => import('@/components/layouts/DefaultLayouts/DefaultLayouts.vue'))
 
-	const pageLayout = shallowRef(DefaultLayouts)
+const pageLayout = shallowRef(DefaultLayouts)
 </script>
 
 <template>

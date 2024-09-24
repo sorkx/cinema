@@ -1,17 +1,29 @@
 <script setup>
-	const props = defineProps({
-		movieDetails: {
-		type: Object,
-		required: true
-		}
-	})
+import {
+    UISymbol,
+} from '~/vue-app-components.js'
+
+const props = defineProps({
+    movieDetails: {
+        type: Object,
+        required: true
+    }
+})
 </script>
 
 <template>
 	<div v-if="props.movieDetails" class="movie-details">
-	  <h2>{{ props.movieDetails.nameRu || props.movieDetails.nameEn }}</h2>
-	  <img :src="props.movieDetails.posterUrl" alt="Movie poster" />
-	  <p>{{ props.movieDetails.description }}</p>
+		<h2>{{ props.movieDetails.nameRu || props.movieDetails.nameEn }}</h2>
+		<img :src="props.movieDetails.posterUrl" alt="Movie poster" />
+		<p>{{ props.movieDetails.description }}</p>
+		<UISymbol
+			name="imdb"
+			:value="props.movieDetails.ratingImdb"
+		/>
+		<UISymbol
+			name="movie"
+			:value="props.movieDetails.ratingKinopoisk"
+		/>
 	</div>
 </template>
   

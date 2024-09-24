@@ -1,7 +1,7 @@
 <script setup>
-	import {
-		CardLists,
-	} from '~/vue-app-components.js'
+import {
+    CardLists,
+} from '~/vue-app-components.js'
 </script>
 
 

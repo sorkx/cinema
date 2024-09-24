@@ -1,13 +1,14 @@
 <script setup>
-
+import {
+    UISymbol,
+} from '~/vue-app-components.js'
 </script>
 
 <template>
 	<div class="header-wrapper">
 		<div class="logo-container">
-			<img 
-				src="@/assets/icons/cinema-logo.svg"
-				alt="Cinema Logo"
+			<UISymbol 
+				name="cinema"
 			/>
 		</div>
 	</div>

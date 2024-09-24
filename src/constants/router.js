@@ -1,7 +1,7 @@
 const ROUTE_NAMES = {
-	MAIN: 'Main',
+    MAIN: 'Main',
 }
 
 export { 
-	ROUTE_NAMES 
+    ROUTE_NAMES 
 }

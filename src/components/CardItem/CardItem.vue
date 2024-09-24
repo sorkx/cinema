@@ -1,44 +1,44 @@
 <script setup>
 import { computed } from 'vue'
 
-	const props = defineProps({
-		id: {
-			type: String,
-			default: '',
-		},
-		src: {
-			type: String,
-			default: '',
-		},
-		name: {
-			type: String,
-			default: '',
-		},
-		genre: {
-			type: String,
-			default: '',
-		},
-		rating: {
-			type: Number,
-			default: 0,
-		}
-	})
+const props = defineProps({
+    id: {
+        type: String,
+        default: '',
+    },
+    src: {
+        type: String,
+        default: '',
+    },
+    name: {
+        type: String,
+        default: '',
+    },
+    genre: {
+        type: String,
+        default: '',
+    },
+    rating: {
+        type: Number,
+        default: 0,
+    }
+})
 
-	const emit = defineEmits(['cardClick'])
+const emit = defineEmits(['cardClick'])
 
-	const handlerClick = () => {
-		emit('cardClick', props.id)
-	}
+const handlerClick = () => {
+    emit('cardClick', props.id)
+}
 
-	const ratingColorClass = computed(() => {
-		if (props.rating >= 7) {
-			return 'green'
-		} else if (props.rating > 5) {
-			return 'yellow'
-		} else {
-			return 'red'
-		}
-	})
+const ratingColorClass = computed(() => {
+    if (props.rating >= 7) {
+        return 'green'
+    } else if (props.rating > 5) {
+        return 'yellow'
+    } else {
+        return 'red'
+    }
+})
 </script>
 
 <template>
