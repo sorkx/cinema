@@ -1,7 +1,7 @@
 <script setup>
-import { 
-    computed, 
-} from 'vue'
+import {
+    computedAsync,
+} from '@vueuse/core'
 
 const props = defineProps({
     name: {
@@ -13,22 +13,18 @@ const props = defineProps({
     },
 })
 
-const modules = import.meta.glob('/src/assets/icons/*.svg', { eager: true })
-
-const iconId = computed(() => {
+const iconId = computedAsync(async () => {
     if (!props.name) return ''
 
-    const path = `/src/assets/icons/${props.name}.svg`
-
-    if (modules[path]) {
-        console.log('Module found:', modules[path])
-        console.log('Default value:', modules[path].default)
-        return modules[path]?.default
-    } else {
-        console.log('Module not found for path:', path)
+    try {
+        const icon = await import(`@/assets/icons/${props.name}.svg`)
+        
+        return icon.default || icon.url || ''
+    } catch (e) {
+        console.error(`Failed to load icon: ${props.name}`, e)
         return ''
     }
-})
+}, '')
 </script>
 
 <template>

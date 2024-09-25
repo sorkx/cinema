@@ -6,16 +6,23 @@
   padding: 0;
 }
 
+html {
+	font-size: var(--rem)
+}
+
 body {
 	margin: 0;
 	min-width: 375px;
 	position: relative;
 	cursor: default;
-	// color: $darkGrey;
-	// font-family: $fMontserrat;
-	// font-weight: $fMedium;
-	font-weight: 500;
+	font-weight: $fMedium;
+	font-family: $fMontserrat;
 	background-color: var(--page-background);
+	-ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
 	&.overlay-open {
 		overflow-y: hidden;
 		padding-right: 0px;
@@ -26,28 +33,11 @@ body {
 	display: flex;
 	flex-direction: column;
 	min-height: calc(100 * (var(--vh)));
-	padding: 2rem;
+	overflow: hidden;
 }
 
-  .main-page {
-	display: flex;
-	flex-direction: column;
-	padding-right: 32px;
-	padding-left: 32px;
-	// width: 1408px;
-	min-height: calc(100% - 170px);
-	// margin: 0 auto;
-  
-	&--wrapper {
-	  display: flex;
-	  flex-direction: column;
-	  flex-grow: 1;
-	}
-	&--section {
-	  display: flex;
-	  justify-content: space-between;
-	  flex-direction: column;
-	  padding-top: 0.7rem;
-	  border-radius: 12px;
-	}
-  }
+.page {
+	flex-grow: 1;
+    padding-top: 36px;
+    padding-bottom: 64px;
+}

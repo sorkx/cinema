@@ -6,7 +6,7 @@ import {
 
 
 <template>
-    <div class="main-page">
+    <div class="main-page content-container">
         <div class="main-page--wrapper">
             <div class="main-page--section">
                 <CardLists />

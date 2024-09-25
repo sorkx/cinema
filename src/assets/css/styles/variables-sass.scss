@@ -1,8 +1,19 @@
-// Fonts
-
+// Sizes
 $baseRem: 16px;
 
 // Colors
-
 $cWhite: #fff;
 $cBlack: #000;
+
+// Fonts
+$fnMontserrat: 'Montserrat';
+
+$fMontserrat: $fnMontserrat, sans-serif;
+
+$fRegular: 400;
+$fMedium: 500;
+$fBold: 700;
+
+// Grid
+$gContent: 46px;
+$mwContent: 1680px;

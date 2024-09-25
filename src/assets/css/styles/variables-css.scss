@@ -5,4 +5,6 @@
 	--color-white: #fff;
 	--defaultColorLight: hsla(0, 0%, 100%, 0.8);
 	--defaultColorBlack: hsla(0, 0%, 0%);
+	--rem: #{$baseRem};
+	--gContent: #{$gContent};
   }
