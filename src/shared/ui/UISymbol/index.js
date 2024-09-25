@@ -1,0 +1,1 @@
+export { default as UISymbol } from './UISymbol.vue'
