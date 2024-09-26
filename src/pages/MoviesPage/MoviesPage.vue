@@ -4,30 +4,22 @@ import {
 } from 'pinia'
 import {
     onMounted,
-	ref,
 } from 'vue'
 import { 
     movieModel,
 } from '@/entities/Movie'
 import {
-    MovieLists,
-} from '@/widgets/Movie/MovieLists'
-
-const isLoading = ref(false)
+    MovieCategoryRow,
+} from '@/widgets/Movie/MovieCategoryRow'
 
 const movieStore = movieModel()
 const { 
-    movies, 
+    movies,
+    series, 
 } = storeToRefs(movieStore)
 
-const fetchMovies = () => {
-    isLoading.value = true
-    movieStore.fetchMoviesData()
-    isLoading.value = false
-}
-
 onMounted(async () => {
-    await fetchMovies()
+    movieStore.fetchAllCategories()
 })
 </script>
 
@@ -36,9 +28,15 @@ onMounted(async () => {
     <div class="main-page content-container">
         <div class="main-page--wrapper">
             <div class="main-page--section">
-                <MovieLists 
-					:movies="movies"
-					:is-loading="isLoading"
+                <MovieCategoryRow 
+					:items="movies"
+					title="Фильмы"
+					type="FILM"
+				/>
+				<MovieCategoryRow 
+					:items="series"
+					title="Cериалы"
+					type="TV_SERIES"
 				/>
             </div>
         </div>

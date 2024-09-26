@@ -1,57 +1,82 @@
 <script setup>
-import { 
+import {
     computed,
 } from 'vue'
-
+import {
+    UISymbol,
+} from '@/shared/ui/UISymbol'
+import {
+    RatingDisplay,
+} from '@/shared/ui/RatingDisplay'
 const props = defineProps({
     movie: {
         type: Object,
     },
 })
 
-const ratingColorClass = computed(() => {
-    if (props.rating >= 7) {
-        return 'green'
-    } else if (props.rating > 5) {
-        return 'yellow'
-    } else {
-        return 'red'
+const ratings = computed(() => {
+    const result = []
+    if (props.movie.ratingImdb) {
+        result.push({
+            value: props.movie.ratingImdb || 0.0,
+            source: 'imdb'
+        })
     }
+    if (props.movie.ratingKinopoisk) {
+        result.push({
+            value: props.movie.ratingKinopoisk || 0.0,
+            source: 'movie'
+        })
+    }
+    return result
 })
 </script>
 
 <template>
-	<div 
-		class="card-item" 
-		@click="handlerClick"
+	<router-link
+		:to="{ name: 'MovieDetails', params: { id: props.movie.kinopoiskId || props.movie.imdbId } }"
+		class="movie"
 	>
-		<div class="card-content">
-			<router-link
-				:to="{ name: 'MovieDetails', params: { id: movie.kinopoiskId || movie.imdbId } }"
-			>
-				<div class="card-background">
-					<img
-						v-if="movie.posterUrlPreview" 
-						:src="movie.posterUrlPreview"
-						class="card-img" 
-						loading="lazy"
+		<div class="movie__body">
+			<UISymbol
+					name="vertical"
+					class="movie__image" 
+					loading="lazy"
+			/>
+			<div class="movie__overlay">
+				<img
+					:src="props.movie.posterUrlPreview"
+					class="movie__image movie__image--inner" 
+					loading="lazy"
+				/>
+				<div class="movie__content">
+					<RatingDisplay 
+						v-for="rating in ratings"
+						:key="rating.source"
+						:rating="rating.value"
+						:source="rating.source"
+						:class="`movie__${rating.source}`"
+						size="small"
 					/>
-					<div class="card-background__darkened" />
-				</div>
-			</router-link>
-			<div class="card-info">
-				<div class="card-name">
-					{{ movie.nameRu || movie.nameEn }}
-				</div>
-				<div class="card-genre">
-					{{ movie.genre }}
-				</div>
-				<div :class="['card-rating', ratingColorClass]">
-					{{ movie.ratingImdb || movie.ratingKinopoisk }}
 				</div>
 			</div>
 		</div>
-	</div>
+		<div class="movie__title">
+			{{ props.movie.nameRu || props.movie.nameOriginal }}
+		</div>
+	</router-link>
 </template>
 
 <style src="./style.scss" lang="scss" scoped />
+
+<!-- <div class="card-info">
+	<div class="card-name">
+		{{ props.movie.nameRu || props.movie.nameEn }}
+	</div>
+	<div class="card-genre">
+		{{ props.movie.genre }}
+	</div>
+	<div>
+		{{ props.movie.ratingImdb || props.movie.ratingKinopoisk }}
+	</div>
+</div> -->

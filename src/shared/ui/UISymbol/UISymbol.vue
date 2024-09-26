@@ -8,9 +8,6 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    value: {
-        type: Number,
-    },
 })
 
 const iconId = computedAsync(async () => {
@@ -34,9 +31,6 @@ const iconId = computedAsync(async () => {
 	>
 		<use :xlink:href="`#${iconId}`" />
 	</svg>
-	<span v-if="props.value">
-		{{ props.value }}
-	</span> 
 </template>
 
-<style src="./UIsymbol.scss" lang="scss" scoped />
+<style src="./styles.scss" lang="scss" scoped />

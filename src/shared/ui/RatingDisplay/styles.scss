@@ -1,0 +1,28 @@
+.external__rating {
+	margin-right: 32px;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 40px auto;
+    grid-gap: 11px;
+	&--value {
+		font-size: 22px;
+		font-weight: $fRegular;
+		color: $cWhite;
+	}
+	&--small {
+		margin-right: 16px;
+		grid-template-columns: 16px auto;
+		grid-column-gap: 4px;
+	}
+}
+
+.external__rating--small 
+.external__rating--value {
+	font-size: 16px;
+}
+
+.external__rating--small
+.external__rating--icon {
+	width: 16px;
+	height: 16px;
+}

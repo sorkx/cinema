@@ -4,6 +4,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  text-decoration: none;
+  font-family: $fMontserrat;
 }
 
 html {
@@ -15,8 +17,6 @@ body {
 	min-width: 375px;
 	position: relative;
 	cursor: default;
-	font-weight: $fMedium;
-	font-family: $fMontserrat;
 	background-color: var(--page-background);
 	-ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
