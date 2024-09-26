@@ -6,11 +6,10 @@ import {
 } from 'vue'
 
 export const useMovieStore = defineStore('movie', () => {
-    const cards = ref([])
-    const selectedMovie = ref(null)
-    const isMovieDetailsOpen = ref(false)
+    const movies = ref([])
+    const selectedMovieDetails = ref(null)
 
-    const fetchData = async () => {
+    const fetchMoviesData = async () => {
         const res = await fetch('https://kinopoiskapiunofficial.tech/api/v2.2/films?type=FILM&page=1&order=RATING', {
             method: 'GET',
             headers: {
@@ -23,14 +22,15 @@ export const useMovieStore = defineStore('movie', () => {
             items,
         } = await res.json()
 	
-        cards.value = items.map((item) => ({
+        movies.value = items.map((item) => ({
             ...item,
             genre: item.genres.map(genre => genre.genre).join(', ')
-			   }))
-	
+        }))
+
+        console.log('movies.value', movies.value)
     }
 
-    const openMovieDetails = async (id) => {
+    const fetchMovieDetails = async (id) => {
         try {
             const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v2.2/films/${id}`, {
                 method: 'GET',
@@ -40,28 +40,19 @@ export const useMovieStore = defineStore('movie', () => {
                 },
             })
 	
-            selectedMovie.value = await res.json()
+            selectedMovieDetails.value = await res.json()
 	
-            isMovieDetailsOpen.value = true
-	
-            console.log('selectedMovie.value', selectedMovie.value)
+            console.log('selectedMovie.value', selectedMovieDetails.value)
         } catch (error) {
             console.error('Error fetching movie details:', error)
         }
     }
 
-    const closeMovieDetails = () => {
-        isMovieDetailsOpen.value = false
-        selectedMovie.value = null
-    }
-
     return {
-        cards,
-        selectedMovie,
-        isMovieDetailsOpen,
-        fetchData,
-        openMovieDetails,
-        closeMovieDetails
+        movies,
+        fetchMoviesData,
+        fetchMovieDetails,
+        selectedMovieDetails,
     }
 
 })

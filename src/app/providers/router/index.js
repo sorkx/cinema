@@ -1,11 +1,22 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import { ROUTE_NAMES } from '@/shared/constants/router'
+import { 
+    createRouter, 
+    createWebHistory,
+} from 'vue-router'
+import { 
+    ROUTE_NAMES, 
+} from '@/shared/constants/router'
 
 const routeOptions = [
     {
         path: '/',
-        name: ROUTE_NAMES.MAIN,
-    }
+        name: ROUTE_NAMES.MOVIES,
+    },
+    {
+        path: '/movie/:id',
+        name: ROUTE_NAMES.MOVIES_DETAILS,
+        props: true
+	  }
+	
 ]
 
 const routes = [
