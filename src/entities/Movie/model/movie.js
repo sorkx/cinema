@@ -53,8 +53,35 @@ export const useMovieStore = defineStore('movie', () => {
         }
     }
 
-    const fetchAllPages = async (category) => {
-        await fetchDataByCategory(category, 1)
+    // const fetchNextPage = async (category) => {
+    //     try {
+    //         if (currentPage.value[category] <= totalPages.value[category]) {
+    //             await fetchDataByCategory(category, currentPage.value[category])
+    //             currentPage.value[category]++
+    //         }
+    //     } catch (error) {
+    //         console.error(`Ошибка при загрузке следующей страницы ${category}:`, error)
+    //     } finally {
+    //         isLoading.value = false
+    //     }
+    // }
+
+    // const resetPagination = (category) => {
+    //     currentPage.value[category] = 1
+    //     if (category === CINEMA_NAMES.FILM) {
+    //         films.value = []
+    //     } else if (category === CINEMA_NAMES.TV_SERIES) {
+    //         series.value = []
+    //     }
+    // }
+
+    // const initialFetch = async (category) => {
+    //     resetPagination(category)
+    //     await fetchNextPage(category)
+    // }
+
+    const fetchAllPages = async (category, page) => {
+        await fetchDataByCategory(category, page)
         const promises = []
         for (let i = 2; i <= totalPages.value[category]; i++) {
             promises.push(fetchDataByCategory(category, i))
@@ -97,6 +124,9 @@ export const useMovieStore = defineStore('movie', () => {
     return {
         films,
         series,
+        // fetchNextPage,
+        // initialFetch,
+        // resetPagination,
         fetchAllPages,
         fetchAllCategories,
         fetchDataByCategory,

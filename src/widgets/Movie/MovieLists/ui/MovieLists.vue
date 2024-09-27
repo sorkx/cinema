@@ -7,24 +7,47 @@ const props = defineProps({
     movies: {
         type: [Array, Object],
     },
-    isLoading: {
-        type: Boolean,
-        default: false,
+    title: {
+        type: String,
+        required: true,
     },
 })
 </script>
-<template>
-	<div v-if="props.isLoading">Loading...</div>
 
-	<div 
-		v-else
-		class="card-lists"
+<template>
+	<div
+		class="content-container"
 	>
-		<Movie
-			v-for="item in props.movies"
-			:movie="item"
-			:key="item.id"
-		/>
+		<ul class="pathway">
+			<li class="pathway__item">
+				<router-link
+					class="pathway__link router-link-exact-active"
+					to="/"
+				>
+					Главная
+				</router-link>
+			</li>
+			<li class="pathway__separator">
+				/
+			</li>
+			<li class="pathway__item">
+				{{ props.title }}
+			</li>
+		</ul>
+		<div class="container__head">
+			<h1 class="container__title">
+				{{ props.title }}
+			</h1>
+		</div>
+		<div 
+			class="lists"
+		>
+			<Movie
+				v-for="item in props.movies"
+				:movie="item"
+				:key="item.id"
+			/>
+		</div>
 	</div>
 </template>
 

@@ -26,7 +26,5 @@ onMounted(async () => {
 </script>
 
 <template>
-	<div class="content-container">
-		<MovieLists :movies="films" />
-	</div>
+	<MovieLists :movies="films" />
 </template>

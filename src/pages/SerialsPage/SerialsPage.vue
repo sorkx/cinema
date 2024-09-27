@@ -5,28 +5,30 @@ import {
 import {
     storeToRefs,
 } from 'pinia'
-import {
-    onMounted,
-} from 'vue'
 import { 
     movieModel,
 } from '@/entities/Movie'
 import {
     CINEMA_NAMES,
 } from '@/shared/lib/constants'
+import { 
+    onMounted,
+} from 'vue'
 
 const store = movieModel()
 const { 
-    series, 
+    series,
 } = storeToRefs(store)
 
 onMounted(async () => {
-    store.fetchAllPages(CINEMA_NAMES.TV_SERIES)
+    await store.fetchAllPages(CINEMA_NAMES.TV_SERIES)
 })
+
 </script>
 
 <template>
-	<div class="content-container">
-		<MovieLists :movies="series" />
-	</div>
+	<MovieLists 
+		:movies="series"
+		title="Сериалы" 
+	/>
 </template>
