@@ -6,7 +6,7 @@ import {
 } from 'vue'
 import {
     CINEMA_NAMES,
-} from '@/shared/constants/cinema'
+} from '@/shared/constants'
 
 export const useMovieStore = defineStore('movie', () => {
     const films = ref([])
@@ -41,8 +41,17 @@ export const useMovieStore = defineStore('movie', () => {
             const { data, loaded } = categoryMapping[category] || {}
 	
             if (data && loaded) {
-                data.value = items
+                data.value = items.map((item) => {
+                    const slug = item.nameOriginal || item.nameRu
+
+                    return {
+                        ...item,
+                        slug: slug.toLowerCase().split(' ').join('').replace(/[:.'",-]/g, '')
+                    }
+                })
                 loaded.value = true
+
+                console.log('data.value', data.value)
             }
         } catch (error) {
             console.error(`Ошибка при загрузке ${category}:`, error)

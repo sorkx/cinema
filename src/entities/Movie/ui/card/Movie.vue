@@ -8,6 +8,10 @@ import {
 import {
     RatingDisplay,
 } from '@/shared/ui/RatingDisplay'
+import {
+    ROUTE_NAMES,
+} from '@/shared/constants'
+
 const props = defineProps({
     movie: {
         type: Object,
@@ -30,11 +34,19 @@ const ratings = computed(() => {
     }
     return result
 })
+
+// :to="{ name: 'MovieDetails', params: { id: props.movie.kinopoiskId || props.movie.imdbId } }"
 </script>
 
 <template>
 	<router-link
-		:to="{ name: 'MovieDetails', params: { id: props.movie.kinopoiskId || props.movie.imdbId } }"
+		:to="{ 
+			name: ROUTE_NAMES.CONTENT_DETAILS, 
+			params: { 
+				type: props.movie.type === 'FILM' ? 'film' : 'serial', 
+				id: props.movie.kinopoiskId || props.movie.imdbId,
+			} 
+		}"
 		class="movie"
 	>
 		<div class="movie__body">

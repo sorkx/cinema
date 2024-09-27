@@ -12,11 +12,10 @@ const routeOptions = [
         name: ROUTE_NAMES.MOVIES,
     },
     {
-        path: '/movie/:id',
-        name: ROUTE_NAMES.MOVIES_DETAILS,
-        props: true
-	  }
-	
+        path: '/:type/:id',
+        name: ROUTE_NAMES.CONTENT_DETAILS,
+        props: true,
+    }
 ]
 
 const routes = [
