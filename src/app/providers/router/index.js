@@ -4,12 +4,20 @@ import {
 } from 'vue-router'
 import { 
     ROUTE_NAMES, 
-} from '@/shared/constants/router'
+} from '@/shared/lib/constants'
 
 const routeOptions = [
     {
         path: '/',
-        name: ROUTE_NAMES.MOVIES,
+        name: ROUTE_NAMES.MAIN,
+    },
+    {
+        path: '/films',
+        name: ROUTE_NAMES.FILMS,
+    },
+    {
+        path: '/serials',
+        name: ROUTE_NAMES.SERIALS,
     },
     {
         path: '/:type/:id',

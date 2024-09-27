@@ -6,11 +6,14 @@ import {
     UISymbol,
 } from '@/shared/ui/UISymbol'
 import {
+    ROUTE_NAMES,
+} from '@/shared/lib/constants'
+import {
     RatingDisplay,
 } from '@/shared/ui/RatingDisplay'
 import {
-    ROUTE_NAMES,
-} from '@/shared/constants'
+    useRatings,
+} from '@/shared/lib/use/useRatings'
 
 const props = defineProps({
     movie: {
@@ -18,24 +21,7 @@ const props = defineProps({
     },
 })
 
-const ratings = computed(() => {
-    const result = []
-    if (props.movie.ratingImdb) {
-        result.push({
-            value: props.movie.ratingImdb || 0.0,
-            source: 'imdb'
-        })
-    }
-    if (props.movie.ratingKinopoisk) {
-        result.push({
-            value: props.movie.ratingKinopoisk || 0.0,
-            source: 'movie'
-        })
-    }
-    return result
-})
-
-// :to="{ name: 'MovieDetails', params: { id: props.movie.kinopoiskId || props.movie.imdbId } }"
+const { ratings } = useRatings(computed(() => props.movie))
 </script>
 
 <template>

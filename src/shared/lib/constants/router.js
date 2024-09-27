@@ -1,6 +1,9 @@
 const ROUTE_NAMES = {
-    MOVIES: 'Movies',
+    MAIN: 'Main',
     CONTENT_DETAILS: 'ContentDetails',
+    FILMS: 'Films',
+    SERIALS: 'Serials',
+
 }
 
 export { 

@@ -22,9 +22,22 @@
 			font-weight: 600;
 			line-height: normal;
 		}
+		svg {
+			opacity: 0;
+			transition: .3s;
+			align-self: center;
+			width: 22px;
+			height: 22px;
+			stroke: $cWhite;
+			margin-left: 10px;
+		}
 	}
 	&__movies--swiper {
 		overflow: hidden;
+	}
+
+	&:hover &__title svg {
+		opacity: 1;
 	}
 }
 

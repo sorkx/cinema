@@ -29,13 +29,13 @@ onMounted(async () => {
             <div class="main-page--section">
                 <MovieCategoryRow 
 					:items="films"
+					name="Films"
 					title="Фильмы"
-					type="FILM"
 				/>
 				<MovieCategoryRow 
 					:items="series"
 					title="Cериалы"
-					type="TV_SERIES"
+					name="Serials"
 				/>
             </div>
         </div>

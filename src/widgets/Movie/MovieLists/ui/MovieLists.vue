@@ -5,7 +5,7 @@ import {
 
 const props = defineProps({
     movies: {
-        type: Array,
+        type: [Array, Object],
     },
     isLoading: {
         type: Boolean,

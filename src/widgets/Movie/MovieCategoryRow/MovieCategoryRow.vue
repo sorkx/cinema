@@ -5,6 +5,9 @@ import {
 import {
     VSwiper,
 } from '@/shared/ui/swipers/VSwiper'
+import {
+    UISymbol,
+} from '@/shared/ui/UISymbol'
 
 const props = defineProps({
     items: {
@@ -14,7 +17,7 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    type: {
+    name: {
         type: String,
         required: true,
     }
@@ -27,10 +30,13 @@ const props = defineProps({
 	>
 		<div class="module__wrap">
 			<router-link 
-				to="#" 
 				class="module__title"
+				:to="{ 
+					name: props.name, 
+				}"
 			>
 				<h2>{{ props.title }}</h2>
+				<UISymbol name="arrow-right" />
 			</router-link>
 		</div>
 		<VSwiper class="module__movies--swiper">

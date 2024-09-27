@@ -6,7 +6,7 @@ import {
 } from 'vue'
 import {
     CINEMA_NAMES,
-} from '@/shared/constants'
+} from '@/shared/lib/constants'
 
 export const useMovieStore = defineStore('movie', () => {
     const films = ref([])
@@ -14,10 +14,11 @@ export const useMovieStore = defineStore('movie', () => {
     const selectedMovieDetails = ref(null)
     const filmsLoaded = ref(false)
     const seriesLoaded = ref(false)
+    const totalPages = ref({ [CINEMA_NAMES.FILM]: 0, [CINEMA_NAMES.TV_SERIES]: 0 })
 
-    const fetchDataByCategory = async (category) => {
+    const fetchDataByCategory = async (category, page = 1) => {
         try {
-            const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v2.2/films?type=${category}&page=1`, {
+            const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v2.2/films?type=${category}&page=${page}`, {
                 method: 'GET',
                 headers: {
                     'X-API-KEY': import.meta.env.VITE_API_KEY,
@@ -29,33 +30,36 @@ export const useMovieStore = defineStore('movie', () => {
                 throw new Error(`Ошибка при загрузке ${category}: ${res.statusText}`)
             }
 
-            const { 
-                items
-			 } = await res.json()
+            const data = await res.json()
 
-			 const categoryMapping = {
+            const categoryMapping = {
                 [CINEMA_NAMES.FILM]: { data: films, loaded: filmsLoaded },
                 [CINEMA_NAMES.TV_SERIES]: { data: series, loaded: seriesLoaded },
             }
-	
-            const { data, loaded } = categoryMapping[category] || {}
-	
-            if (data && loaded) {
-                data.value = items.map((item) => {
-                    const slug = item.nameOriginal || item.nameRu
-
-                    return {
-                        ...item,
-                        slug: slug.toLowerCase().split(' ').join('').replace(/[:.'",-]/g, '')
-                    }
-                })
+  
+            const { data: categoryData, loaded } = categoryMapping[category] || {}
+  
+            if (categoryData && loaded) {
+                if (page === 1) {
+                    categoryData.value = data.items
+                } else {
+                    categoryData.value = [...categoryData.value, ...data.items]
+                }
+                totalPages.value[category] = data.totalPages
                 loaded.value = true
-
-                console.log('data.value', data.value)
             }
         } catch (error) {
             console.error(`Ошибка при загрузке ${category}:`, error)
         }
+    }
+
+    const fetchAllPages = async (category) => {
+        await fetchDataByCategory(category, 1)
+        const promises = []
+        for (let i = 2; i <= totalPages.value[category]; i++) {
+            promises.push(fetchDataByCategory(category, i))
+        }
+        await Promise.all(promises)
     }
 
     const fetchAllCategories = async () => {
@@ -93,6 +97,7 @@ export const useMovieStore = defineStore('movie', () => {
     return {
         films,
         series,
+        fetchAllPages,
         fetchAllCategories,
         fetchDataByCategory,
         fetchMovieDetails,
