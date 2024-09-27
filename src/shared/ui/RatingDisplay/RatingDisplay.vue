@@ -1,6 +1,7 @@
 <script setup>
 import { 
     defineProps,
+    computed,
 } from 'vue'
 import { 
     UISymbol,
@@ -20,6 +21,10 @@ const props = defineProps({
         default: '',
     }
 })
+
+const addedZeroRating = computed(() => {
+    return Number.isInteger(props.rating) ? `${props.rating}.0` : props.rating.toFixed(1)
+})
 </script>
 
 <template>
@@ -32,7 +37,7 @@ const props = defineProps({
 			class="external__rating--icon"
 		/>
 		<div class="external__rating--value">
-			{{ props.rating }}
+			{{ addedZeroRating }}
 		</div>
 	</div>
 </template>

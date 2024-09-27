@@ -1,1 +1,1 @@
-export { useMovieStore as movieModel } from './cinema'
+export { useMovieStore as movieModel } from './movie'

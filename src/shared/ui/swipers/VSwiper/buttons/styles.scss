@@ -1,11 +1,13 @@
 .swiper-button {
-	color: var(--defaultColorLight);
-	border-radius: 100%;
-	opacity: 0.3;
+	padding: 8px;
+    opacity: .3;
+	color: $cWhite;
+	background-color: transparent;
+	border: none;
 
 	&:focus-visible,
 	&:hover {
-		opacity: 1;
+		opacity: .9;
 	}
 
 	&:active {
@@ -13,8 +15,7 @@
 	}
 
 	&:disabled {
-		opacity: 0.1;
-		color: #eaeaea;
+		display: none;
 	}
 
 	svg {

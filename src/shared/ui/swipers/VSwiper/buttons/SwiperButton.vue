@@ -5,8 +5,8 @@ import {
 </script>
 
 <template>
-	<button
-		class="swiper-button reset"
+	<button 
+		class="swiper-button" 
 		type="button"
 	>
 		<UISymbol name="arrow" />

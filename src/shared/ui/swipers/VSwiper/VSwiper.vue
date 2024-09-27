@@ -2,9 +2,10 @@
 import { 
     Pagination, 
     Navigation,
-} from 'swiper'
+} from 'swiper/modules'
 import {
     toRefs,
+    reactive,
 } from 'vue'
 import { 
     register,
@@ -14,29 +15,46 @@ import SwiperButton from './buttons/SwiperButton.vue'
 register()
 
 const props = defineProps({
-    slidesPerView: {
-        type: Number,
-        required: false,
-        default: 1
-    },
-    spaceBetween: {
-        type: Number,
-        required: false,
-        default: 0
-    },
-    hasPagination: {
-        type: Boolean,
-        required: false,
-        default: true
-    },
     hasNavigation: {
         type: Boolean,
         required: false,
-        default: true
-    }
+        default: true,
+    },
+    speed: {
+        type: Number,
+        required: false,
+        default: 700,
+		
+    },
 })
 
-const { slidesPerView, spaceBetween, hasPagination, hasNavigation } = toRefs(props)
+const swiperBreakpoints = reactive({
+    640: {
+        slidesPerView: 2.5,
+        spaceBetween: 20,
+    },
+    768: {
+        slidesPerView: 2.5,
+        spaceBetween: 20,
+    },
+    968: {
+        slidesPerView: 3.5,
+        spaceBetween: 20,
+    },
+    1024: {
+        slidesPerView: 4.5,
+        spaceBetween: 20,
+        slidesPerGroup: 2,
+    },
+    1440: {
+        slidesPerView: 6.5,
+        spaceBetween: 28,
+        slidesPerGroup: 4,
+    }
+});
+
+
+const { hasNavigation, speed } = toRefs(props)
 const modules = [Pagination, Navigation]
 </script>
 
@@ -44,26 +62,18 @@ const modules = [Pagination, Navigation]
 	<swiper-container
 		class="v-swiper"
 		:modules="modules"
-		:slides-per-view="slidesPerView"
-		:space-between="spaceBetween"
-		:pagination="{
-			el: '.v-swiper__pagination',
-			type: 'bullets',
-			clickable: true
-		}"
+		:speed="speed"
+		:breakpoints="swiperBreakpoints"
 		:navigation="{
 			nextEl: '.v-swiper__button--next',
 			prevEl: '.v-swiper__button--prev'
 		}"
 	>
+
 		<slot />
   
 	  <!-- eslint-disable-next-line vue/no-deprecated-slot-attribute -->
 		<div slot="container-end">
-			<div
-				v-if="hasPagination"
-				class="v-swiper__pagination swiper-pagination row"
-			/>
 			<SwiperButton
 				v-if="hasNavigation"
 				class="v-swiper__button v-swiper__button--next"

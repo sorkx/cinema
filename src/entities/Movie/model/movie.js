@@ -8,16 +8,16 @@ import {
     CINEMA_NAMES,
 } from '@/shared/constants/cinema'
 
-export const useMovieStore = defineStore('cinema', () => {
-    const movies = ref([])
+export const useMovieStore = defineStore('movie', () => {
+    const films = ref([])
     const series = ref([])
     const selectedMovieDetails = ref(null)
-    const moviesLoaded = ref(false)
+    const filmsLoaded = ref(false)
     const seriesLoaded = ref(false)
 
     const fetchDataByCategory = async (category) => {
         try {
-            const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v2.2/films?type=${category}`, {
+            const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v2.2/films?type=${category}&page=1`, {
                 method: 'GET',
                 headers: {
                     'X-API-KEY': import.meta.env.VITE_API_KEY,
@@ -34,7 +34,7 @@ export const useMovieStore = defineStore('cinema', () => {
 			 } = await res.json()
 
 			 const categoryMapping = {
-                [CINEMA_NAMES.FILM]: { data: movies, loaded: moviesLoaded },
+                [CINEMA_NAMES.FILM]: { data: films, loaded: filmsLoaded },
                 [CINEMA_NAMES.TV_SERIES]: { data: series, loaded: seriesLoaded },
             }
 	
@@ -52,7 +52,7 @@ export const useMovieStore = defineStore('cinema', () => {
     const fetchAllCategories = async () => {
         const promises = []
 
-        if (!moviesLoaded.value) {
+        if (!filmsLoaded.value) {
             promises.push(fetchDataByCategory(CINEMA_NAMES.FILM))
         }
 
@@ -82,7 +82,7 @@ export const useMovieStore = defineStore('cinema', () => {
     }
 
     return {
-        movies,
+        films,
         series,
         fetchAllCategories,
         fetchDataByCategory,

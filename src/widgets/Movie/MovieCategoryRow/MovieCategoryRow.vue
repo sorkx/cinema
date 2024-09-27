@@ -10,10 +10,6 @@ const props = defineProps({
     items: {
         type: Array,
     },
-    isLoading: {
-        type: Boolean,
-        default: false,
-    },
     title: {
         type: String,
         required: true,
@@ -24,11 +20,9 @@ const props = defineProps({
     }
 })
 </script>
-<template>
-	<div v-if="props.isLoading">Loading...</div>
 
+<template>
 	<div
-		v-else
 		class="module"
 	>
 		<div class="module__wrap">
@@ -39,22 +33,19 @@ const props = defineProps({
 				<h2>{{ props.title }}</h2>
 			</router-link>
 		</div>
-		<div class="module__slider">
-			<VSwiper class="movies__swiper">
-				<swiper-slide
-					v-for="item in props.items"
+		<VSwiper class="module__movies--swiper">
+			<swiper-slide
+				v-for="item in props.items"
+				:key="item.id"
+				class="swiper-slide"
+				lazy="true"
+			>
+				<Movie
 					:movie="item"
 					:key="item.id"
-					class="movie__swiper--slide"
-					lazy="true"
-				>
-					<Movie
-						:movie="item"
-						:key="item.id"
-					/>
-    			</swiper-slide>
-  			</VSwiper>
-		</div>
+				/>
+			</swiper-slide>
+		</VSwiper>
 	</div>
 </template>
 

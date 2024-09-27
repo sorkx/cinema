@@ -14,7 +14,7 @@ import {
 
 const movieStore = movieModel()
 const { 
-    movies,
+    films,
     series, 
 } = storeToRefs(movieStore)
 
@@ -23,13 +23,12 @@ onMounted(async () => {
 })
 </script>
 
-
 <template>
     <div class="main-page content-container">
         <div class="main-page--wrapper">
             <div class="main-page--section">
                 <MovieCategoryRow 
-					:items="movies"
+					:items="films"
 					title="Фильмы"
 					type="FILM"
 				/>

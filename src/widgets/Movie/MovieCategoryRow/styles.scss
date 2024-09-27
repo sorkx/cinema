@@ -23,12 +23,16 @@
 			line-height: normal;
 		}
 	}
-	&__slider {
-		display: flex;
+	&__movies--swiper {
+		overflow: hidden;
 	}
 }
 
-// font-size: 32px;
-// font-style: normal;
-// font-weight: 600;
-// line-height: normal;
+.swiper-slide {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition-property: transform;
+    display: block;
+}

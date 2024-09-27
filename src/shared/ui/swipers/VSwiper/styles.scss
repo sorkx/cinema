@@ -1,0 +1,42 @@
+.v-swiper {
+	&:hover &__button {
+		opacity: .9;
+	}
+	&__button {
+		display: grid;
+		align-content: center;
+		justify-content: center;
+		place-content: center;
+		position: absolute;
+		width: 60px;
+		height: 100%;
+		z-index: 100;
+		top: 0;
+		cursor: pointer;
+		opacity: 0;
+		transition: .3s;
+
+		&--next {
+			right: 0;
+			background-image: linear-gradient(90deg, hsla(0, 0%, 100%, 0), rgba(5, 23, 44, .7));
+		}
+
+		&--prev {
+			left: 0;
+			background-image: linear-gradient(270deg, hsla(0, 0%, 100%, 0), rgba(5, 23, 44, .7));
+
+			:deep(svg) {
+				transform: rotate(180deg);
+			}
+		}
+	}
+}
+
+@media (max-width: 968px) {
+	:deep(.v-swiper__button--next),
+	:deep(.v-swiper__button--prev) {
+	  display: none;
+	}
+  }
+  
+
