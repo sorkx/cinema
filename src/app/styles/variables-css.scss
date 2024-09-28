@@ -7,4 +7,8 @@
 	--defaultColorBlack: hsla(0, 0%, 0%);
 	--rem: #{$baseRem};
 	--gContent: #{$gContent};
+	--page-min-width: 1024px;
+	--header-height: 76px;
+	--header-z-index: 1500;
+	--content-z-index: 3;
   }

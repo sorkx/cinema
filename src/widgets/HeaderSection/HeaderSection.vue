@@ -2,16 +2,39 @@
 import {
     LogoLink,
 } from '@/shared/ui/LogoLink'
+
+const items = [
+    {
+        id: 'main',
+        title: 'Главная',
+        to: '/',
+    },
+    {
+        id: 'films',
+        title: 'Фильмы',
+        to: '/serials',
+    },
+    {
+        id: 'serials',
+        title: 'Сериалы',
+        to: '/films',
+    },
+    {
+        id: 'favorite',
+        title: 'Избранное',
+        to: '/favorite',
+    }
+]
 </script>
 
 <template>
-	<header class="header">
-		<div class="header__inner">
-			<div class="content-container header__content">
+	<div class="header__wrapper">
+		<header class="header content-container ">
+			<nav class="header__content">
 				<LogoLink />
-			</div>
-		</div>
-	</header>
+			</nav>
+		</header>
+	</div>
 </template>
 
-<style src="./headerSection.scss" lang="scss" scoped />
+<style src="./styles.scss" lang="scss" scoped />

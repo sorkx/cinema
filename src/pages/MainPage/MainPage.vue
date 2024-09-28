@@ -24,9 +24,9 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="main-page content-container">
-        <div class="main-page--wrapper">
-            <div class="main-page--section">
+    <div class="main-container">
+        <div class="main">
+            <div class="content-container main__container">
                 <MovieCategoryRow 
 					:items="films"
 					name="Films"
@@ -42,3 +42,4 @@ onMounted(async () => {
     </div>
 </template>
 
+<style src="./styles.scss" lang="scss" scoped />

@@ -5,7 +5,7 @@ import {
 
 const props = defineProps({
     movies: {
-        type: [Array, Object],
+        type: Array,
     },
     title: {
         type: String,
