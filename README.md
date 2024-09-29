@@ -1,35 +1,23 @@
-# cinema
+# CINEMA
 
-This template should help get you started developing with Vue 3 in Vite.
+## Technology stack
 
-## Recommended IDE Setup
+- **UI**: [`Vue3`](https://vuejs.org/)
+- **Data model**: [`pinia`](https://pinia.vuejs.org/)
+- **Lang**: [`javascript`](https://js.org//)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Routing**: [`vue-router`](https://router.vuejs.org/)
+- **Lint**: [`eslint`](https://eslint.org/), [`prettier`](https://prettier.io/)
+- **Architecture**: [`feature-sliced`](https://feature-sliced.design/)
 
-## Customize configuration
+# Feature Sliced Design
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+FSD (Sliced Design Feature) is a new front end architecture for large projects and this architecture is simply the best for me.
 
-## Project Setup
+## What is FSD?
 
-```sh
-npm install
-```
+Feature-Sliced Design (FSD) is an architectural methodology for scaffolding front-end applications. Simply put, it's a compilation of rules and conventions on organizing code. The main purpose of this methodology is to make the project more understandable and structured in the face of ever-changing business requirements.
 
-### Compile and Hot-Reload for Development
+![how fsd looks like](https://feature-sliced.design/assets/images/visual_schema-e826067f573946613dcdc76e3f585082.jpg)
 
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+[Official website](https://feature-sliced.design/docs/get-started/overview)
