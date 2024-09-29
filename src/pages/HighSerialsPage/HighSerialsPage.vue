@@ -17,18 +17,18 @@ import {
 
 const store = movieModel()
 const { 
-    films,
+    series,
 } = storeToRefs(store)
 
 onMounted(async () => {
-    await store.fetchAllPages(CINEMA_NAMES.FILM)
+    await store.fetchHighPages(CINEMA_NAMES.TV_SERIES)
 })
 
 </script>
 
 <template>
 	<MovieLists 
-		:movies="films"
-		title="Фильмы"
+		:movies="series"
+		title="Сериалы с рейтингом 9+" 
 	/>
 </template>

@@ -35,7 +35,7 @@ const props = defineProps({
 					name: props.name, 
 				}"
 			>
-				<h2>{{ props.title }}</h2>
+				<h2>{{ props.title }} с рейтингом 9+</h2>
 				<UISymbol name="arrow-right" />
 			</router-link>
 		</div>

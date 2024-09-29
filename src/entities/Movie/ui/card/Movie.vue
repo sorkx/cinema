@@ -65,16 +65,4 @@ const { ratings } = useRatings(computed(() => props.movie))
 	</router-link>
 </template>
 
-<style src="./style.scss" lang="scss" scoped />
-
-<!-- <div class="card-info">
-	<div class="card-name">
-		{{ props.movie.nameRu || props.movie.nameEn }}
-	</div>
-	<div class="card-genre">
-		{{ props.movie.genre }}
-	</div>
-	<div>
-		{{ props.movie.ratingImdb || props.movie.ratingKinopoisk }}
-	</div>
-</div> -->
+<style src="./styles.scss" lang="scss" scoped />

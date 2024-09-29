@@ -5,7 +5,5 @@ import {
 </script>
 
 <template>
-	<div class="content-container">
-		<MovieInfo />
-	</div>
+	<MovieInfo />
 </template>

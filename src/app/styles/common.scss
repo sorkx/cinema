@@ -37,7 +37,6 @@ body {
 }
 
 .page {
-	flex-grow: 1;
-    padding-top: 36px;
-    padding-bottom: 64px;
+    position: relative;
+    z-index: 1;
 }

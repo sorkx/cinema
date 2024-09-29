@@ -1,5 +1,8 @@
 <script setup>
 import {
+    LogoLink,
+} from '@/shared/ui/LogoLink'
+import {
     UISymbol,
 } from '@/shared/ui/UISymbol'
 import {
@@ -72,6 +75,7 @@ const footerItems = reactive([
 									v-for="item in section.items"
 									:key="item.image"
 									class="application application--img application--footer"
+									to="#"
 								>
 									<img src="#" />
 								</router-link>
@@ -83,6 +87,7 @@ const footerItems = reactive([
 									v-for="item in section.items"
 									:key="item.icon"
 									class="social__img"
+									to="#"
 								>
 									<UISymbol :name="item.icon" />
 								</router-link>
@@ -124,10 +129,7 @@ const footerItems = reactive([
 						class="logo"
 						aria-current="page"
 					>
-						<UISymbol 
-							name="cinema" 
-							class="logo-image"
-						/>
+						<LogoLink />
 					</router-link>
 				</div>
 			</div>

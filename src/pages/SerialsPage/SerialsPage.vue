@@ -29,6 +29,6 @@ onMounted(async () => {
 <template>
 	<MovieLists 
 		:movies="series"
-		title="Сериалы" 
+		title="Сериалы"
 	/>
 </template>

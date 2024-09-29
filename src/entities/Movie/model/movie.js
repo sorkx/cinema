@@ -16,9 +16,19 @@ export const useMovieStore = defineStore('movie', () => {
     const seriesLoaded = ref(false)
     const totalPages = ref({ [CINEMA_NAMES.FILM]: 0, [CINEMA_NAMES.TV_SERIES]: 0 })
 
-    const fetchDataByCategory = async (category, page = 1) => {
+    const fetchDataByCategory = async (category, page = 1, order= null, ratingTo = null) => {
         try {
-            const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v2.2/films?type=${category}&page=${page}`, {
+            let url =` https://kinopoiskapiunofficial.tech/api/v2.2/films?type=${category}&page=${page}`
+
+            if (order) {
+                url +=` &order=${order}`
+            }
+
+            if (ratingTo !== null) {
+                url += `&ratingTo=${ratingTo}`
+            }
+
+            const res = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'X-API-KEY': import.meta.env.VITE_API_KEY,
@@ -89,15 +99,24 @@ export const useMovieStore = defineStore('movie', () => {
         await Promise.all(promises)
     }
 
+    const fetchHighPages = async (category, page) => {
+        await fetchDataByCategory(category, page, 'RATING', 9)
+        const promises = []
+        for (let i = 2; i <= totalPages.value[category]; i++) {
+            promises.push(fetchDataByCategory(category, i, 'RATING', 9))
+        }
+        await Promise.all(promises)
+    }
+
     const fetchAllCategories = async () => {
         const promises = []
 
         if (!filmsLoaded.value) {
-            promises.push(fetchDataByCategory(CINEMA_NAMES.FILM))
+            promises.push(fetchDataByCategory(CINEMA_NAMES.FILM, 1, 'RATING', 9))
         }
 
         if (!seriesLoaded.value) {
-            promises.push(fetchDataByCategory(CINEMA_NAMES.TV_SERIES))
+            promises.push(fetchDataByCategory(CINEMA_NAMES.TV_SERIES, 1, 'RATING', 9))
         }
 
         await Promise.all(promises)
@@ -128,6 +147,7 @@ export const useMovieStore = defineStore('movie', () => {
         // initialFetch,
         // resetPagination,
         fetchAllPages,
+        fetchHighPages,
         fetchAllCategories,
         fetchDataByCategory,
         fetchMovieDetails,

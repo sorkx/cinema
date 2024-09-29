@@ -4,6 +4,11 @@
 	gap: 10px;
 	text-decoration: none;
 
+	svg {
+		width: 100px;
+		height: 80px;
+	}
+
 	&__title {
 		color: var(--color-white);
 	}

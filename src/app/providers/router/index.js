@@ -12,18 +12,32 @@ const routeOptions = [
         name: ROUTE_NAMES.MAIN,
     },
     {
+        path: '/high-films',
+        name: ROUTE_NAMES.HIGH_FILMS,
+    },
+    {
+        path: '/high-serials',
+        name: ROUTE_NAMES.HIGH_SERIALS,
+    },
+    {
         path: '/films',
         name: ROUTE_NAMES.FILMS,
+        props: true,
     },
     {
         path: '/serials',
         name: ROUTE_NAMES.SERIALS,
+        props: true,
     },
     {
         path: '/:type/:id',
         name: ROUTE_NAMES.CONTENT_DETAILS,
         props: true,
-    }
+    },
+    {
+        path: '/favorite',
+        name: ROUTE_NAMES.FAVORITE,
+    },
 ]
 
 const routes = [

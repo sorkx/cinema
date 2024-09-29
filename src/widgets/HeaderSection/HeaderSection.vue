@@ -2,22 +2,20 @@
 import {
     LogoLink,
 } from '@/shared/ui/LogoLink'
+import {
+    UISymbol,
+} from '@/shared/ui/UISymbol'
 
 const items = [
     {
-        id: 'main',
-        title: 'Главная',
-        to: '/',
-    },
-    {
         id: 'films',
         title: 'Фильмы',
-        to: '/serials',
+        to: '/films',
     },
     {
         id: 'serials',
         title: 'Сериалы',
-        to: '/films',
+        to: '/serials',
     },
     {
         id: 'favorite',
@@ -30,9 +28,42 @@ const items = [
 <template>
 	<div class="header__wrapper">
 		<header class="header content-container ">
-			<nav class="header__content">
+			<div class="header__content">
 				<LogoLink />
-			</nav>
+				<nav class="header__nav--wrapper">
+					<ul class="menu menu--header">
+						<li 
+							v-for="item in items" 
+							:key="item.id"
+						>
+							<router-link
+								:to="item.to"
+								active-class="active-link"
+							>
+								<span>
+									{{ item.title }}
+								</span>
+							</router-link>
+						</li>
+					</ul>
+				</nav>
+				<div class="header__profile">
+					<div class="header__profile--search">
+						<button class="v-button v-button--search">
+							<UISymbol name="search" />
+						</button>
+					</div>
+					<div class="header__profile--btn header__profile--btn-promocode">
+						Промокод
+					</div>
+					<router-link 
+						to="/login" 
+						class="header__profile--btn"
+					>
+						Авторизация
+					</router-link>
+				</div>
+			</div>
 		</header>
 	</div>
 </template>
