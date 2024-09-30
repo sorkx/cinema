@@ -7,7 +7,7 @@ import {
     VSwiper,
 } from '@/shared/ui/swipers'
 import {
-    PersonCard,
+    StaffCard,
 } from '@/entities/Staff'
 import {
     Movie,
@@ -28,16 +28,16 @@ import {
 
 const props = defineProps({
     movie: {
-        type: Object,
-        required: true,
+        type: Array,
+        default: () => [],
     },
     staff: {
-        type: [Array, Object],
-        required: true,
+        type: Array,
+        default: () => [],
     },
     similars: {
         type: Array,
-        required: true,
+        default: () => [],
     },
 })
 
@@ -268,7 +268,7 @@ const directorsDisplayed = computed(() => {
 							v-for="person in actors"
 							:key="person.staffId"
 						>
-							<PersonCard 
+							<StaffCard 
 								:person="person"
 							/>
 						</swiper-slide>

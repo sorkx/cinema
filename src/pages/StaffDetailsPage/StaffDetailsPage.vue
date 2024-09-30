@@ -1,7 +1,7 @@
 <script setup>
 import {
     PersonInfo,
-} from '@/widgets/PersonInfo'
+} from '@/widgets/StaffInfo'
 </script>
 
 <template>
