@@ -1,4 +1,4 @@
-# CINEMA
+# CINEMA [`DEMO`](https://sorq1ngg-cinema.netlify.app/)
 
 ## Technology stack
 
