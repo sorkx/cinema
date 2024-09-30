@@ -10,6 +10,28 @@
     // padding-right: var(--gContent);
 }
 
+.container {
+	&-head {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		margin-bottom: 40px;
+		grid-gap: 16px;
+		gap: 16px;
+	}
+
+	&-title {
+		font-size: 32px;
+		font-weight: 700;
+		line-height: 1.2em;
+		color: #fff;
+		align-self: center;
+		display: flex;
+		grid-gap: 20px;
+		gap: 20px;
+		align-items: center;
+	}
+}
+
 @media (max-width: 1700px) {
     .content-container {
         padding: 50px 70px;
