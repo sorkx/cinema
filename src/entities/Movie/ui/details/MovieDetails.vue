@@ -284,7 +284,6 @@ const fomrattedDirectors = computed(() => {
 						<h2 class="module__title">
 							Смотреть также
 						</h2>
-						<UISymbol name="arrow-right" />
 					</div>
 					<div class="module__slider">
 						<VSwiper>
