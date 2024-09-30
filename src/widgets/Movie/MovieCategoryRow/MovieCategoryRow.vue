@@ -4,7 +4,7 @@ import {
 } from '@/entities/Movie'
 import {
     VSwiper,
-} from '@/shared/ui/swipers/VSwiper'
+} from '@/shared/ui/swipers'
 import {
     UISymbol,
 } from '@/shared/ui/UISymbol'

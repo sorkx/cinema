@@ -1,7 +1,7 @@
 <script setup>
 import {
     MovieInfo,
-} from '@/widgets/Movie/MovieInfo'
+} from '@/widgets/Movie'
 </script>
 
 <template>

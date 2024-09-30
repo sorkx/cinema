@@ -10,7 +10,7 @@ import {
 } from '@/shared/lib/constants'
 import {
     RatingDisplay,
-} from '@/shared/ui/RatingDisplay'
+} from '@/shared/ui/Ratings'
 import {
     useRatings,
 } from '@/shared/lib/use/useRatings'
@@ -29,8 +29,8 @@ const { ratings } = useRatings(computed(() => props.movie))
 		:to="{ 
 			name: ROUTE_NAMES.CONTENT_DETAILS, 
 			params: { 
-				type: props.movie.type === 'FILM' ? 'film' : 'serial', 
-				id: props.movie.kinopoiskId || props.movie.imdbId,
+				type: 'movie', 
+				id: props.movie.kinopoiskId || props.movie.imdbId || props.movie.filmId,
 			} 
 		}"
 		class="movie"

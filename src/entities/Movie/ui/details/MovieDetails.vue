@@ -1,7 +1,17 @@
 <script setup>
 import {
     RatingDisplay,
-} from '@/shared/ui/RatingDisplay'
+    RatingStars,
+} from '@/shared/ui/Ratings'
+import {
+    VSwiper,
+} from '@/shared/ui/swipers'
+import {
+    PersonCard,
+} from '@/entities/Staff'
+import {
+    Movie,
+} from '@/entities/Movie'
 import {
     VButton,
 } from '@/shared/ui/buttons/VButton'
@@ -13,13 +23,25 @@ import {
 } from '@/shared/lib/use/useRatings'
 import {
     computed,
+    ref,
 } from 'vue'
 
 const props = defineProps({
     movie: {
         type: Object,
-    }
+        required: true,
+    },
+    staff: {
+        type: [Array, Object],
+        required: true,
+    },
+    similars: {
+        type: Array,
+        required: true,
+    },
 })
+
+const showAll = ref(false)
 
 const { ratings } = useRatings(computed(() => props.movie))
 
@@ -38,11 +60,46 @@ const genres = computed(() => {
         return char.toUpperCase() + item.genre.slice(1)
     }).join(', ')
 })
+
+const directors = computed(() => {
+    return props.staff.filter(member => member.professionKey === 'DIRECTOR')
+})
+
+const actors = computed(() => {
+    return props.staff.filter(member => member.professionKey === 'ACTOR')
+})
+
+const filmDuration = computed(() => {
+    const totalMinutes = props.movie?.filmLength ?? 'Неизвестно'
+
+    if (totalMinutes < 60) {
+        return `${totalMinutes} мин`
+    } else {
+        const hours = Math.floor(totalMinutes / 60)
+        const minutes = totalMinutes % 60
+
+        return  minutes === 0
+            ? `${hours} ч`
+            : `${hours} ч ${minutes} мин`
+    }
+})
+
+const addedZeroRating = (rating) => {
+    return Number.isInteger(rating) ? `${rating}.0` : rating.toFixed(1)
+}
+
+const directorsDisplayed = computed(() => {
+    if (showAll.value) {
+        return directors.value
+    } else {
+        return directors.value.slice(0, 3)
+    }
+})
 </script>
 
 <template>
-	<section 
-		v-if="props.movie" 
+	<section
+		v-if="props.movie"
 		class="movie__page"
 	>
 		<div 
@@ -76,6 +133,12 @@ const genres = computed(() => {
 						>
 							{{  genres  }}
 						</div>
+						<div 
+							class="movie__head--infos-info" 
+							style="text-align: start"
+						>
+							{{  filmDuration }}
+						</div>
 					</div>
 					<div class="movie__head--desc">
 						{{ props.movie?.description }}
@@ -101,7 +164,7 @@ const genres = computed(() => {
 								</v-button>
 							</a>
 							<div class="movie__head--trailers">
-								<a :href="`${props.movie?.webUrl}/video`" target="_blank">
+								<a href="#" target="_blank">
 									<button class="movie__head--trailers-btn">
 										<UISymbol name="trailers" />
 									</button>
@@ -114,8 +177,13 @@ const genres = computed(() => {
 								<div class="voice-acting__title">
 									Переведено и озвучено:
 								</div>
-								<div class="voice-acting__name">
-									<img src="@/shared/assets/images/voice.png" alt="TVSork" />
+								<div class="voice-acting__studio">
+									<div class="voice-acting__name">
+										RedHeadSound
+									</div>
+									<div class="voice-acting__caption">
+										Кино и сериалы
+									</div>
 								</div>
 							</div>
 						</div>
@@ -125,12 +193,112 @@ const genres = computed(() => {
 							<p class="movie__head--meta-title">
 								Аудиодорожки и качество видео:
 							</p>
-							<p>480p, 720p, 1080p («TVSork»)</p>
-							<p>Русский Stereo («TVSork»)</p>
+							<p>480p, 720p, 1080p («RHS»)</p>
+							<p>Русский Stereo («RHS»)</p>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="content-container">
+			<div class="movie__body">
+				<div class="movie-page__left">
+					<div class="movie__body-item">
+						<div 
+							v-if="directors.length > 0"
+							class="movie__body-title"
+						>
+							{{ staff[0]?.professionText }}
+						</div>
+						<div 
+							v-for="member in directorsDisplayed"
+							:key="member.staffId"
+							class="movie__body-desc"
+						>
+							{{ member.nameEn || member.nameRu }}
+						</div>
+						<a
+							v-if="directors.length > 3"
+							class="fulltext__link"
+							href="javascript:void(0)"
+							@click="showAll = !showAll"
+						>
+							{{ showAll ? 'Скрыть' : 'Читать полностью'  }}
+						</a>
+					</div>
+				</div>
+				<div class="movie-body__right">
+					<div class="movie-vote">
+						<div class="movie-vote__title">
+							Рейтинг
+							{{  props.movie?.type === 'FILM' ? 'фильма' : 'сериала'  }}
+						</div>
+						<div class="stars">
+							<RatingStars 
+								:rating="props.movie?.ratingKinopoisk || props.movie?.ratingImdb || 0"
+							/>
+							<div class="stars-vote__values">
+								<div class="movie-vote__item">
+									<div class="movie-vote__value">
+										{{ 
+											addedZeroRating(props.movie?.ratingKinopoisk) ||
+											addedZeroRating(props.movie?.ratingImdb)
+										}}
+									</div>
+									<div class="movie-vote__label">
+										ОБЩАЯ ОЦЕНКА
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="content-container">
+			<div class="container-head">
+				<h2 class="container-title">
+					Актерский состав
+				</h2>
+			</div>
+			<div class="module">
+				<div class="module__slider">
+					<VSwiper>
+						<swiper-slide
+							v-for="person in actors"
+							:key="person.staffId"
+						>
+							<PersonCard 
+								:person="person"
+							/>
+						</swiper-slide>
+					</VSwiper>
+				</div>
+			</div>
+		</div>
+		<div class="content-container">
+			<section class="similar-movies">
+				<div class="module">
+					<div class="module__wrap">
+						<h2 class="module__title">
+							Смотреть также
+						</h2>
+						<UISymbol name="arrow-right" />
+					</div>
+					<div class="module__slider">
+						<VSwiper>
+							<swiper-slide
+								v-for="similar in props.similars"
+								:key="similar.filmId"
+							>
+								<Movie 
+									:movie="similar"
+								/>
+							</swiper-slide>
+						</VSwiper>
+					</div>
+				</div>
+			</section>	
 		</div>
 	</section>
 </template>

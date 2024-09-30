@@ -4,12 +4,19 @@ import {
     movieModel,
 } from '@/entities/Movie'
 import {
+    staffModel,
+} from '@/entities/Staff'
+import {
+    SpinnerLoader,
+} from '@/shared/ui/SpinnerLoader'
+import {
     storeToRefs,
 } from 'pinia'
 import {
     computed,
-    onBeforeMount,
+    onMounted,
     ref,
+    watch,
 } from 'vue'
 import { 
     useRoute,
@@ -17,37 +24,61 @@ import {
 
 const route = useRoute()
 
+const staffDetailsStore = staffModel()
 const movieDetailsStore = movieModel()
+
 let { 
-    selectedMovieDetails, 
+    selectedMovieDetails,
+    similars, 
 } = storeToRefs(movieDetailsStore)
+
+let {
+    staff,
+} = storeToRefs(staffDetailsStore)
 
 const loading = ref(false)
 
 const productId = computed(() => +route.params.id)
 
-console.log('productId', productId.value)
+const fetchData = async (id) => {
+    const promises = []
 
-const fetchMovieDetails = async () => {
-    loading.value = true
-    await movieDetailsStore.fetchMovieDetails(productId.value)
-    loading.value = false
-    console.log('selectedMovie', selectedMovieDetails)
+    try {
+        promises.push(
+            movieDetailsStore.fetchMovieDetails(id),
+            staffDetailsStore.fetchStaff(id),
+            movieDetailsStore.fetchMovieSimilars(id),
+        )
+        await Promise.all(promises)
+    } catch (error) {
+        console.error('Ошибка при загрузке данных:', error)
+    }
 }
 
-onBeforeMount(async () => {
-    await fetchMovieDetails()
-})
+watch(
+    () => route.params.id,
+    (newId, oldId) => {
+        if (newId !== oldId) {
+            fetchData(+newId)
+        }
+    }
+)
 
+onMounted(async () => {
+    loading.value = true
+    await fetchData(productId.value)
+    loading.value = false
+})
 </script>
 
 <template>
-	<div v-if="loading">
-		Loading...
-	</div>
+	<SpinnerLoader v-if="loading" />
+
 	<MovieDetails 
 		v-else
 		:movie="selectedMovieDetails"
+		:staff="staff"
+		:similars="similars"
 	/>
 </template>
   
