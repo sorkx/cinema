@@ -290,6 +290,7 @@ const fomrattedDirectors = computed(() => {
 							<swiper-slide
 								v-for="similar in props.similars"
 								:key="similar.filmId"
+								lazy="true"
 							>
 								<Movie 
 									:movie="similar"
