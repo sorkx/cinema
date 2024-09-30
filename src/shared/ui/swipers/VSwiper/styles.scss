@@ -18,12 +18,12 @@
 
 		&--next {
 			right: 0;
-			background-image: linear-gradient(90deg, hsla(0, 0%, 100%, 0), rgba(5, 23, 44, .7));
+			background-image: linear-gradient(90deg, hsla(0, 0%, 100%, 0), rgba(19, 21, 23, .7));
 		}
 
 		&--prev {
 			left: 0;
-			background-image: linear-gradient(270deg, hsla(0, 0%, 100%, 0), rgba(5, 23, 44, .7));
+			background-image: linear-gradient(270deg, hsla(0, 0%, 100%, 0), rgba(19, 21, 23, .7));
 
 			:deep(svg) {
 				transform: rotate(180deg);

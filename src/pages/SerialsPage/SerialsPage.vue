@@ -1,7 +1,7 @@
 <script setup>
 import {
     MovieLists,
-} from '@/widgets/Movie/MovieLists'
+} from '@/widgets/Movie'
 import {
     storeToRefs,
 } from 'pinia'

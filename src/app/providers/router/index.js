@@ -38,6 +38,11 @@ const routeOptions = [
         path: '/favorite',
         name: ROUTE_NAMES.FAVORITE,
     },
+    {
+        path: '/staff/:id',
+        name: ROUTE_NAMES.STAFF_DETAILS,
+        props: true,
+    }
 ]
 
 const routes = [

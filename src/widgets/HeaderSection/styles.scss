@@ -8,8 +8,8 @@
 	padding-block-start: 0;
     padding-block-end: 0;
 	white-space: nowrap;
-    border-bottom: 2px solid #122337;
-    background: rgba(5, 23, 44, .8);
+    border-bottom: 2px solid $cBluishBlack;;
+    background: rgba(19, 21, 23, .8);
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
 
@@ -61,10 +61,10 @@
 			font-weight: 700;
 			font-size: 12px;
 			line-height: 15px;
-			color: #3369ff;
+			color: $cCaterpillar;
 			padding: 5px 16px;
 			border-radius: 5px;
-			border: 2px solid #3369ff;
+			border: 2px solid $cCaterpillar;
 			display: flex;
 			max-height: 33px;
 			align-items: center;

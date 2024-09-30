@@ -1,0 +1,48 @@
+.person {
+	position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+	height: 350px;
+    display: flex;
+    flex-direction: column;
+
+	&:hover &__image {
+		transform: scale(1.03);
+		filter: brightness(.8);
+	}
+
+	&__image {
+		width: 100%;
+		transition: .4s;
+		-o-object-fit: cover;
+		object-fit: cover;
+		height: 100%;
+		border-radius: 8px;
+	}
+
+	&__overlay {
+		height: 100%;
+		top: 0;
+		z-index: 2;
+		background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, .6));
+	}
+
+	&__overlay, &__title {
+		position: absolute;
+		width: 100%;
+		left: 0;
+	}
+
+	&__title {
+		bottom: 0;
+		padding: 10px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		font-size: 16px;
+		text-align: center;
+		background: rgba(200, 203, 214, .7);
+		font-weight: 600;
+		color: $cBlack;
+	}
+}

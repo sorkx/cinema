@@ -6,6 +6,7 @@ const ROUTE_NAMES = {
     FILMS: 'Films',
     SERIALS: 'Serials',
     FAVORITE: 'Favorite',
+    STAFF_DETAILS: 'StaffDetails',
 
 }
 

@@ -8,6 +8,10 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    fill: {
+        type: String,
+        default: 'currentColor',
+    }
 })
 
 const iconId = computedAsync(async () => {
@@ -27,6 +31,7 @@ const iconId = computedAsync(async () => {
 <template>
 	<svg
 		class="icon"
+		:fill="props.fill"
 		xmlns="http://www.w3.org/2000/svg"
 	>
 		<use :xlink:href="`#${iconId}`" />

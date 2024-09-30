@@ -1,5 +1,5 @@
 .footer {
-	background: #041223;
+	background: $cBluishBlack;
     padding: 47px 0;
 
 	&__applications {
@@ -74,9 +74,6 @@
 .social__img {
 	width: 40px;
     height: 40px;
-	svg {
-		fill: #122338
-	}
 }
 
 .socials--footer {

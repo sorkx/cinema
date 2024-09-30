@@ -10,7 +10,7 @@ import {
 } from '@/entities/Movie'
 import {
     MovieCategoryRow,
-} from '@/widgets/Movie/MovieCategoryRow'
+} from '@/widgets/Movie'
 
 const movieStore = movieModel()
 const { 

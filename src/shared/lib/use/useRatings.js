@@ -5,15 +5,15 @@ import {
 export function useRatings(movie) {
     const ratings = computed(() => {
         const result = []
-        if (movie.value.ratingImdb) {
+        if (movie.value?.ratingImdb) {
             result.push({
-                value: movie.value.ratingImdb,
+                value: movie.value?.ratingImdb,
                 source: 'imdb'
             })
         }
-        if (movie.value.ratingKinopoisk) {
+        if (movie.value?.ratingKinopoisk) {
             result.push({
-                value: movie.value.ratingKinopoisk,
+                value: movie.value?.ratingKinopoisk,
                 source: 'movie'
             })
         }

@@ -1,0 +1,34 @@
+.stars {
+	display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 6px;
+    margin-bottom: 27px;
+    position: relative;
+    max-width: 346px;
+
+	&__item {
+		position: relative;
+   		// cursor: pointer;
+
+		svg {
+			position: absolute;
+			top: 0;
+			left: 0;
+			fill: $cLightGrey;
+		}
+	}
+}
+
+.stars__item,
+.stars svg {
+	width: 30px;
+	height: 30px;
+}
+
+.active {
+	fill: $cCaterpillar !important;
+}
+
+.inactive {
+	fill: $cLightGrey;
+}

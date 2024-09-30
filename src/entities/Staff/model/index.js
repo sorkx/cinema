@@ -1,0 +1,1 @@
+export { useStaffStore as staffModel } from './staff'

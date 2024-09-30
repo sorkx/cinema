@@ -1,0 +1,1 @@
+export { default as PersonDetails } from './PersonDetails.vue'
