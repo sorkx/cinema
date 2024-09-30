@@ -7,6 +7,7 @@ const ROUTE_NAMES = {
     SERIALS: 'Serials',
     FAVORITE: 'Favorite',
     STAFF_DETAILS: 'StaffDetails',
+    SIMILARS: 'Similars',
 
 }
 

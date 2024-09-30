@@ -1,0 +1,23 @@
+.pathway {
+	list-style-type: none;
+    margin: -10px 0 40px;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+
+	&__item {
+		color: var(--defaultColorLight);
+		text-transform: capitalize;
+
+		a {
+			color: var(--defaultColor);
+			font-size: 16px;
+			font-weight: 600;
+		}
+	}
+
+	&__separator {
+		margin: 0 15px;
+		color: $cWhite;
+	}
+}
