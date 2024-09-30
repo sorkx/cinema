@@ -22,21 +22,19 @@ const routeOptions = [
     {
         path: '/films',
         name: ROUTE_NAMES.FILMS,
-        props: true,
     },
     {
         path: '/serials',
         name: ROUTE_NAMES.SERIALS,
-        props: true,
+    },
+    {
+        path: '/favorite',
+        name: ROUTE_NAMES.FAVORITE,
     },
     {
         path: '/:type/:id',
         name: ROUTE_NAMES.CONTENT_DETAILS,
         props: true,
-    },
-    {
-        path: '/favorite',
-        name: ROUTE_NAMES.FAVORITE,
     },
     {
         path: '/staff/:id',

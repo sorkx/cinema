@@ -233,33 +233,13 @@
 		font-size: 24px;
 	}
 
-	&__studio {
-		display: inline-flex;
-		flex-direction: column;
-		justify-content: center;
-		text-align: left;
-		background: url('@/shared/assets/images/rhs.png') 0 -1px / 40px no-repeat;
-		padding-left: 48px;
-	}
-
-	&__caption {
-		font-size: 10px;
-		font-weight: 600;
-		color: $cWhite;
-		opacity: 0.8;
-		text-transform: uppercase;
-		letter-spacing: 3px;
-		margin-top: 3px;
-	}
 
 	&__name {
-		text-transform: uppercase;
-		color: $cWhite;
-		font-size: 18px;
-		letter-spacing: 3px;
-		font-weight: 400;
-		line-height: 1;
-		font-family: 'Caveat Brush', cursive;
+		span {
+			font-weight: $fMedium;
+			font-size: 22px;
+			color: $cWhite;
+		}
 	}
 }
 

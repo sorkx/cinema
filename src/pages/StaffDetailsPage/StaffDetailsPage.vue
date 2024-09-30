@@ -1,9 +1,9 @@
 <script setup>
 import {
-    PersonInfo,
+    StaffInfo,
 } from '@/widgets/StaffInfo'
 </script>
 
 <template>
-	<PersonInfo />
+	<StaffInfo />
 </template>

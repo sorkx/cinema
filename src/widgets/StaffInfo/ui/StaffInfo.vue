@@ -1,6 +1,6 @@
 <script setup>
 import {
-    PersonDetails,
+    StaffDetails,
     staffModel,
 } from '@/entities/Staff'
 import {
@@ -28,7 +28,7 @@ onMounted(async () => await staffDetailsStore.fetchCurrentPerson(personId.value)
 </script>
 
 <template>
-	<PersonDetails 
+	<StaffDetails 
 		:person="person"
 	/>
 </template>

@@ -28,8 +28,8 @@ import {
 
 const props = defineProps({
     movie: {
-        type: Array,
-        default: () => [],
+        type: Object,
+        default: () => {},
     },
     staff: {
         type: Array,
@@ -95,6 +95,12 @@ const directorsDisplayed = computed(() => {
         return directors.value.slice(0, 3)
     }
 })
+
+const fomrattedDirectors = computed(() => {
+    return directorsDisplayed.value.map(member => 
+        member.nameEn || member.nameRu
+    ).join(', ')
+})
 </script>
 
 <template>
@@ -116,28 +122,28 @@ const directorsDisplayed = computed(() => {
 					</h1>
 					<div class="movie__head--infos">
 						<div class="movie__head--infos-info">
-							{{  props.movie?.year  }}
+							{{ props.movie?.year }}
 						</div>
 						<div class="movie__head--infos-info">
-							{{  modificationAgeLimits  }}
+							{{ modificationAgeLimits }}
 						</div>
 						<div 
 							class="movie__head--infos-info" 
 							style="text-align: start"
 						>
-							{{  countries  }}
+							{{ countries }}
 						</div>
 						<div 
 							class="movie__head--infos-info" 
 							style="text-align: start"
 						>
-							{{  genres  }}
+							{{ genres }}
 						</div>
 						<div 
 							class="movie__head--infos-info" 
 							style="text-align: start"
 						>
-							{{  filmDuration }}
+							{{ filmDuration }}
 						</div>
 					</div>
 					<div class="movie__head--desc">
@@ -175,15 +181,10 @@ const directorsDisplayed = computed(() => {
 							</div>
 							<div class="voice-acting-block">
 								<div class="voice-acting__title">
-									Переведено и озвучено:
+									Озвучка:
 								</div>
-								<div class="voice-acting__studio">
-									<div class="voice-acting__name">
-										RedHeadSound
-									</div>
-									<div class="voice-acting__caption">
-										Кино и сериалы
-									</div>
+								<div class="voice-acting__name">
+									<span>Дубляж</span>
 								</div>
 							</div>
 						</div>
@@ -193,8 +194,8 @@ const directorsDisplayed = computed(() => {
 							<p class="movie__head--meta-title">
 								Аудиодорожки и качество видео:
 							</p>
-							<p>480p, 720p, 1080p («RHS»)</p>
-							<p>Русский Stereo («RHS»)</p>
+							<p>480p, 720p, 1080p (Дубляж)</p>
+							<p>Русский Stereo (Дубляж)</p>
 						</div>
 					</div>
 				</div>
@@ -211,11 +212,9 @@ const directorsDisplayed = computed(() => {
 							{{ staff[0]?.professionText }}
 						</div>
 						<div 
-							v-for="member in directorsDisplayed"
-							:key="member.staffId"
 							class="movie__body-desc"
 						>
-							{{ member.nameEn || member.nameRu }}
+							{{ fomrattedDirectors }}
 						</div>
 						<a
 							v-if="directors.length > 3"
@@ -231,7 +230,7 @@ const directorsDisplayed = computed(() => {
 					<div class="movie-vote">
 						<div class="movie-vote__title">
 							Рейтинг
-							{{  props.movie?.type === 'FILM' ? 'фильма' : 'сериала'  }}
+							{{ props.movie?.type === 'FILM' ? 'фильма' : 'сериала' }}
 						</div>
 						<div class="stars">
 							<RatingStars 
@@ -267,9 +266,11 @@ const directorsDisplayed = computed(() => {
 						<swiper-slide
 							v-for="person in actors"
 							:key="person.staffId"
+							lazy="true"
 						>
 							<StaffCard 
 								:person="person"
+								:key="person.staffId"
 							/>
 						</swiper-slide>
 					</VSwiper>
@@ -293,6 +294,7 @@ const directorsDisplayed = computed(() => {
 							>
 								<Movie 
 									:movie="similar"
+									:key="similar.filmId"
 								/>
 							</swiper-slide>
 						</VSwiper>
