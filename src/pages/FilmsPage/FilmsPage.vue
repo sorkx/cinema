@@ -13,7 +13,10 @@ import {
 } from '@/shared/lib/constants'
 import { 
     onMounted,
+    ref,
 } from 'vue'
+
+const loading = ref(false)
 
 const store = movieModel()
 const { 
@@ -21,7 +24,9 @@ const {
 } = storeToRefs(store)
 
 onMounted(async () => {
+    loading.value = true
     await store.fetchAllPages(CINEMA_NAMES.FILM)
+    loading.value = false
 })
 
 </script>
@@ -30,5 +35,6 @@ onMounted(async () => {
 	<MovieLists 
 		:movies="films"
 		title="Фильмы"
+		:loading="loading"
 	/>
 </template>

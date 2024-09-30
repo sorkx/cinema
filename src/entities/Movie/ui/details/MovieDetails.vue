@@ -1,11 +1,14 @@
 <script setup>
 import {
+    ModuleWrapper,
+} from '@/shared/ui/ModuleWrapper'
+import {
+    ROUTE_NAMES,
+} from '@/shared/lib/constants'
+import {
     RatingDisplay,
     RatingStars,
 } from '@/shared/ui/Ratings'
-import {
-    VSwiper,
-} from '@/shared/ui/swipers'
 import {
     StaffCard,
 } from '@/entities/Staff'
@@ -202,6 +205,18 @@ const fomrattedDirectors = computed(() => {
 			</div>
 		</div>
 		<div class="content-container">
+			<div class="container-head">
+				<div class="container-title">
+					 Сезоны и сериалы
+				</div>
+			</div>
+			<div class="series-list__wrapper">
+				<div class="series-list">
+					В процессе разработки
+				</div>
+			</div>
+		</div>
+		<div class="content-container">
 			<div class="movie__body">
 				<div class="movie-page__left">
 					<div class="movie__body-item">
@@ -260,46 +275,35 @@ const fomrattedDirectors = computed(() => {
 					Актерский состав
 				</h2>
 			</div>
-			<div class="module">
-				<div class="module__slider">
-					<VSwiper>
-						<swiper-slide
-							v-for="person in actors"
-							:key="person.staffId"
-							lazy="true"
-						>
-							<StaffCard 
-								:person="person"
-								:key="person.staffId"
-							/>
-						</swiper-slide>
-					</VSwiper>
-				</div>
-			</div>
+			<ModuleWrapper
+				:items="actors"
+			>
+				<template #slide="{ item }">
+					<StaffCard 
+						:person="item"
+						:key="item.staffId"
+					/>
+				</template>
+			</ModuleWrapper>
 		</div>
-		<div class="content-container">
+		<div
+			v-if="props.similars.length > 0" 
+			class="content-container"
+		>
 			<section class="similar-movies">
-				<div class="module">
-					<div class="module__wrap">
-						<h2 class="module__title">
-							Смотреть также
-						</h2>
-					</div>
-					<div class="module__slider">
-						<VSwiper>
-							<swiper-slide
-								v-for="similar in props.similars"
-								:key="similar.filmId"
-								lazy="true"
-							>
-								<Movie 
-									:movie="similar"
-									:key="similar.filmId"
-								/>
-							</swiper-slide>
-						</VSwiper>
-					</div>
-				</div>
+				<ModuleWrapper
+					:items="props.similars"
+					title="Смотреть также"
+					:link="ROUTE_NAMES.SIMILARS"
+					icon="arrow-right"
+				>
+					<template #slide="{ item }">
+						<Movie 
+							:movie="item"
+							:key="item.filmId"
+						/>
+					</template>
+				</ModuleWrapper>
 			</section>	
 		</div>
 	</section>

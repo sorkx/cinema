@@ -8,6 +8,9 @@ import {
 import {
     UISymbol,
 } from '@/shared/ui/UISymbol'
+import {
+    ModuleWrapper,
+} from '@/shared/ui/ModuleWrapper'
 
 const props = defineProps({
     items: {
@@ -25,34 +28,19 @@ const props = defineProps({
 </script>
 
 <template>
-	<div
-		class="module"
+	<ModuleWrapper
+		:items="props.items"
+		:title="`${props.title} с рейтингом 9+`"
+		icon="arrow-right"
+		:link="props.name"
 	>
-		<div class="module__wrap">
-			<router-link 
-				class="module__title"
-				:to="{ 
-					name: props.name, 
-				}"
-			>
-				<h2>{{ props.title }} с рейтингом 9+</h2>
-				<UISymbol name="arrow-right" />
-			</router-link>
-		</div>
-		<VSwiper class="module__movies--swiper">
-			<swiper-slide
-				v-for="item in props.items"
+		<template #slide="{ item }">
+			<Movie 
+				:movie="item"
 				:key="item.id"
-				class="swiper-slide"
-				lazy="true"
-			>
-				<Movie
-					:movie="item"
-					:key="item.id"
-				/>
-			</swiper-slide>
-		</VSwiper>
-	</div>
+			/>
+		</template>
+	</ModuleWrapper>
 </template>
 
 <style src="./styles.scss" lang="scss" scoped />

@@ -12,6 +12,7 @@ export const useMovieStore = defineStore('movie', () => {
     const films = ref([])
     const series = ref([])
     const similars = ref([])
+    const seasons = ref([])
     const selectedMovieDetails = ref(null)
     const filmsLoaded = ref(false)
     const seriesLoaded = ref(false)
@@ -163,13 +164,37 @@ export const useMovieStore = defineStore('movie', () => {
         }
     }
 
+    const fetchSerialSeasons = async (id) => {
+        try {
+            const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/seasons`, {
+                method: 'GET',
+                headers: {
+                    'X-API-KEY': import.meta.env.VITE_API_KEY,
+                    'Content-Type': 'application/json',
+                },
+            })
+	
+            const {
+                items,
+            } = await res.json()
+
+            seasons.value = items
+	
+            console.log('seasons.value', seasons.value)
+        } catch (error) {
+            console.error('Error fetching movie details:', error)
+        }
+    }
+
     return {
         films,
         series,
         similars,
+        seasons,
         // fetchNextPage,
         // initialFetch,
         // resetPagination,
+        fetchSerialSeasons,
         fetchMovieSimilars,
         fetchAllPages,
         fetchHighPages,

@@ -278,45 +278,11 @@
     font-size: 16px;
 }
 
-.module {
-	position: relative;
-
-	&__slider {
+.series-list {
+	display: flex;
+    margin-top: 32px;
+    overflow: scroll;
+	&__wrapper {
 		position: relative;
-	}
-
-	&__wrap {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		margin-bottom: 32px;
-	}
-
-	&__title {
-		color: $cWhite;
-		font-size: 32px;
-		font-weight: 600;
-		display: grid;
-		grid-template-columns: auto 1fr;
-		grid-column-gap: 15px;
-		position: relative;
-
-		h2 {
-			font-size: 32px;
-			font-style: normal;
-			font-weight: 600;
-			line-height: normal;
-		}
-
-		svg {
-			width: 22px;
-			height: 22px;
-			opacity: 0;
-			transition: .3s;
-			align-self: center;
-			stroke: $cWhite;
-			margin-left: 10px;
-		}
 	}
 }

@@ -40,6 +40,10 @@ const routeOptions = [
         path: '/staff/:id',
         name: ROUTE_NAMES.STAFF_DETAILS,
         props: true,
+    },
+    {
+        path: '/similars',
+        name: ROUTE_NAMES.SIMILARS,
     }
 ]
 

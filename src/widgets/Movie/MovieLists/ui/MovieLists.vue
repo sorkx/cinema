@@ -2,6 +2,12 @@
 import { 
     Movie,
 } from '@/entities/Movie'
+import {
+    SpinnerLoader,
+} from '@/shared/ui/SpinnerLoader'
+import {
+    Pathway,
+} from '@/shared/ui/Pathway'
 
 const props = defineProps({
     movies: {
@@ -11,34 +17,23 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    loading: {
+        type: Boolean,
+        default: false,
+    }
 })
 </script>
 
 <template>
+	<SpinnerLoader v-if="props.loading" />
+
 	<div
+		v-else
 		class="content-container"
 	>
-		<ul class="pathway">
-			<li class="pathway__item">
-				<router-link
-					class="pathway__link router-link-exact-active"
-					to="/"
-				>
-					Главная
-				</router-link>
-			</li>
-			<li class="pathway__separator">
-				/
-			</li>
-			<li class="pathway__item">
-				{{ props.title }}
-			</li>
-		</ul>
-		<div class="container__head">
-			<h1 class="container__title">
-				{{ props.title }}
-			</h1>
-		</div>
+		<Pathway 
+			:title="props.title"
+		/>
 		<div 
 			class="lists"
 		>
