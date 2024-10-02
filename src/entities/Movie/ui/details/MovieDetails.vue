@@ -304,7 +304,10 @@ onMounted(() => {
 				</div>
 			</div>
 		</div>
-		<div class="content-container">
+		<div
+			v-if="props.staff.length > 0" 
+			class="content-container"
+		>
 			<div class="container-head">
 				<h2 class="container-title">
 					Актерский состав
