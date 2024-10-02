@@ -14,10 +14,8 @@ import {
 } from '@/entities/Staff'
 import {
     Movie,
-} from '@/entities/Movie'
-import {
     Episode,
-} from '@/shared/ui/Episode'
+} from '@/entities/Movie'
 import {
     VButton,
 } from '@/shared/ui/buttons/VButton'
@@ -49,7 +47,11 @@ const props = defineProps({
     seasons: {
         type: Array,
         default: () => [],
-    }
+    },
+    boxOffice: {
+        type: Array,
+        default: () => [],
+    },
 })
 
 const showAll = ref(false)
@@ -80,7 +82,9 @@ const genres = computed(() => {
 })
 
 const filmDuration = computed(() => {
-    const totalMinutes = props.movie?.filmLength ?? 'Неизвестно'
+    const totalMinutes = props.movie?.filmLength
+
+    if (totalMinutes === null || isNaN(totalMinutes)) return 'Длительность неизвестна'
 
     if (totalMinutes < 60) {
         return `${totalMinutes} мин`
@@ -200,7 +204,9 @@ onMounted(() => {
 									Озвучка:
 								</div>
 								<div class="voice-acting__name">
-									<span>Дубляж</span>
+									<span>
+										Дубляж
+									</span>
 								</div>
 							</div>
 						</div>
@@ -210,8 +216,12 @@ onMounted(() => {
 							<p class="movie__head--meta-title">
 								Аудиодорожки и качество видео:
 							</p>
-							<p>480p, 720p, 1080p (Дубляж)</p>
-							<p>Русский Stereo (Дубляж)</p>
+							<p>
+								480p, 720p, 1080p (Дубляж)
+							</p>
+							<p>
+								Русский Stereo (Дубляж)
+							</p>
 						</div>
 					</div>
 				</div>

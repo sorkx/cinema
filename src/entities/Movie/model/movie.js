@@ -17,6 +17,7 @@ export const useMovieStore = defineStore('movie', () => {
     const series = ref([])
     const similars = ref([])
     const seasons = ref([])
+    const boxOffice = ref([])
     const selectedMovieDetails = ref(null)
     const filmsLoaded = ref(false)
     const seriesLoaded = ref(false)
@@ -190,14 +191,35 @@ export const useMovieStore = defineStore('movie', () => {
         }
     }
 
+    const fetchMovieBoxOffice = async (id) => {
+        try {
+            const res = await fetch(`${API_URL}/${id}/box_office`, {
+                method: 'GET',
+                headers: {
+                    'X-API-KEY': API_KEY,
+                    'Content-Type': 'application/json',
+                },
+            })
+	
+            const {
+                items,
+            } = await res.json()
+
+            boxOffice.value = items
+	
+            console.log('boxOffice.value', boxOffice.value)
+        } catch (error) {
+            console.error('Error fetching movie details:', error)
+        }
+    }
+
     return {
         films,
         series,
         similars,
         seasons,
-        // fetchNextPage,
-        // initialFetch,
-        // resetPagination,
+        boxOffice,
+        fetchMovieBoxOffice,
         fetchSerialSeasons,
         fetchMovieSimilars,
         fetchAllPages,
@@ -206,6 +228,9 @@ export const useMovieStore = defineStore('movie', () => {
         fetchDataByCategory,
         fetchMovieDetails,
         selectedMovieDetails,
+        // fetchNextPage,
+        // initialFetch,
+        // resetPagination,
     }
 
 })
