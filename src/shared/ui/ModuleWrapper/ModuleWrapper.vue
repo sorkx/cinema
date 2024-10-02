@@ -48,7 +48,7 @@ const props = defineProps({
 				v-for="item in props.items"
 				:key="item.id"
 				class="swiper-slide"
-				lazy="true"
+				:lazy="item.posterUrlPreview ? true : false"
 			>
 			<slot name="slide" :item="item" />
 			</swiper-slide>

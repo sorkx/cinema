@@ -7,6 +7,10 @@ import {
 import {
     CINEMA_NAMES,
 } from '@/shared/lib/constants'
+import {
+    API_URL,
+    API_KEY,
+} from '@/shared/api'
 
 export const useMovieStore = defineStore('movie', () => {
     const films = ref([])
@@ -20,7 +24,7 @@ export const useMovieStore = defineStore('movie', () => {
 
     const fetchDataByCategory = async (category, page = 1, order= null, ratingTo = null) => {
         try {
-            let url =` https://kinopoiskapiunofficial.tech/api/v2.2/films?type=${category}&page=${page}`
+            let url =`${API_URL}?type=${category}&page=${page}`
 
             if (order) {
                 url +=` &order=${order}`
@@ -33,7 +37,7 @@ export const useMovieStore = defineStore('movie', () => {
             const res = await fetch(url, {
                 method: 'GET',
                 headers: {
-                    'X-API-KEY': import.meta.env.VITE_API_KEY,
+                    'X-API-KEY': API_KEY,
                     'Content-Type': 'application/json',
                 },
             })
@@ -126,10 +130,10 @@ export const useMovieStore = defineStore('movie', () => {
 
     const fetchMovieDetails = async (id) => {
         try {
-            const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v2.2/films/${id}`, {
+            const res = await fetch(`${API_URL}/${id}`, {
                 method: 'GET',
                 headers: {
-                    'X-API-KEY': import.meta.env.VITE_API_KEY,
+                    'X-API-KEY': API_KEY,
                     'Content-Type': 'application/json',
                 },
             })
@@ -144,10 +148,10 @@ export const useMovieStore = defineStore('movie', () => {
 
     const fetchMovieSimilars = async (id) => {
         try {
-            const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/similars`, {
+            const res = await fetch(`${API_URL}/${id}/similars`, {
                 method: 'GET',
                 headers: {
-                    'X-API-KEY': import.meta.env.VITE_API_KEY,
+                    'X-API-KEY': API_KEY,
                     'Content-Type': 'application/json',
                 },
             })
@@ -166,10 +170,10 @@ export const useMovieStore = defineStore('movie', () => {
 
     const fetchSerialSeasons = async (id) => {
         try {
-            const res = await fetch(`https://kinopoiskapiunofficial.tech/api/v2.2/films/${id}/seasons`, {
+            const res = await fetch(`${API_URL}/${id}/seasons`, {
                 method: 'GET',
                 headers: {
-                    'X-API-KEY': import.meta.env.VITE_API_KEY,
+                    'X-API-KEY': API_KEY,
                     'Content-Type': 'application/json',
                 },
             })

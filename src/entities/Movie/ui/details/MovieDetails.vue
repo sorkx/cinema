@@ -16,6 +16,9 @@ import {
     Movie,
 } from '@/entities/Movie'
 import {
+    Episode,
+} from '@/shared/ui/Episode'
+import {
     VButton,
 } from '@/shared/ui/buttons/VButton'
 import {
@@ -27,6 +30,7 @@ import {
 import {
     computed,
     ref,
+    onMounted,
 } from 'vue'
 
 const props = defineProps({
@@ -42,11 +46,24 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    seasons: {
+        type: Array,
+        default: () => [],
+    }
 })
 
 const showAll = ref(false)
+const selectedSeason = ref(null)
 
 const { ratings } = useRatings(computed(() => props.movie))
+
+const directors = computed(() => props.staff.filter(member => member.professionKey === 'DIRECTOR'))
+
+const actors = computed(() => props.staff.filter(member => member.professionKey === 'ACTOR'))
+
+const currentSeason = computed(() => props.seasons.find(season => season.number === selectedSeason.value))
+
+const countries = computed(() => props.movie?.countries.map((item) => item.country).join(', '))
 
 const modificationAgeLimits = computed(() => {
     const age = props.movie?.ratingAgeLimits
@@ -55,21 +72,11 @@ const modificationAgeLimits = computed(() => {
     return `${ageSlice}+`
 })
 
-const countries = computed(() => props.movie?.countries.map((item) => item.country).join(', '))
-
 const genres = computed(() => {
     return props.movie?.genres.map((item) => {
         const char = item.genre.charAt(0)
         return char.toUpperCase() + item.genre.slice(1)
     }).join(', ')
-})
-
-const directors = computed(() => {
-    return props.staff.filter(member => member.professionKey === 'DIRECTOR')
-})
-
-const actors = computed(() => {
-    return props.staff.filter(member => member.professionKey === 'ACTOR')
 })
 
 const filmDuration = computed(() => {
@@ -87,10 +94,6 @@ const filmDuration = computed(() => {
     }
 })
 
-const addedZeroRating = (rating) => {
-    return Number.isInteger(rating) ? `${rating}.0` : rating.toFixed(1)
-}
-
 const directorsDisplayed = computed(() => {
     if (showAll.value) {
         return directors.value
@@ -103,6 +106,16 @@ const fomrattedDirectors = computed(() => {
     return directorsDisplayed.value.map(member => 
         member.nameEn || member.nameRu
     ).join(', ')
+})
+
+const addedZeroRating = (rating) => Number.isInteger(rating) ? `${rating}.0` : rating.toFixed(1)
+
+const selectSeason = (seasonNumber) => selectedSeason.value = seasonNumber
+
+onMounted(() => {
+    if (props.seasons.length > 0) {
+        selectedSeason.value = props.seasons[0].number
+    }
 })
 </script>
 
@@ -204,7 +217,10 @@ const fomrattedDirectors = computed(() => {
 				</div>
 			</div>
 		</div>
-		<div class="content-container">
+		<div 
+			v-if="props.seasons.length > 0"
+			class="content-container"
+		>
 			<div class="container-head">
 				<div class="container-title">
 					 Сезоны и сериалы
@@ -212,7 +228,26 @@ const fomrattedDirectors = computed(() => {
 			</div>
 			<div class="series-list__wrapper">
 				<div class="series-list">
-					В процессе разработки
+					<a 
+						v-for="season in props.seasons"
+						:key="season.number"
+						class="link--module--seasons link series-list__season"
+						@click="selectSeason(season.number)"
+						:class="{ active: selectedSeason === season.number }"
+					>
+						<div 
+							class="series-list__season__number"
+						>
+							{{ season.number }}
+						</div>
+					</a>
+				</div>
+				<div v-if="currentSeason">
+					<ModuleWrapper :items="currentSeason.episodes">
+						<template #slide="{ item }">
+							<Episode :item="item" />
+						</template>
+					</ModuleWrapper>
 				</div>
 			</div>
 		</div>

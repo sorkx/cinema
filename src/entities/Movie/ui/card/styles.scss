@@ -2,17 +2,19 @@
 	height: 350px;
     display: flex;
     flex-direction: column;
+
 	&:hover .movie__image--inner {
 		transform: scale(1.05);
 		filter: brightness(.8);
 	}
+	
 	&__body {
 		position: relative;
 		overflow: hidden;
 		border-radius: 8px;
-
 		height: 100%;
 	}
+
 	&__image {
 		width: 100%;
 		transition: .4s;
@@ -20,6 +22,7 @@
 		object-fit: cover;
 		height: 100%;
 	}
+	
 	&__overlay {
 		position: absolute;
 		width: 100%;
@@ -27,6 +30,7 @@
 		top: 0;
 		left: 0;
 	}
+
 	&__content {
 		position: absolute;
 		width: 100%;
@@ -42,18 +46,21 @@
 		grid-template-areas:
 			"card-kp card-imdb card-flex";
 	}
+
 	&__movie {
 		grid-area: card-kp;
 		margin-right: 0;
 		justify-content: flex-start;
 		margin-top: auto;
 	}
+
 	&__imdb {
 		grid-area: card-imdb;
 		margin-right: 0;
 		justify-content: center;
 		margin-top: auto;
 	}
+	
 	&__title {
 		font-size: 16px;
 		font-weight: 700;

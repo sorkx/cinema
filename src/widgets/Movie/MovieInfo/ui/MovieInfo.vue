@@ -29,7 +29,8 @@ const movieDetailsStore = movieModel()
 
 let { 
     selectedMovieDetails,
-    similars, 
+    similars,
+    seasons,
 } = storeToRefs(movieDetailsStore)
 
 let {
@@ -48,6 +49,7 @@ const fetchData = async (id) => {
             movieDetailsStore.fetchMovieDetails(id),
             staffDetailsStore.fetchStaff(id),
             movieDetailsStore.fetchMovieSimilars(id),
+            movieDetailsStore.fetchSerialSeasons(id),
         )
         await Promise.all(promises)
     } catch (error) {
@@ -79,6 +81,7 @@ onMounted(async () => {
 		:movie="selectedMovieDetails"
 		:staff="staff"
 		:similars="similars"
+		:seasons="seasons"
 	/>
 </template>
   

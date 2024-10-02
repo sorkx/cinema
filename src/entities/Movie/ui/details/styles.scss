@@ -282,7 +282,37 @@
 	display: flex;
     margin-top: 32px;
     overflow: scroll;
+
 	&__wrapper {
 		position: relative;
+	}
+	
+	&__season {
+		position: relative;
+	}
+}
+
+.link {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+	&--module--seasons {
+		height: 48px;
+		width: 48px;
+		border-radius: 8px;
+		background: $cLightGrey;
+		margin-right: 8px;
+		font-size: 16px;
+		font-weight: 500;
+		line-height: 1.25;
+		letter-spacing: normal;
+		color: $cBlack;
+		min-width: 48px;
+	
+		&.active {
+			background: $cCaterpillar;
+		}
 	}
 }

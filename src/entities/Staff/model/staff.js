@@ -4,6 +4,10 @@ import {
 import {
     ref,
 } from 'vue'
+import {
+    API_URL_STAFF,
+    API_KEY,
+} from '@/shared/api'
 
 export const useStaffStore = defineStore('staff', () => {
     const staff = ref([])
@@ -11,10 +15,10 @@ export const useStaffStore = defineStore('staff', () => {
 
     const fetchStaff = async (filmId) => {
         try {
-            const response = await fetch(`https://kinopoiskapiunofficial.tech/api/v1/staff?filmId=${filmId}`, {
+            const response = await fetch(`${API_URL_STAFF}?filmId=${filmId}`, {
                 method: 'GET',
                 headers: {
-                    'X-API-KEY': import.meta.env.VITE_API_KEY,
+                    'X-API-KEY': API_KEY,
                     'Content-Type': 'application/json',
                 },
             })
@@ -24,16 +28,16 @@ export const useStaffStore = defineStore('staff', () => {
 	
             console.log('staff', staff.value)
         } catch(e) {
-            console.log('Ошибка получения персонала', e)
+            console.error('Ошибка получения персонала', e)
         }
     }
 
     const fetchCurrentPerson = async (id) => {
         try {
-            const response = await fetch(`https://kinopoiskapiunofficial.tech/api/v1/staff/${id}`, {
+            const response = await fetch(`${API_URL_STAFF}/${id}`, {
                 method: 'GET',
                 headers: {
-                    'X-API-KEY': import.meta.env.VITE_API_KEY,
+                    'X-API-KEY': API_KEY,
                     'Content-Type': 'application/json',
                 },
             })
@@ -42,7 +46,7 @@ export const useStaffStore = defineStore('staff', () => {
 	
             console.log('person.value', person.value)
         }catch(e) {
-            console.log('Ошибка получения персоны', e)
+            console.error('Ошибка получения данных о человеке', e)
         }
     }
 
