@@ -59,6 +59,7 @@ const props = defineProps({
 })
 
 const showAll = ref(false)
+const showTrailers = ref(false)
 const selectedSeason = ref(null)
 
 const { ratings } = useRatings(computed(() => props.movie))
@@ -70,6 +71,10 @@ const actors = computed(() => props.staff.filter(member => member.professionKey 
 const currentSeason = computed(() => props.seasons.find(season => season.number === selectedSeason.value))
 
 const countries = computed(() => props.movie?.countries.map((item) => item.country).join(', '))
+
+const trailersFilter = computed(() => {
+    return props.trailers.filter(trailer => trailer.site === 'YOUTUBE')
+})
 
 const modificationAgeLimits = computed(() => {
     const age = props.movie?.ratingAgeLimits
@@ -194,14 +199,38 @@ onMounted(() => {
 								</v-button>
 							</a>
 							<div class="movie__head--trailers">
-								<a href="#" target="_blank">
+								<a
+									@click="showTrailers = !showTrailers"
+								>
 									<button class="movie__head--trailers-btn">
 										<UISymbol name="trailers" />
 									</button>
 								</a>
-								<span class="trailers__tooltip">
-									Трейлер
-								</span>
+								<div 
+									v-if="showTrailers"
+									class="movie-tooltip__trailers"
+								>
+									<div 
+										v-if="trailersFilter.length > 0"
+										class="trailers-list"
+									>
+										<a
+											v-for="trailer in trailersFilter"
+											:key="trailer.name"
+											:href="trailer.url"
+											target="_blank"
+											class="trailers-list__link"
+										>
+											{{ trailer.name }}
+										</a>
+									</div>
+									<span
+										v-else 
+										class="trailers__tooltip"
+									>
+										Трейлеров не обнаружено
+									</span>
+								</div>
 							</div>
 							<div class="voice-acting-block">
 								<div class="voice-acting__title">
@@ -215,7 +244,10 @@ onMounted(() => {
 							</div>
 						</div>
 					</div>
-					<div class="movie__box-office">
+					<div
+						v-if="props.boxOffice.length > 0" 
+						class="movie__box-office"
+					>
 						<div 
 							v-for="box in props.boxOffice"
 							:key="box.type"

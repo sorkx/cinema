@@ -21,11 +21,16 @@ export const fetchInstance = async (u, path = '', params = {}) => {
             mode: 'cors',
         })
 
+        if (response.status === 402) {
+            throw new Error('Payment Required (превышено количество бесплатных запросов)')
+        }
+
         if (!response.ok) {
             throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`)
         }
 
         const data = await response.json()
+
         return data
     } catch (error) {
         console.error('Fetch Error:', error)

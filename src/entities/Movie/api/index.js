@@ -30,7 +30,9 @@ export const Api = {
 
     getMovieSimilars: async (id) => {
         try {
-            await fetchInstance(API_URL, `/${id}/similars`)
+            const { items } = await fetchInstance(API_URL, `/${id}/similars`)
+
+            return items
         } catch (e) {
             console.error('Error fetching similars movie:', e)
         }
