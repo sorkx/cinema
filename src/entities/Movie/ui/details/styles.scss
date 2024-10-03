@@ -148,19 +148,6 @@
 				}
 			}
 		}
-
-		&--meta {
-			color: $cWhite;
-			margin: 40px 0 0;
-			display: grid;
-			grid-template-columns: 1fr;
-			grid-gap: 16px;
-
-			&-title {
-				font-weight: $fMedium;
-				margin-bottom: 8px;
-			}
-		}
 	}
 
 	&__body {
@@ -222,6 +209,24 @@
 			font-weight: 700;
 			color: #c8cbd6;
 			align-self: center;
+		}
+	}
+
+	&__box-office {
+		color: $cWhite;
+		margin: 40px 0 0;
+		display: grid;
+		grid-template-columns: repeat(2, 300px);
+		grid-gap: 16px;
+
+		&--title {
+			font-weight: $fMedium;
+			font-size: 21px;
+			margin-bottom: 8px;
+		}
+
+		&--amount {
+			font-size: 18px;
 		}
 	}
 }

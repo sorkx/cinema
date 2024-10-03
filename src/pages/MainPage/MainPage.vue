@@ -43,13 +43,13 @@ onMounted(async () => {
             <div class="content-container main__container">
                 <MovieCategoryRow 
 					:items="films"
-					name="HighFilms"
+					name="Films"
 					title="Фильмы"
 				/>
 				<MovieCategoryRow 
 					:items="series"
 					title="Cериалы"
-					name="HighSerials"
+					name="Serials"
 				/>
             </div>
         </div>

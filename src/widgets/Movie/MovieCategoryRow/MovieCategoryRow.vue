@@ -3,12 +3,6 @@ import {
     Movie,
 } from '@/entities/Movie'
 import {
-    VSwiper,
-} from '@/shared/ui/swipers'
-import {
-    UISymbol,
-} from '@/shared/ui/UISymbol'
-import {
     ModuleWrapper,
 } from '@/shared/ui/ModuleWrapper'
 
@@ -30,7 +24,7 @@ const props = defineProps({
 <template>
 	<ModuleWrapper
 		:items="props.items"
-		:title="`${props.title} с рейтингом 9+`"
+		:title="props.title"
 		icon="arrow-right"
 		:link="props.name"
 	>

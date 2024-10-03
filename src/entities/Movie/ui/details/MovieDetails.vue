@@ -52,6 +52,10 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    trailers: {
+        type: Array,
+        default: () => [],
+    },
 })
 
 const showAll = ref(false)
@@ -211,17 +215,20 @@ onMounted(() => {
 							</div>
 						</div>
 					</div>
-					<div class="movie__head--meta">
-						<div class="movie__head--meta-item">
-							<p class="movie__head--meta-title">
-								Аудиодорожки и качество видео:
-							</p>
-							<p>
-								480p, 720p, 1080p (Дубляж)
-							</p>
-							<p>
-								Русский Stereo (Дубляж)
-							</p>
+					<div class="movie__box-office">
+						<div 
+							v-for="box in props.boxOffice"
+							:key="box.type"
+							class="movie__box-office--item"
+						>
+							<div>
+								<p class="movie__box-office--title">
+									{{ box.type }}
+								</p>
+								<p class="movie__box-office--amount">
+								{{ box.symbol }} {{ box.amount.toLocaleString() }}
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>

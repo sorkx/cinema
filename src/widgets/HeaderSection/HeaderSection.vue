@@ -8,16 +8,6 @@ import {
 
 const items = [
     {
-        id: 'films',
-        title: 'Фильмы',
-        to: '/films',
-    },
-    {
-        id: 'serials',
-        title: 'Сериалы',
-        to: '/serials',
-    },
-    {
         id: 'favorite',
         title: 'Избранное',
         to: '/favorite',
