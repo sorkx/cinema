@@ -113,7 +113,6 @@
 		border-radius: 8px;
 		background-color: $cBlack;
 		height: 50px;
-		padding: 0 10px;
 		border: 1px solid hsla(0, 0%, 100%, .65098);
 	}
 }
@@ -172,14 +171,16 @@
     max-width: 100px;
 }
 
-.container {
-	width: 100%;
-    padding: 50px 150px;
-    margin: auto;
+@media (max-width: 1480px) {
+    .footer__top {
+		grid-template-areas:
+			"menu1 menu2 socials buttons1"
+			"menu1 menu2 menu3 buttons2";
+    }
 }
 
-@media (max-width: 1700px) {
-    .container {
-        padding: 50px 70px;
+@media (max-width: 1280px) {
+    .footer__top {
+        grid-template-columns: minmax(105px, 200px) minmax(260px, 340px) minmax(200px, 1fr) minmax(270px, 300px);
     }
 }

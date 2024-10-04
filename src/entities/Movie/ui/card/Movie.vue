@@ -1,6 +1,6 @@
 <script setup>
 import {
-    computed,
+    toRef,
 } from 'vue'
 import {
     UISymbol,
@@ -17,11 +17,11 @@ import {
 
 const props = defineProps({
     movie: {
-        type: Object,
+        type: [Array, Object],
     },
 })
 
-const { ratings } = useRatings(computed(() => props.movie))
+const { ratings } = useRatings(toRef(() => props.movie))
 </script>
 
 <template>
@@ -43,10 +43,17 @@ const { ratings } = useRatings(computed(() => props.movie))
 			/>
 			<div class="movie__overlay">
 				<img
+					v-if="props.movie.posterUrlPreview"
 					:src="props.movie.posterUrlPreview"
 					class="movie__image movie__image--inner" 
 					loading="lazy"
 				/>
+				<span 
+					v-else
+					class="movie__image--not-found"
+				>
+					Постер не найден
+				</span>
 				<div class="movie__content">
 					<RatingDisplay 
 						v-for="rating in ratings"

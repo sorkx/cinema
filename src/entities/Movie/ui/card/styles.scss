@@ -21,6 +21,14 @@
 		-o-object-fit: cover;
 		object-fit: cover;
 		height: 100%;
+
+		&--not-found {
+			display: flex;
+			align-items: center;
+			height: 100%;
+			justify-content: center;
+			color: $cWhite;
+		}
 	}
 	
 	&__overlay {

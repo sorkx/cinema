@@ -39,10 +39,10 @@ const footerItems = reactive([
     {
         name: 'Скачать мобильное приложение',
         items: [
-            { image: '#' },
-            { image: '#' },
-            { image: '#' },
-            { image: '#' },
+            { image: 'android' },
+            { image: 'appstore' },
+            { image: 'googleplay' },
+            { image: 'rustore' },
         ]
     },
     {
@@ -52,8 +52,7 @@ const footerItems = reactive([
             { icon: 'telegram' },
         ]
     },
-]);
-
+])
 </script>
 
 <template>
@@ -77,7 +76,10 @@ const footerItems = reactive([
 									class="application application--img application--footer"
 									to="#"
 								>
-									<img src="#" />
+									<img 
+										:src="`/images/${item.image}.png`" 
+										:alt="item.image" 
+									/>
 								</router-link>
 							</div>
 						</div>

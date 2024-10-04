@@ -18,7 +18,7 @@ import {
 } from '@/entities/Movie'
 import {
     VButton,
-} from '@/shared/ui/buttons/VButton'
+} from '@/shared/ui/buttons'
 import {
     UISymbol,
 } from '@/shared/ui/UISymbol'
@@ -29,6 +29,7 @@ import {
     computed,
     ref,
     onMounted,
+    toRef,
 } from 'vue'
 
 const props = defineProps({
@@ -58,11 +59,19 @@ const props = defineProps({
     },
 })
 
+const typingMapping ={
+    'BUDGET': 'Бюджет',
+    'RUS': 'РФ',
+    'USA': 'США',
+    'WORLD': 'В мире',
+    'MARKETING': 'Потрачено на маркетинг',
+}
+
 const showAll = ref(false)
 const showTrailers = ref(false)
 const selectedSeason = ref(null)
 
-const { ratings } = useRatings(computed(() => props.movie))
+const { ratings } = useRatings(toRef(() => props.movie))
 
 const directors = computed(() => props.staff.filter(member => member.professionKey === 'DIRECTOR'))
 
@@ -72,9 +81,7 @@ const currentSeason = computed(() => props.seasons.find(season => season.number 
 
 const countries = computed(() => props.movie?.countries.map((item) => item.country).join(', '))
 
-const trailersFilter = computed(() => {
-    return props.trailers.filter(trailer => trailer.site === 'YOUTUBE')
-})
+const trailersFilter = computed(() => props.trailers.filter(trailer => trailer.site === 'YOUTUBE'))
 
 const modificationAgeLimits = computed(() => {
     const age = props.movie?.ratingAgeLimits
@@ -123,8 +130,6 @@ const fomrattedDirectors = computed(() => {
 
 const addedZeroRating = (rating) => Number.isInteger(rating) ? `${rating}.0` : rating.toFixed(1)
 
-const selectSeason = (seasonNumber) => selectedSeason.value = seasonNumber
-
 onMounted(() => {
     if (props.seasons.length > 0) {
         selectedSeason.value = props.seasons[0].number
@@ -142,7 +147,7 @@ onMounted(() => {
 			:style="`background-image: url(${props.movie?.coverUrl || props.movie?.posterUrl})`"
 		>
 			<div class="movie__head--overlay">
-				<div class="content-container">
+				<div class="container">
 					<div class="movie__head--original">
 						{{ props.movie?.nameOriginal || props.movie?.nameEn || 'Неизвестно' }} 
 					</div>
@@ -188,7 +193,10 @@ onMounted(() => {
 					</div>
 					<div class="movie__head--bottom">
 						<div class="movie__head--bottom-btns">
-							<a :href="props.movie?.webUrl" target="_blank">
+							<a 
+								:href="props.movie?.webUrl" 
+								target="_blank"
+							>
 								<v-button modificator="play-free">
 									<span class="movie__head--play">
 										Смотреть
@@ -206,31 +214,35 @@ onMounted(() => {
 										<UISymbol name="trailers" />
 									</button>
 								</a>
-								<div 
-									v-if="showTrailers"
-									class="movie-tooltip__trailers"
+								<Transition
+									name="fade"
 								>
 									<div 
-										v-if="trailersFilter.length > 0"
-										class="trailers-list"
+										v-if="showTrailers"
+										class="movie-tooltip__trailers"
 									>
-										<a
-											v-for="trailer in trailersFilter"
-											:key="trailer.name"
-											:href="trailer.url"
-											target="_blank"
-											class="trailers-list__link"
+										<div
+											v-if="trailersFilter.length > 0" 
+											class="trailers-list"
 										>
-											{{ trailer.name }}
-										</a>
+											<a
+												v-for="trailer in trailersFilter"
+												:key="trailer.name"
+												:href="trailer.url"
+												target="_blank"
+												class="trailers-list__link"
+											>
+												{{ trailer.name }}
+											</a>
+										</div>
+										<div
+											v-else 
+											class="trailers-list__not-found"
+										>
+											Трейлеров не обнаружено
+										</div>
 									</div>
-									<span
-										v-else 
-										class="trailers__tooltip"
-									>
-										Трейлеров не обнаружено
-									</span>
-								</div>
+								</Transition>
 							</div>
 							<div class="voice-acting-block">
 								<div class="voice-acting__title">
@@ -255,7 +267,7 @@ onMounted(() => {
 						>
 							<div>
 								<p class="movie__box-office--title">
-									{{ box.type }}
+									{{ typingMapping[box.type] }}
 								</p>
 								<p class="movie__box-office--amount">
 								{{ box.symbol }} {{ box.amount.toLocaleString() }}
@@ -268,7 +280,7 @@ onMounted(() => {
 		</div>
 		<div 
 			v-if="props.seasons.length > 0"
-			class="content-container"
+			class="container"
 		>
 			<div class="container-head">
 				<div class="container-title">
@@ -281,7 +293,7 @@ onMounted(() => {
 						v-for="season in props.seasons"
 						:key="season.number"
 						class="link--module--seasons link series-list__season"
-						@click="selectSeason(season.number)"
+						@click="selectedSeason = season.number"
 						:class="{ active: selectedSeason === season.number }"
 					>
 						<div 
@@ -300,7 +312,7 @@ onMounted(() => {
 				</div>
 			</div>
 		</div>
-		<div class="content-container">
+		<div class="container">
 			<div class="movie__body">
 				<div class="movie-page__left">
 					<div class="movie__body-item">
@@ -355,7 +367,7 @@ onMounted(() => {
 		</div>
 		<div
 			v-if="props.staff.length > 0" 
-			class="content-container"
+			class="container"
 		>
 			<div class="container-head">
 				<h2 class="container-title">
@@ -375,7 +387,7 @@ onMounted(() => {
 		</div>
 		<div
 			v-if="props.similars.length > 0" 
-			class="content-container"
+			class="container"
 		>
 			<section class="similar-movies">
 				<ModuleWrapper

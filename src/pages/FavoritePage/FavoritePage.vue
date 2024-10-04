@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-	<div class="content-container">
+	<div class="container">
 		<h1 class="title">Страница в процессе разработки</h1>
 	</div>
 </template>

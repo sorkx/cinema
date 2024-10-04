@@ -8,13 +8,13 @@ import {
 } from '@/entities/Staff'
 import {
     SpinnerLoader,
-} from '@/shared/ui/SpinnerLoader'
+} from '@/shared/ui/loaders'
 import {
     storeToRefs,
 } from 'pinia'
 import {
     computed,
-    onMounted,
+    // onMounted,
     ref,
     watch,
 } from 'vue'
@@ -41,40 +41,34 @@ let {
 
 const loading = ref(false)
 
-const productId = computed(() => +route.params.id)
-
 const fetchData = async (id) => {
-    const promises = []
+    loading.value = true
 
     try {
-        promises.push(
-            movieDetailsStore.fetchMovieDetails(id),
+        await movieDetailsStore.fetchMovieDetails(id)
+
+        const isTvSeries = computed(() => selectedMovieDetails.value.type === 'TV_SERIES').value
+
+        const fetchPromises = [
             staffDetailsStore.fetchStaff(id),
             movieDetailsStore.fetchMovieSimilars(id),
-            movieDetailsStore.fetchSerialSeasons(id),
             movieDetailsStore.fetchMovieBoxOffice(id),
-            movieDetailsStore.fetchMovieTrailers(id)        
-        )
-        await Promise.all(promises)
+            movieDetailsStore.fetchMovieTrailers(id)
+        ]
+
+        if (isTvSeries) {
+            fetchPromises.push(movieDetailsStore.fetchSerialSeasons(id))
+        }
+
+        await Promise.all(fetchPromises)
     } catch (error) {
         console.error('Ошибка при загрузке данных:', error)
+    } finally {
+        loading.value = false
     }
 }
 
-watch(
-    () => route.params.id,
-    (newId, oldId) => {
-        if (newId !== oldId) {
-            fetchData(+newId)
-        }
-    }
-)
-
-onMounted(async () => {
-    loading.value = true
-    await fetchData(productId.value)
-    loading.value = false
-})
+watch(() => route.params.id, fetchData, { immediate: true })
 </script>
 
 <template>

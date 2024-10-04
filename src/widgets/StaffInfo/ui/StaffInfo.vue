@@ -7,14 +7,17 @@ import {
     storeToRefs,
 } from 'pinia'
 import {
-    onMounted,
+    onBeforeMount,
     computed,
+    ref,
 } from 'vue'
 import { 
     useRoute,
 } from 'vue-router'
 
 const route = useRoute()
+
+const loading = ref(false)
 
 const staffDetailsStore = staffModel()
 
@@ -24,11 +27,20 @@ let {
     person,
 } = storeToRefs(staffDetailsStore)
 
-onMounted(async () => await staffDetailsStore.fetchCurrentPerson(personId.value))
+const fetchStaffDetails = async (id) => {
+    await staffDetailsStore.fetchCurrentPerson(id)
+}
+
+onBeforeMount(async () => {
+    loading.value = true
+    await fetchStaffDetails(personId.value)
+    loading.value = false
+})
 </script>
 
 <template>
 	<StaffDetails 
 		:person="person"
+		:loading="loading"
 	/>
 </template>

@@ -11,30 +11,37 @@ import {
 import {
     CINEMA_NAMES,
 } from '@/shared/lib/constants'
-import { 
-    onMounted,
-    ref,
-} from 'vue'
-
-const loading = ref(false)
+import {
+    useInfinityScroll
+} from '@/shared/lib/use/useInfinityScroll'
+import {
+    HorizontalLoader,
+} from '@/shared/ui/loaders'
 
 const store = movieModel()
+
 const { 
     films,
+    isLoading,
 } = storeToRefs(store)
 
-onMounted(async () => {
-    loading.value = true
-    await store.fetchAllPages(CINEMA_NAMES.FILM)
-    loading.value = false
+const { scrollComponent } = useInfinityScroll({
+    fetchDataByCategory: store.fetchDataByCategory,
+    fetchNextPage: store.fetchNextPage,
+    category: CINEMA_NAMES.FILM,
 })
-
 </script>
 
 <template>
-	<MovieLists 
-		:movies="films"
-		title="Фильмы"
-		:loading="loading"
-	/>
+	<div 
+		class="container" 
+		ref="scrollComponent"
+	>
+		<MovieLists 
+			:movies="films"
+			title="Фильмы"
+			:loading="isLoading"
+		/>
+		<HorizontalLoader v-if="isLoading" />
+	</div>
 </template>

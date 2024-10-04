@@ -4,7 +4,7 @@ import {
 } from '@/entities/Movie'
 import {
     SpinnerLoader,
-} from '@/shared/ui/SpinnerLoader'
+} from '@/shared/ui/loaders'
 import {
     Pathway,
 } from '@/shared/ui/Pathway'
@@ -12,10 +12,11 @@ import {
 const props = defineProps({
     movies: {
         type: Array,
+        default: () => [],
     },
     title: {
         type: String,
-        required: true,
+        default: '',
     },
     loading: {
         type: Boolean,
@@ -29,12 +30,13 @@ const props = defineProps({
 
 	<div
 		v-else
-		class="content-container"
 	>
-		<Pathway 
+		<Pathway
+			v-if="props.title" 
 			:title="props.title"
 		/>
-		<div 
+		<div
+			v-if="props.movies.length && props.movies" 
 			class="lists"
 		>
 			<Movie

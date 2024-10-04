@@ -14,7 +14,7 @@ import {
 } from '@/widgets/Movie'
 import {
     SpinnerLoader,
-} from '@/shared/ui/SpinnerLoader'
+} from '@/shared/ui/loaders'
 
 const loading = ref(false)
 
@@ -40,7 +40,7 @@ onMounted(async () => {
 		class="main-container"
 	>
         <div class="main">
-            <div class="content-container main__container">
+            <div class="container main__container">
                 <MovieCategoryRow 
 					:items="films"
 					name="Films"

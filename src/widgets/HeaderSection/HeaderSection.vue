@@ -17,7 +17,7 @@ const items = [
 
 <template>
 	<div class="header__wrapper">
-		<header class="header content-container ">
+		<header class="header container ">
 			<div class="header__content">
 				<LogoLink />
 				<nav class="header__nav--wrapper">

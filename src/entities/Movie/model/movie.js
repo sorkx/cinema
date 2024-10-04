@@ -18,10 +18,16 @@ export const useMovieStore = defineStore('movie', () => {
     const seasons = ref([])
     const boxOffice = ref([])
     const trailers = ref([])
+    const isLoading = ref(false)
     const selectedMovieDetails = ref(null)
-    const totalPages = ref({ [CINEMA_NAMES.FILM]: 0, [CINEMA_NAMES.TV_SERIES]: 0 })
-
+    const totalPages = ref({ [CINEMA_NAMES.FILM]: 1, [CINEMA_NAMES.TV_SERIES]: 1 })
+    const currentPage = ref({ [CINEMA_NAMES.FILM]: 1, [CINEMA_NAMES.TV_SERIES]: 1 })
+	
     const fetchDataByCategory = async (category, page) => {
+        // if (isLoading.value) return
+
+        // isLoading.value = true
+
         const data = await Api.getCategories(category, page)
 
         const categoryMapping = {
@@ -38,22 +44,26 @@ export const useMovieStore = defineStore('movie', () => {
                 categoryData.value = [...categoryData.value, ...data.items]
             }
             totalPages.value[category] = data.totalPages
+            currentPage.value[category] = page
         }
+
+        // isLoading.value = false
     }
 
-    const fetchAllPages = async (category, page) => {
-        await fetchDataByCategory(category, page)
-        const promises = []
-        for (let i = 2; i <= totalPages.value[category]; i++) {
-            promises.push(fetchDataByCategory(category, i))
+    const fetchNextPage = async (category) => {
+        if (isLoading.value) return
+
+        if (currentPage.value[category] < totalPages.value[category]) {
+            isLoading.value = true
+            await fetchDataByCategory(category, currentPage.value[category] + 1)	
+            isLoading.value = false
         }
-        await Promise.all(promises)
     }
 
     const fetchAllCategories = async () => {
         await Promise.all([
+            fetchDataByCategory(CINEMA_NAMES.FILM, 1),
             fetchDataByCategory(CINEMA_NAMES.TV_SERIES, 1),
-            fetchDataByCategory(CINEMA_NAMES.FILM, 1)
         ])
     }
 
@@ -99,11 +109,14 @@ export const useMovieStore = defineStore('movie', () => {
         seasons,
         boxOffice,
         trailers,
+        totalPages,
+        currentPage,
+        isLoading,
+        fetchNextPage,
         fetchMovieTrailers,
         fetchMovieBoxOffice,
         fetchSerialSeasons,
         fetchMovieSimilars,
-        fetchAllPages,
         fetchAllCategories,
         fetchDataByCategory,
         fetchMovieDetails,

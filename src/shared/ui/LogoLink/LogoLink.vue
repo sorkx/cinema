@@ -6,7 +6,7 @@ import {
 
 <template>
     <router-link to="/" class="logo-link">
-        <UISymbol name="cinema" />
+        <UISymbol name="logo" />
     </router-link>
 </template>
 

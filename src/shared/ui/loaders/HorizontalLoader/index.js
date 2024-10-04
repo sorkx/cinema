@@ -1,0 +1,1 @@
+export { default as HorizontalLoader } from './HorizontalLoader.vue'

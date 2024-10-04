@@ -1,0 +1,18 @@
+.v-button-filter {
+	height: 48px;
+    padding: 7px 10px;
+    font-weight: 500;
+    font-size: 18px;
+    background: #122337;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+	cursor: pointer;
+    color: $cWhite;
+	border: none;
+}
+
+.active {
+	background-color: #3369ff;
+    box-shadow: 0 5px 30px rgba(51, 105, 255, .5);
+}
