@@ -343,21 +343,19 @@ onMounted(() => {
 							Рейтинг
 							{{ props.movie?.type === 'FILM' ? 'фильма' : 'сериала' }}
 						</div>
-						<div class="stars">
-							<RatingStars 
-								:rating="props.movie?.ratingKinopoisk || props.movie?.ratingImdb || 0"
-							/>
-							<div class="stars-vote__values">
-								<div class="movie-vote__item">
-									<div class="movie-vote__value">
-										{{ 
-											addedZeroRating(props.movie?.ratingKinopoisk) ||
-											addedZeroRating(props.movie?.ratingImdb)
-										}}
-									</div>
-									<div class="movie-vote__label">
-										ОБЩАЯ ОЦЕНКА
-									</div>
+						<RatingStars 
+							:rating="props.movie?.ratingKinopoisk || props.movie?.ratingImdb || 0"
+						/>
+						<div class="stars-vote__values">
+							<div class="movie-vote__item">
+								<div class="movie-vote__value">
+									{{ 
+										addedZeroRating(props.movie?.ratingKinopoisk) ||
+										addedZeroRating(props.movie?.ratingImdb)
+									}}
+								</div>
+								<div class="movie-vote__label">
+									ОБЩАЯ ОЦЕНКА
 								</div>
 							</div>
 						</div>

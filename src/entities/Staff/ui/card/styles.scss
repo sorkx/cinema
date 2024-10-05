@@ -46,3 +46,15 @@
 		color: $cBlack;
 	}
 }
+
+@media (max-width: 968px) {
+    .person {
+		height: 417px;
+	}
+}
+
+@media (max-width: 680px) {
+    .person {
+		height: 235px;
+	}
+}

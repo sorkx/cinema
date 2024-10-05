@@ -29,16 +29,20 @@ const props = defineProps({
 })
 
 const swiperBreakpoints = reactive({
+    140: {
+        slidesPerView: 2.5,
+        spaceBetween: 20,
+    },
     640: {
         slidesPerView: 2.5,
         spaceBetween: 20,
     },
     768: {
-        slidesPerView: 2.5,
+        slidesPerView: 3.5,
         spaceBetween: 20,
     },
     968: {
-        slidesPerView: 3.5,
+        slidesPerView: 4.5,
         spaceBetween: 20,
     },
     1024: {
@@ -63,6 +67,8 @@ const modules = [Pagination, Navigation]
 		class="v-swiper"
 		:modules="modules"
 		:speed="speed"
+		mode="vertical"
+		calculateHeight="true"
 		:breakpoints="swiperBreakpoints"
 		:navigation="{
 			nextEl: '.v-swiper__button--next',

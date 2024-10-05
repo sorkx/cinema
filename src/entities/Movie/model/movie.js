@@ -24,10 +24,6 @@ export const useMovieStore = defineStore('movie', () => {
     const currentPage = ref({ [CINEMA_NAMES.FILM]: 1, [CINEMA_NAMES.TV_SERIES]: 1 })
 	
     const fetchDataByCategory = async (category, page) => {
-        // if (isLoading.value) return
-
-        // isLoading.value = true
-
         const data = await Api.getCategories(category, page)
 
         const categoryMapping = {
@@ -46,8 +42,6 @@ export const useMovieStore = defineStore('movie', () => {
             totalPages.value[category] = data.totalPages
             currentPage.value[category] = page
         }
-
-        // isLoading.value = false
     }
 
     const fetchNextPage = async (category) => {

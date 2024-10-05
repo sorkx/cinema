@@ -31,10 +31,10 @@ const props = defineProps({
 		<div class="module__wrap">
 			<router-link
 				v-if="props.link" 
-				class="module__title"
 				:to="{ 
 					name: props.link, 
 				}"
+				class="module__title"
 			>
 				<h2>{{ props.title }}</h2>
 				<UISymbol
@@ -47,10 +47,13 @@ const props = defineProps({
 			<swiper-slide
 				v-for="item in props.items"
 				:key="item.id"
-				class="swiper-slide"
 				:lazy="item.posterUrlPreview ? true : false"
+				class="swiper-slide module__item"
 			>
-			<slot name="slide" :item="item" />
+			<slot 
+				:item="item" 
+				name="slide" 
+			/>
 			</swiper-slide>
 		</v-swiper>
 	</div>

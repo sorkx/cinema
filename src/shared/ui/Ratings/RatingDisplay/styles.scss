@@ -26,3 +26,19 @@
 	width: 25px;
 	height: 25px;
 }
+
+@media (max-width: 479px) {
+    .external__rating {
+        grid-template-columns: 28px auto;
+        margin-right: 20px;
+
+		&--icon {
+			width: 28px;
+			height: 28px;
+		}
+
+		&--value {
+			font-size: 16px;
+		}
+    }
+}

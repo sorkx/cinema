@@ -89,14 +89,20 @@
 	grid-column-gap: 4px;
 }
 
-@media (max-width: 768px) {
-    .movie {
-		height: 400px;
-	}
-}
-
 @media (max-width: 1409px) {
     .movie__content {
         padding:10px;
     }
+}
+
+@media (max-width: 968px) {
+    .movie {
+		height: 417px;
+	}
+}
+
+@media (max-width: 680px) {
+    .movie {
+		height: 235px;
+	}
 }
