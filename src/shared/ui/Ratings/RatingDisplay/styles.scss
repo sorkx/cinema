@@ -40,5 +40,25 @@
 		&--value {
 			font-size: 16px;
 		}
+
+		&--small &--value {
+			font-size: 12px;
+		}
+
+		&--small &--icon {
+			width: 20px;
+			height: 20px;
+		}
+
+		&--small {
+			grid-template-columns: 12px auto;
+		}
+    }
+}
+
+@media (max-width: 479px) {
+    .external-rating--small .external-rating__icon {
+        width: 12px;
+        height: 12px;
     }
 }

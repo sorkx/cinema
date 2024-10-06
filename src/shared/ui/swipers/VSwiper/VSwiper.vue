@@ -29,7 +29,11 @@ const props = defineProps({
 })
 
 const swiperBreakpoints = reactive({
-    140: {
+    320: {
+        slidesPerView: 1,
+        spaceBetween: 20,
+    },
+    375: {
         slidesPerView: 2.5,
         spaceBetween: 20,
     },

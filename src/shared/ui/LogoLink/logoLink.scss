@@ -1,8 +1,9 @@
 .logo-link {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	text-decoration: none;
+    text-decoration: none;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    place-content: center;
 
 	svg {
 		width: 100px;

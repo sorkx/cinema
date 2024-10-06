@@ -34,3 +34,16 @@
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 }
+
+@media (max-width: 768px) {
+    .lists {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+}
+
+@media (max-width: 479px) {
+    .lists {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        grid-column-gap: 10px;
+    }
+}

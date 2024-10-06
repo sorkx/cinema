@@ -21,3 +21,10 @@
 		color: $cWhite;
 	}
 }
+
+@media (max-width: 500px) {
+    .pathway {
+        grid-gap: 5px;
+        gap: 5px;
+    }
+}

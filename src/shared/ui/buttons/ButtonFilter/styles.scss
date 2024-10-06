@@ -16,3 +16,9 @@
 	background-color: #3369ff;
     box-shadow: 0 5px 30px rgba(51, 105, 255, .5);
 }
+
+@media (max-width: 680px) {
+    .active {
+        box-shadow: none;
+    }
+}
