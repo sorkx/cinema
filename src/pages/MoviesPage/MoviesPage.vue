@@ -5,6 +5,12 @@ import {
 import {
     storeToRefs,
 } from 'pinia'
+import {
+    computed,
+    watch,
+    watchEffect,
+	onMounted,
+} from 'vue'
 import { 
     movieModel,
 } from '@/entities/Movie'
@@ -17,19 +23,31 @@ import {
 import {
     HorizontalLoader,
 } from '@/shared/ui/loaders'
+import { 
+    useRoute,
+} from 'vue-router'
+
+const route = useRoute()
 
 const store = movieModel()
 
 const { 
-    state,
+    categories,
     isLoading,
 } = storeToRefs(store)
 
+const currentCategory = computed(() => route.params.category === 'serials' ? CINEMA_NAMES.TV_SERIES : CINEMA_NAMES.FILM)
+
 const { scrollComponent } = useInfinityScroll({
-    fetchDataByCategory: store.fetchCategoryData,
-    fetchNextPage: store.fetchCategoryNextPage,
+    fetchDataByCategory: store.fetchDataByCategory,
+    fetchNextPage: store.fetchNextPage,
     category: CINEMA_NAMES.FILM,
 })
+
+const titlesMapping = {
+    [CINEMA_NAMES.FILM]: 'Фильмы',
+    [CINEMA_NAMES.TV_SERIES]: 'Cериалы',
+}
 </script>
 
 <template>
@@ -38,8 +56,10 @@ const { scrollComponent } = useInfinityScroll({
 		class="container" 
 	>
 		<MovieLists
-			:movies="state?.categories.FILM?.data"
-			title="Фильмы"
+			v-for="(category, key) in categories"
+			:key="key" 
+			:movies="category.data"
+			:title="titlesMapping[key]"
 		/>
 
 		<HorizontalLoader v-if="isLoading" />

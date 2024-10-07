@@ -3,6 +3,7 @@ import {
 } from 'pinia'
 import {
     ref,
+    reactive
 } from 'vue'
 import {
     CINEMA_NAMES,
@@ -12,107 +13,123 @@ import {
 } from '../api'
 
 export const useMovieStore = defineStore('movie', () => {
-    const films = ref([])
-    const series = ref([])
     const similars = ref([])
     const seasons = ref([])
     const boxOffice = ref([])
     const trailers = ref([])
     const isLoading = ref(false)
     const selectedMovieDetails = ref(null)
-    const totalPages = ref({ [CINEMA_NAMES.FILM]: 1, [CINEMA_NAMES.TV_SERIES]: 1 })
-    const currentPage = ref({ [CINEMA_NAMES.FILM]: 1, [CINEMA_NAMES.TV_SERIES]: 1 })
-	
-    const fetchDataByCategory = async (category, page) => {
-        const data = await Api.getCategories(category, page)
+    const state = reactive({
+        categories: {},
+        collections: {},
+    })
 
-        const categoryMapping = {
-            [CINEMA_NAMES.FILM]: { data: films },
-            [CINEMA_NAMES.TV_SERIES]: { data: series },
-        }
-  
-        const { data: categoryData } = categoryMapping[category] || {}
-  
-        if (categoryData) {
-            if (page === 1) {
-                categoryData.value = data.items
-            } else {
-                categoryData.value = [...categoryData.value, ...data.items]
+    console.log('state', state)
+
+    const fetchData = async (type, category, page, apiFunction) => {
+        const target = state[type]
+	
+        const { items, totalPages } = await apiFunction(category, page)
+	
+        if (!target[category]) {
+            target[category] = {
+                data: [],
+                pagination: { current: 1, total: 1 },
             }
-            totalPages.value[category] = data.totalPages
-            currentPage.value[category] = page
         }
+	
+        if (page === 1) {
+            target[category].data = items
+        } else {
+            target[category].data.push(...items)
+        }
+
+        target[category].pagination.current = page
+        target[category].pagination.total = totalPages
     }
 
-    const fetchNextPage = async (category) => {
+    const fetchNextPage = async (type, category, apiFunction) => {
         if (isLoading.value) return
-
-        if (currentPage.value[category] < totalPages.value[category]) {
+	
+        const target = state[type][category]
+        if (!target) {
+            console.warn(`No data found for ${type} with category ${category}`);
+            return
+        }
+	
+        if (target.pagination.current < target.pagination.total) {
             isLoading.value = true
-            await fetchDataByCategory(category, currentPage.value[category] + 1)	
+            await fetchData(type, category, target.pagination.current + 1, apiFunction)
             isLoading.value = false
         }
     }
 
+    const fetchCategoryData = async (category, page = 1) => {
+        await fetchData('categories', category, page, Api.getCategories)
+    }
+	
+    const fetchCategoryNextPage = async (category) => {
+        await fetchNextPage('categories', category, Api.getCategories)
+    }
+	
+    const fetchCollectionData = async (category, page = 1) => {
+        await fetchData('collections', category, page, Api.getMovieCollections)
+    }
+
+    const fetchCollectionNextPage = async (category) => {
+        await fetchNextPage('collections', category, Api.getMovieCollections)
+    }	
+
     const fetchAllCategories = async () => {
         await Promise.all([
-            fetchDataByCategory(CINEMA_NAMES.FILM, 1),
-            fetchDataByCategory(CINEMA_NAMES.TV_SERIES, 1),
+            fetchCollectionData(CINEMA_NAMES.TOP_POPULAR_ALL, 1),
+            fetchCollectionData(CINEMA_NAMES.TOP_250_MOVIES, 1),
+            fetchCollectionData(CINEMA_NAMES.TOP_250_TV_SHOWS, 1),
         ])
     }
 
     const fetchMovieDetails = async (id) => {
         const data = await Api.getMovieDetails(id)
         selectedMovieDetails.value = data
-	
-        console.log('selectedMovie.value', selectedMovieDetails.value)
     }
 
     const fetchMovieSimilars = async (id) => {
         const data = await Api.getMovieSimilars(id)
         similars.value = data
-	
-        console.log('similars.value', similars.value)
     }
 
     const fetchSerialSeasons = async (id) => {
         const data = await Api.getSerialSeasons(id)
         seasons.value = data
-	
-        console.log('seasons.value', seasons.value)
     }
 
     const fetchMovieBoxOffice = async (id) => {
         const data = await Api.getMovieBoxOffice(id)
         boxOffice.value = data
-	
-        console.log('boxOffice.value', boxOffice.value)
     }
 
     const fetchMovieTrailers = async (id) => {
         const data = await Api.getMovieTrailers(id)
         trailers.value = data
-	
-        console.log('trailers.value', trailers.value)
     }
 
     return {
-        films,
-        series,
         similars,
         seasons,
         boxOffice,
         trailers,
-        totalPages,
-        currentPage,
+        state,
         isLoading,
+        fetchCategoryData,
+        fetchCategoryNextPage,
+        fetchCollectionNextPage,
+        fetchCollectionData,
         fetchNextPage,
         fetchMovieTrailers,
         fetchMovieBoxOffice,
         fetchSerialSeasons,
         fetchMovieSimilars,
         fetchAllCategories,
-        fetchDataByCategory,
         fetchMovieDetails,
         selectedMovieDetails,
     }

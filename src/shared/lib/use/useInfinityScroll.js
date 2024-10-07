@@ -1,7 +1,7 @@
 import { 
     ref, 
-    onMounted, 
-    onUnmounted,
+    onBeforeMount,
+    onBeforeUnmount,
 } from 'vue'
 
 export const useInfinityScroll = ({ fetchDataByCategory, fetchNextPage, category }) => {
@@ -15,12 +15,12 @@ export const useInfinityScroll = ({ fetchDataByCategory, fetchNextPage, category
         }
     }
 
-    onMounted(async () => {
+    onBeforeMount(async () => {
         await fetchDataByCategory(category, 1)
         window.addEventListener('scroll', onScroll)
     })
 
-    onUnmounted(() => {
+    onBeforeUnmount(() => {
         window.removeEventListener('scroll', onScroll)
     })
 

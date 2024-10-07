@@ -9,14 +9,15 @@ import {
 const props = defineProps({
     items: {
         type: Array,
+        default: () => [],
     },
     title: {
         type: String,
-        required: true,
+        default: '',
     },
     name: {
         type: String,
-        required: true,
+        default: '',
     }
 })
 </script>

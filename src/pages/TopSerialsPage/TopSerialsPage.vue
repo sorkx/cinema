@@ -21,14 +21,14 @@ import {
 const store = movieModel()
 
 const { 
-    state,
+    collections,
     isLoading,
 } = storeToRefs(store)
 
 const { scrollComponent } = useInfinityScroll({
-    fetchDataByCategory: store.fetchCategoryData,
-    fetchNextPage: store.fetchCategoryNextPage,
-    category: CINEMA_NAMES.TV_SERIES,
+    fetchDataByCategory: store.fetchCollectionData,
+    fetchNextPage: store.fetchCollectionNextPage,
+    category: CINEMA_NAMES.TOP_250_TV_SHOWS,
 })
 </script>
 
@@ -38,8 +38,8 @@ const { scrollComponent } = useInfinityScroll({
 		class="container" 
 	>
 		<MovieLists
-			:movies="state.categories.TV_SERIES?.data"
-			title="Сериалы"
+			:movies="state?.collections.TOP_250_TV_SHOWS?.data"
+			title="Топ 250 сериалов"
 		/>
 
 		<HorizontalLoader v-if="isLoading" />

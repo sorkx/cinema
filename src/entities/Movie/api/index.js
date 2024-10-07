@@ -8,13 +8,8 @@ import {
 export const Api = {
 
     getCategories: async (category, page = 1) => {
-        const params = {
-            type: category,
-            page,
-        };
-
         try{
-            return await fetchInstance(API_URL, '', params)
+            return await fetchInstance(API_URL, '', { type: category, page })
         } catch(e) {
             console.error(`Ошибка при загрузке ${category}:`, e)
         }
@@ -67,4 +62,12 @@ export const Api = {
             console.error('Error fetching movie trailers:', e)
         }
     },
+
+    getMovieCollections: async (category, page = 1) => {
+        try {
+            return await fetchInstance(API_URL, '/collections', { type: category, page })
+        } catch(e) {
+            console.error('Error fetching movies collections:', e)
+        }
+    }
 }

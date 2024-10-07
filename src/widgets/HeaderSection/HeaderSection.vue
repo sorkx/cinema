@@ -8,6 +8,16 @@ import {
 
 const items = [
     {
+        id: 'films',
+        title: 'Фильмы',
+        to: '/films',
+    },
+    {
+        id: 'serials',
+        title: 'Сериалы',
+        to: '/serials',
+    },
+    {
         id: 'favorite',
         title: 'Избранное',
         to: '/favorite',
@@ -43,15 +53,15 @@ const items = [
 							<UISymbol name="search" />
 						</button>
 					</div>
-					<div class="header__profile--btn header__profile--btn-promocode">
+					<!-- <div class="header__profile--btn header__profile--btn-promocode">
 						Промокод
-					</div>
-					<router-link 
+					</div> -->
+					<!-- <router-link 
 						to="/login" 
 						class="header__profile--btn"
 					>
 						Авторизация
-					</router-link>
+					</router-link> -->
 				</div>
 			</div>
 		</header>

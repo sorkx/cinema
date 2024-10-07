@@ -20,6 +20,18 @@ const routeOptions = [
         name: ROUTE_NAMES.SERIALS,
     },
     {
+        path: '/popular',
+        name: ROUTE_NAMES.POPULAR,
+    },
+    {
+        path: '/top250-movies',
+        name: ROUTE_NAMES.TOP_MOVIES,
+    },
+    {
+        path: '/top250-serials',
+        name: ROUTE_NAMES.TOP_SERIALS,
+    },
+    {
         path: '/favorite',
         name: ROUTE_NAMES.FAVORITE,
     },

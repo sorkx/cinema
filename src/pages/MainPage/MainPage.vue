@@ -4,6 +4,7 @@ import {
 } from 'pinia'
 import {
     onMounted,
+	onBeforeMount,
     ref,
 } from 'vue'
 import { 
@@ -21,11 +22,22 @@ const loading = ref(false)
 const movieStore = movieModel()
 
 const { 
-    films,
-    series, 
+    state, 
 } = storeToRefs(movieStore)
 
-onMounted(async () => {
+const titlesMapping = {
+    TOP_250_MOVIES: 'Топ 250 Фильмов',
+    TOP_250_TV_SHOWS: 'Топ 250 Cериалов',
+    TOP_POPULAR_ALL: 'Популярное',
+}
+
+const routingMapping = {
+    TOP_250_MOVIES: 'TopMovies',
+    TOP_250_TV_SHOWS: 'TopSerials',
+    TOP_POPULAR_ALL: 'Popular',
+}
+
+onBeforeMount(async () => {
     loading.value = true
     await movieStore.fetchAllCategories()
     loading.value = false
@@ -42,14 +54,11 @@ onMounted(async () => {
         <div class="main">
             <div class="container main__container">
                 <MovieCategoryRow 
-					:items="films"
-					name="Films"
-					title="Фильмы"
-				/>
-				<MovieCategoryRow 
-					:items="series"
-					title="Cериалы"
-					name="Serials"
+					v-for="(collection, key) in state?.collections"
+					:key="key"
+					:items="collection.data"
+					:title="titlesMapping[key]"
+					:name="routingMapping[key]"
 				/>
             </div>
         </div>

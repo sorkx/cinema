@@ -9,7 +9,6 @@ import {
 const props = defineProps({
     items: {
         type: [Array, Object],
-        required: true,
     },
     link: {
         type: String,

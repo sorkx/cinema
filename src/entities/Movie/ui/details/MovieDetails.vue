@@ -35,7 +35,7 @@ import {
 const props = defineProps({
     movie: {
         type: Object,
-        default: () => {},
+        default: () => ({}),
     },
     staff: {
         type: Array,
@@ -128,7 +128,7 @@ const fomrattedDirectors = computed(() => {
     ).join(', ')
 })
 
-const addedZeroRating = (rating) => Number.isInteger(rating) ? `${rating}.0` : rating.toFixed(1)
+const addedZeroRating = (rating) => Number.isInteger(rating) ? `${rating}.0` : rating
 
 onMounted(() => {
     if (props.seasons.length > 0) {
@@ -337,7 +337,10 @@ onMounted(() => {
 						</a>
 					</div>
 				</div>
-				<div class="movie-body__right">
+				<div
+					v-if="props.movie?.ratingKinopoisk || props.movie?.ratingImdb" 
+					class="movie-body__right"
+				>
 					<div class="movie-vote">
 						<div class="movie-vote__title">
 							Рейтинг
