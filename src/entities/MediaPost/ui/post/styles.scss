@@ -1,0 +1,96 @@
+.card-news {
+	position: relative;
+    display: block;
+	height: 233px;
+
+	&__image {
+		width: 100%;
+		transition: .4s;
+		-o-object-fit: cover;
+		object-fit: cover;
+		height: 100%;
+		border-radius: 8px;
+	}
+
+	&__overlay {
+		z-index: 10;
+	}
+
+	&__content {
+		z-index: 2;
+		background-image: linear-gradient(227deg, rgba(5, 23, 44, .2), rgba(5, 23, 44, .8));
+		padding: 15px;
+		grid-template-columns: auto 1fr;
+		grid-template-rows: auto auto 1fr auto auto;
+		grid-gap: 6px;
+		grid-template-areas:
+			"news-label ."
+			"news-release ."
+			". ."
+			"news-title news-title"
+			"news-date .";
+	}
+
+	&__label {
+		grid-area: news-label;
+		padding: 5px 8px;
+		border-radius: 4px;
+		background-color: #cd025b;
+		font-size: 14px;
+		font-weight: 600;
+		text-align: center;
+		color: $cWhite;
+	}
+
+	&__title {
+		grid-area: news-title;
+		margin-bottom: 0;
+		font-weight: 600;
+		max-width: 250px;
+		color: $cWhite;
+	}
+
+	&__date {
+		grid-area: news-date;
+		font-size: 15px;
+		font-weight: 700;
+		line-height: 2.17;
+		letter-spacing: 1.44px;
+		color: #b4b9c0;
+	}
+}
+
+.card-news__overlay, .card-news__content {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	display: grid;
+	overflow: hidden;
+	border-radius: 8px;
+}
+
+@media (max-width: 1440px) {
+    .card-news {
+        height: 212px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .card-news {
+        height: 210px;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-news {
+        height: 280px;
+    }
+}
+
+@media (max-width: 425px) {
+    .card-news {
+        height: 193px;
+    }
+}

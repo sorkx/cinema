@@ -25,22 +25,22 @@ const {
     isLoading,
 } = storeToRefs(store)
 
+const fetchCategoryItems = async () => await store.fetchCategoryData(CINEMA_NAMES.FILM, 1)
+const fetchNextPage = async () => await store.fetchCategoryNextPage(CINEMA_NAMES.FILM)
+
 const { scrollComponent } = useInfinityScroll({
-    fetchDataByCategory: store.fetchCategoryData,
-    fetchNextPage: store.fetchCategoryNextPage,
-    category: CINEMA_NAMES.FILM,
+    fetchData: fetchCategoryItems,
+    fetchNextPage: fetchNextPage,
 })
 </script>
 
 <template>
-	<div
-		ref="scrollComponent"
-		class="container" 
-	>
+	<div class="container">
 		<MovieLists
 			:movies="state?.categories.FILM?.data"
 			title="Фильмы"
 		/>
+		<div ref="scrollComponent" />
 
 		<HorizontalLoader v-if="isLoading" />
 	</div>

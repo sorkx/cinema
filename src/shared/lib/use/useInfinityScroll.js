@@ -1,27 +1,37 @@
 import { 
     ref, 
-    onBeforeMount,
+    onMounted,
     onBeforeUnmount,
 } from 'vue'
 
-export const useInfinityScroll = ({ fetchDataByCategory, fetchNextPage, category }) => {
+export const useInfinityScroll = ({ fetchData, fetchNextPage }) => {
     const scrollComponent = ref(null)
+    let observer = null
 
-    const onScroll = async () => {
-        const element = scrollComponent.value
-
-        if (element.getBoundingClientRect().bottom < window.innerHeight) {
-            await fetchNextPage(category)
+    onMounted(() => {
+        fetchData()
+	
+        observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    fetchNextPage()
+                }
+            })
+        }, {
+            root: null,       
+            rootMargin: '150px',
+            threshold: 0.5,
+        })
+	
+        if (scrollComponent.value) {
+            observer.observe(scrollComponent.value)
         }
-    }
-
-    onBeforeMount(async () => {
-        await fetchDataByCategory(category, 1)
-        window.addEventListener('scroll', onScroll)
     })
-
+	
     onBeforeUnmount(() => {
-        window.removeEventListener('scroll', onScroll)
+        if (observer && scrollComponent.value) {
+            observer.unobserve(scrollComponent.value)
+        }
     })
 
     return {

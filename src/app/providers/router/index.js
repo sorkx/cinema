@@ -32,6 +32,10 @@ const routeOptions = [
         name: ROUTE_NAMES.TOP_SERIALS,
     },
     {
+        path: '/news',
+        name: ROUTE_NAMES.NEWS,
+    },
+    {
         path: '/favorite',
         name: ROUTE_NAMES.FAVORITE,
     },

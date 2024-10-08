@@ -10,6 +10,7 @@ const ROUTE_NAMES = {
     STAFF_DETAILS: 'StaffDetails',
     SIMILARS: 'Similars',
     MOVIES: 'Movies',
+    NEWS: 'News',
 
 }
 

@@ -6,6 +6,7 @@ import {
 import {
     toRefs,
     reactive,
+    computed,
 } from 'vue'
 import { 
     register,
@@ -24,11 +25,16 @@ const props = defineProps({
         type: Number,
         required: false,
         default: 700,
-		
     },
+    swiperType: { 
+        type: String,
+        required: true,
+        validator: value => ['movies', 'media'].includes(value),
+    },
+
 })
 
-const swiperBreakpoints = reactive({
+const moviesBreakpoints = reactive({
     320: {
         slidesPerView: 1,
         spaceBetween: 20,
@@ -44,10 +50,12 @@ const swiperBreakpoints = reactive({
     768: {
         slidesPerView: 3.5,
         spaceBetween: 20,
+        slidesPerGroup: 2,
     },
     968: {
         slidesPerView: 4.5,
         spaceBetween: 20,
+        slidesPerGroup: 2,
     },
     1024: {
         slidesPerView: 4.5,
@@ -59,11 +67,33 @@ const swiperBreakpoints = reactive({
         spaceBetween: 28,
         slidesPerGroup: 4,
     }
-});
+})
+
+const mediaBreakpoints = {
+    320: {
+        slidesPerView: 1.5,
+        spaceBetween: 10,
+    },
+    768: {
+        slidesPerView: 1.5,
+        spaceBetween: 20,
+    },
+    1024: {
+        slidesPerView: 2.5,
+        spaceBetween: 20,
+    },
+    1440: {
+        slidesPerView: 3.5,
+        spaceBetween: 28,
+    }
+}
 
 
 const { hasNavigation, speed } = toRefs(props)
 const modules = [Pagination, Navigation]
+
+const swiperBreakpoints = computed(() => props.swiperType === 'movies' ? moviesBreakpoints : mediaBreakpoints)
+
 </script>
 
 <template>

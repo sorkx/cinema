@@ -21,7 +21,11 @@ const props = defineProps({
     icon: {
         type: String,
         default: '',
-    }
+    },
+    swiperType: {
+        type: String,
+        required: true,
+    },
 })
 </script>
 
@@ -42,17 +46,20 @@ const props = defineProps({
 				/>
 			</router-link>
 		</div>
-		<v-swiper class="module__movies--swiper">
+		<v-swiper 
+			class="module__movies--swiper"
+			:swiper-type="props.swiperType"
+		>
 			<swiper-slide
 				v-for="item in props.items"
 				:key="item.id"
 				:lazy="item.posterUrlPreview ? true : false"
 				class="swiper-slide module__item"
 			>
-			<slot 
-				:item="item" 
-				name="slide" 
-			/>
+				<slot 
+					:item="item" 
+					name="slide" 
+				/>
 			</swiper-slide>
 		</v-swiper>
 	</div>

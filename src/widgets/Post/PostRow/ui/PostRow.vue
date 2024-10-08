@@ -1,7 +1,7 @@
 <script setup>
 import { 
-    Movie,
-} from '@/entities/Movie'
+    Post,
+} from '@/entities/MediaPost'
 import {
     ModuleWrapper,
 } from '@/shared/ui/ModuleWrapper'
@@ -28,15 +28,15 @@ const props = defineProps({
 		:title="props.title"
 		icon="arrow-right"
 		:link="props.name"
-		swiper-type="movies"
+		swiper-type="media"
 	>
 		<template #slide="{ item }">
-			<Movie 
-				:movie="item"
-				:key="item.id"
+			<Post 
+				:post="item"
+				:key="item.kinopoiskId"
 			/>
 		</template>
 	</ModuleWrapper>
 </template>
 
-<style src="./styles.scss" lang="scss" scoped />
+<!-- <style src="./styles.scss" lang="scss" scoped /> -->

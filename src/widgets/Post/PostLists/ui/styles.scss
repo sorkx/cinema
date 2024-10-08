@@ -1,0 +1,17 @@
+.media-posts {
+	display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 24px;
+    margin-bottom: 75px;
+
+	&__item {
+		overflow: hidden;
+		border-radius: 8px;
+	}
+}
+
+@media (max-width: 1280px) {
+    .media-posts {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+}

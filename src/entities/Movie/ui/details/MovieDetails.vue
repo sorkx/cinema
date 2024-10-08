@@ -304,7 +304,10 @@ onMounted(() => {
 					</a>
 				</div>
 				<div v-if="currentSeason">
-					<ModuleWrapper :items="currentSeason.episodes">
+					<ModuleWrapper 
+						:items="currentSeason.episodes"
+						swiper-type="movies"
+					>
 						<template #slide="{ item }">
 							<Episode :item="item" />
 						</template>
@@ -377,6 +380,7 @@ onMounted(() => {
 			</div>
 			<ModuleWrapper
 				:items="actors"
+				swiper-type="movies"
 			>
 				<template #slide="{ item }">
 					<StaffCard 
@@ -396,6 +400,7 @@ onMounted(() => {
 					title="Смотреть также"
 					:link="ROUTE_NAMES.SIMILARS"
 					icon="arrow-right"
+					swiper-type="movies"
 				>
 					<template #slide="{ item }">
 						<Movie 

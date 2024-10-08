@@ -9,3 +9,4 @@ const getEnvVariable = (key) => {
 export const API_URL = getEnvVariable('VITE_API_URL')
 export const API_URL_STAFF = getEnvVariable('VITE_API_URL_STAFF')
 export const API_KEY = getEnvVariable('VITE_API_KEY')
+export const API_URL_NEWS = getEnvVariable('VITE_API_URL_NEWS')
