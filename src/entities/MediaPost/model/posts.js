@@ -18,8 +18,6 @@ export const useMediaPosts = defineStore('news', () => {
         isLoading.value = true
 
         const { items, totalPages: apiTotalPages } = await ApiPosts.getMediaPosts(page)
-
-        console.log(`Загрузка страницы: ${page}`)
 		
         if (Array.isArray(items) && items.length > 0) {
             posts.value.push(...items)   

@@ -66,27 +66,25 @@ onBeforeRouteLeave(() => {
 <template>
 	<SpinnerLoader v-if="loading" />
 
-    <div
-		v-else 
-		class="main-container"
+	<div
+		v-else
+		class="home"
 	>
-        <div class="main">
-            <div class="container main__container">
-                <MovieCategoryRow 
-					v-for="(collection, key) in state?.collections"
-					:key="key"
-					:items="collection.data"
-					:title="titlesMapping[key]"
-					:name="routingMapping[key]"
+		<div class="container main__container">
+			<MovieCategoryRow 
+				v-for="(collection, key) in state?.collections"
+				:key="key"
+				:items="collection.data"
+				:title="titlesMapping[key]"
+				:name="routingMapping[key]"
+			/>
+			<PostRow 
+				:items="posts"
+				title="Новости"
+				name="News"
 				/>
-				<PostRow 
-					:items="posts"
-					title="Новости"
-					name="News"
-				/>
-            </div>
-        </div>
-    </div>
+		</div>
+	</div>
 </template>
 
 <style src="./styles.scss" lang="scss" scoped />

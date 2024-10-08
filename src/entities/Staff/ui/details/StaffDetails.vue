@@ -36,7 +36,8 @@ const professionMapping ={
     'HIMSELF': 'Сам себя',
     'PRODUCER': 'Продюсер',
     'WRITER': 'Сценарист',
-    'UNKNOWN': 'Неизвестно',
+	'VOICE_MALE': 'Мужской голос',
+    'VOICE_FEMALE': 'Женский голос',
     'DIRECTOR': 'Режиссер',
     'HRONO_TITR_MALE': 'Указан в титрах',
 }

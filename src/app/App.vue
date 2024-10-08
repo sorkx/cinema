@@ -10,14 +10,16 @@ const pageLayout = shallowRef(DefaultLayouts)
 </script>
 
 <template>
-	<div class="app">
-		<router-view v-slot="{ Component }">
-			<component :is="pageLayout">
-				<div class="page">
-					<component :is="Component" />
-				</div>
-			</component>
- 		 </router-view>
+	<div id="_layout">
+		<div class="page-container">
+			<router-view v-slot="{ Component }">
+				<component :is="pageLayout">
+					<div class="page-container__main">
+						<component :is="Component" />
+					</div>
+				</component>
+			</router-view>
+		</div>
 	</div>	
 </template>
 

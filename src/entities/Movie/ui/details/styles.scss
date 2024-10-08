@@ -366,16 +366,6 @@
     justify-content: space-between;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity .28s ease-in-out;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
 @media (max-width: 968px) {
     .movie__body {
         grid-template-columns: 1fr;
