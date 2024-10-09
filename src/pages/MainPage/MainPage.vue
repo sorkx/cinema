@@ -50,12 +50,14 @@ const routingMapping = {
     TOP_POPULAR_ALL: 'Popular',
 }
 
-onMounted(async () => {
+const fetchData = async () => {
     loading.value = true
-    await movieStore.fetchAllCategories()
+    await movieStore.fetchAllCategories(),
     await postStore.fetchMediaPosts(1)
     loading.value = false
-})
+}
+
+onMounted(async () => await fetchData())
 
 onBeforeRouteLeave(() => {
     state.collections = {}
@@ -78,7 +80,7 @@ onBeforeRouteLeave(() => {
 				:title="titlesMapping[key]"
 				:name="routingMapping[key]"
 			/>
-			<PostRow 
+			<PostRow
 				:items="posts"
 				title="Новости"
 				name="News"

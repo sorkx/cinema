@@ -8,20 +8,23 @@ export const useInfinityScroll = ({ fetchData, fetchNextPage }) => {
     const scrollComponent = ref(null)
     let observer = null
 
+    const handleIntersection = async (entries) => {
+        for (const entry of entries) {
+            if (entry.isIntersecting) {
+                await fetchNextPage()
+            }
+        }
+    }
+
     onMounted(() => {
         fetchData()
 	
-        observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    fetchNextPage()
-                }
-            })
-        }, {
+        observer = new IntersectionObserver(handleIntersection, {
             root: null,       
             rootMargin: '150px',
             threshold: 0.5,
         })
+
 	
         if (scrollComponent.value) {
             observer.observe(scrollComponent.value)

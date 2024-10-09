@@ -1,0 +1,134 @@
+.search {
+	&__wrapper {
+		position: absolute;
+		top: 76px;
+		left: 0;
+		width: 100%;
+		height: calc(100vh - 76px);
+		z-index: 100;
+		background-color: rgba(5, 23, 44, .69);
+		padding-right: 5px;
+	}
+
+	&__body {
+		position: relative;
+		width: 100%;
+		padding: 48px 22px 22px;
+		background-color: $cVampireBlack;
+		height: 100%;
+	}
+
+	&__content {
+		position: relative;
+		width: 100%;
+		max-width: 1040px;
+		margin: auto auto 40px;
+	}
+
+	&__container {
+		height: calc(100% - 110px);
+		overflow: auto;
+		padding: 10px 70px;
+	}
+
+	&__result {
+		padding: 10px 0;
+	}
+	
+	&-input {
+		position: relative;
+		margin-bottom: 44px;
+
+		&__close {
+			position: absolute;
+			right: 0;
+			z-index: 10;
+			top: 0;
+			width: 64px;
+			height: 64px;
+			cursor: pointer;
+			border: none;
+			background: none;
+			display: grid;
+			align-content: center;
+			justify-content: center;
+			place-content: center;
+
+			svg {
+				width: 17px;
+				height: 17px;
+				fill: $cWhite
+			}
+		}
+
+		&__control {
+			width: 100%;
+			height: 64px;
+			padding: 0 70px;
+			border-radius: 8px;
+			-webkit-backdrop-filter: blur(10px);
+			backdrop-filter: blur(10px);
+			background-color: $cBluishBlack;
+			color: $cWhite;
+			font-size: 20px;
+			box-shadow: none;
+    		border: none;
+
+			&:focus {
+				outline: 1px solid #3369ff;
+			}
+		}
+
+		&__icon {
+			position: absolute;
+			width: 21px;
+			height: 21px;
+			top: 20px;
+			left: 24px;
+			z-index: 20;
+			opacity: .4;
+		}
+	}
+}
+
+input {
+	&::-webkit-input-placeholder {
+		opacity: 1;
+		transition: opacity 0.1s ease;
+	}
+
+	&::-moz-placeholder {
+		opacity: 1;
+		transition: opacity 0.1s ease;
+	}
+
+	&:-moz-placeholder {
+		opacity: 1;
+		transition: opacity 0.1s ease;
+	}
+
+	&:-ms-input-placeholder {
+		opacity: 1;
+		transition: opacity 0.1s ease;
+	}
+
+	&:focus::-webkit-input-placeholder {
+		opacity: 0;
+		transition: opacity 0.1s ease;
+	}
+
+	&:focus::-moz-placeholder {
+		opacity: 0;
+		transition: opacity 0.1s ease;
+	}
+
+	&:focus:-moz-placeholder {
+		opacity: 0;
+		transition: opacity 0.1s ease;
+	}
+
+	&:focus:-ms-input-placeholder {
+		opacity: 0;
+		transition: opacity 0.1s ease;
+	}
+}

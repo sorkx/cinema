@@ -1,10 +1,24 @@
 <script setup>
 import {
+    ref,
+    watch,
+} from 'vue'
+import {
     LogoLink,
 } from '@/shared/ui/LogoLink'
 import {
     UISymbol,
 } from '@/shared/ui/UISymbol'
+import {
+    MovieSearch,
+} from '@/features/Movies/MovieSearch'
+import { 
+    useRouter,
+} from 'vue-router'
+
+const router = useRouter()
+
+const isSearchVisible = ref(false)
 
 const items = [
     {
@@ -23,14 +37,37 @@ const items = [
         to: '/favorite',
     }
 ]
+
+const toggleSearch = () => {
+    isSearchVisible.value = !isSearchVisible.value
+}
+
+const closeSearch = () => {
+    isSearchVisible.value = false
+}
+
+watch(isSearchVisible, async (newVal) => {
+    if (newVal) {
+        document.documentElement.classList.add('search-page')
+    } else {
+        document.documentElement.classList.remove('search-page')
+    }
+})
+
+router.beforeEach((to, from, next) => {
+    if (isSearchVisible.value) {
+        closeSearch()
+    }
+    next()
+})
 </script>
 
 <template>
-	<div class="header__wrapper">
-		<header class="header container ">
-			<div class="header__content">
+	<div class="header__container overflow">
+		<header class="header header--overflow">
+			<div class="container header__wrapper">
 				<LogoLink />
-				<nav class="header__nav--wrapper">
+				<nav class="header__center">
 					<ul class="menu menu--header">
 						<li 
 							v-for="item in items" 
@@ -49,9 +86,17 @@ const items = [
 				</nav>
 				<div class="header__profile">
 					<div class="header__profile--search">
-						<button class="v-button v-button--search">
+						<button
+							@click="toggleSearch" 
+							class="v-button v-button--search"
+						>
 							<UISymbol name="search" />
 						</button>
+						<MovieSearch 
+							v-if="isSearchVisible"
+							focus-on-mounted
+							@close="closeSearch"
+						/>
 					</div>
 					<!-- <div class="header__profile--btn header__profile--btn-promocode">
 						Промокод

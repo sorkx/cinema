@@ -1,0 +1,1 @@
+export { useSearchStore as searchModel } from './search'
