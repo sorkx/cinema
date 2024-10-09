@@ -10,6 +10,7 @@ import {
 } from '@/entities/MediaPost'
 import {
     HorizontalLoader,
+    SpinnerLoader,
 } from '@/shared/ui/loaders'
 import {
     useInfinityScroll
@@ -19,11 +20,10 @@ const store = newsModel()
 
 const { 
     posts,
-    currentPage,
     isLoading,
 } = storeToRefs(store)
 
-const fetchPosts = async () => await store.fetchMediaPosts(currentPage.value)
+const fetchPosts = async () => await store.fetchMediaPosts(1)
 const fetchNextPage = async () => await store.fetchNextPostsPage()
 
 const { scrollComponent } = useInfinityScroll({
@@ -33,6 +33,8 @@ const { scrollComponent } = useInfinityScroll({
 </script>
 
 <template>
+	<SpinnerLoader v-if="isLoading && !posts.length" />
+
 	<div class="container">
 		<PostLists
 			:posts="posts"

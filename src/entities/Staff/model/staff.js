@@ -15,15 +15,11 @@ export const useStaffStore = defineStore('staff', () => {
     const fetchStaff = async (filmId) => {
         const data = await ApiStaff.getAllStaff(filmId)
         staff.value = data
-	
-        console.log('staff', staff.value)
     }
 
     const fetchCurrentPerson = async (id) => {
         const data = await ApiStaff.getPerson(id)
         person.value = data
-	
-        console.log('person.value', person.value)
     }
 
     return {

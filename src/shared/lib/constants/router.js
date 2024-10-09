@@ -8,7 +8,6 @@ const ROUTE_NAMES = {
     TOP_MOVIES: 'TopMovies',
     FAVORITE: 'Favorite',
     STAFF_DETAILS: 'StaffDetails',
-    SIMILARS: 'Similars',
     MOVIES: 'Movies',
     NEWS: 'News',
 

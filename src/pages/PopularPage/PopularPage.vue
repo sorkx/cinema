@@ -16,6 +16,7 @@ import {
 } from '@/shared/lib/use/useInfinityScroll'
 import {
     HorizontalLoader,
+    SpinnerLoader,
 } from '@/shared/ui/loaders'
 
 const store = movieModel()
@@ -35,6 +36,8 @@ const { scrollComponent } = useInfinityScroll({
 </script>
 
 <template>
+	<SpinnerLoader v-if="isLoading && !state.collections.TOP_POPULAR_ALL?.data.length" />
+
 	<div
 		class="container" 
 	>

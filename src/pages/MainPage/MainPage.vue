@@ -66,7 +66,7 @@ onBeforeRouteLeave(() => {
 </script>
 
 <template>
-	<SpinnerLoader v-if="loading" />
+	<SpinnerLoader v-if="loading && !state?.collections.length && !posts.length" />
 
 	<div
 		v-else

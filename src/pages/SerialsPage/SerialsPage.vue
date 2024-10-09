@@ -15,6 +15,7 @@ import {
     useInfinityScroll
 } from '@/shared/lib/use/useInfinityScroll'
 import {
+    SpinnerLoader,
     HorizontalLoader,
 } from '@/shared/ui/loaders'
 
@@ -35,6 +36,8 @@ const { scrollComponent } = useInfinityScroll({
 </script>
 
 <template>
+	<SpinnerLoader v-if="isLoading && !state.categories.TV_SERIES?.data.length" />
+
 	<div class="container">
 		<MovieLists
 			:movies="state.categories.TV_SERIES?.data"

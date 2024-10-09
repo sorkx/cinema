@@ -394,22 +394,22 @@ onMounted(() => {
 			v-if="props.similars.length > 0" 
 			class="container"
 		>
-			<section class="similar-movies">
-				<ModuleWrapper
-					:items="props.similars"
-					title="Смотреть также"
-					:link="ROUTE_NAMES.SIMILARS"
-					icon="arrow-right"
-					swiper-type="movies"
-				>
-					<template #slide="{ item }">
-						<Movie 
-							:movie="item"
-							:key="item.filmId"
-						/>
-					</template>
-				</ModuleWrapper>
-			</section>	
+			<div class="container-head">
+				<h2 class="container-title">
+					Смотреть позже
+				</h2>
+			</div>
+			<ModuleWrapper
+				:items="props.similars"
+				swiper-type="movies"
+			>
+				<template #slide="{ item }">
+					<Movie 
+						:movie="item"
+						:key="item.filmId"
+					/>
+				</template>
+			</ModuleWrapper>	
 		</div>
 	</section>
 </template>

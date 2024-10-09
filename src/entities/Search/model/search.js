@@ -15,8 +15,12 @@ export const useSearchStore = defineStore('search', () => {
     const currentPage = ref(1)	
     const isLoading = ref(false)
 
+    const setInitialLoading = (value) => {
+        isLoading.value = value
+    }
+
     const fetchKeywordMovie = async (word, page = 1) => {
-        isLoading.value = true
+        setInitialLoading(true)
 
         const { films, pagesCount } = await ApiSearch.searchByKeyword(word, page)
 
@@ -32,7 +36,7 @@ export const useSearchStore = defineStore('search', () => {
         }
 	
 
-        isLoading.value = false
+        setInitialLoading(false)
     }
 
     const fetchNextPageMovies = async (keyword) => {

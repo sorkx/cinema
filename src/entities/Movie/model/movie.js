@@ -24,9 +24,13 @@ export const useMovieStore = defineStore('movie', () => {
         collections: {},
     })
 
-    console.log('state', state)
+    const setInitialLoading = (value) => {
+        isLoading.value = value
+    }
 
     const fetchData = async (type, category, page, apiFunction) => {
+        setInitialLoading(true)
+
         const target = state[type]
 	
         const { items, totalPages } = await apiFunction(category, page)
@@ -41,11 +45,13 @@ export const useMovieStore = defineStore('movie', () => {
         if (page === 1) {
             target[category].data = items
         } else {
-            target[category].data.push(...items)
+            target[category].data = [...target[category].data, ...items]
         }
 
         target[category].pagination.current = page
         target[category].pagination.total = totalPages
+
+        setInitialLoading(false)
     }
 
     const fetchNextPage = async (type, category, apiFunction) => {
@@ -58,9 +64,7 @@ export const useMovieStore = defineStore('movie', () => {
         }
 	
         if (target.pagination.current < target.pagination.total) {
-            isLoading.value = true
             await fetchData(type, category, target.pagination.current + 1, apiFunction)
-            isLoading.value = false
         }
     }
 

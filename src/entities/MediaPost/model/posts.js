@@ -14,18 +14,26 @@ export const useMediaPosts = defineStore('news', () => {
     const currentPage = ref(1)
     const totalPages = ref(1)
 
+    const setInitialLoading = (value) => {
+        isLoading.value = value
+    }
+
     const fetchMediaPosts = async (page) => {
-        isLoading.value = true
+        setInitialLoading(true)
 
         const { items, totalPages: apiTotalPages } = await ApiPosts.getMediaPosts(page)
 		
-        if (Array.isArray(items) && items.length > 0) {
-            posts.value.push(...items)   
+        if (items.length > 0) {
+            if (page === 1) {
+                posts.value = items
+            } else {
+                posts.value = [...posts.value, ...items] 
+            }  
             currentPage.value = page
             totalPages.value = apiTotalPages
         }
 
-        isLoading.value = false
+        setInitialLoading(false)
     }
 
     const fetchNextPostsPage = async () => {
