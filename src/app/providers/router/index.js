@@ -5,6 +5,7 @@ import {
 import { 
     ROUTE_NAMES, 
 } from '@/shared/lib/constants'
+import NProgress from 'nprogress'
 
 const routeOptions = [
     {
@@ -79,6 +80,15 @@ const router = createRouter({
     scrollBehavior (to) {
         return to.hash ? { el: to.hash } : { top: 0 }
     },
+})
+
+router.beforeEach((to, from, next) => {
+    NProgress.start()
+    next()
+})
+
+router.afterEach(() => {
+    NProgress.done()
 })
 
 export default router
