@@ -29,6 +29,7 @@ export default defineConfig({
                 additionalData: `
 					@import "@/app/styles/variables-sass.scss";
 				`,
+                api: 'modern-compiler',
             },
         },
     },
