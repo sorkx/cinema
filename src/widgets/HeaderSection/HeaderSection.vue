@@ -15,6 +15,9 @@ import {
 import { 
     useRouter,
 } from 'vue-router'
+import {
+    VButton,
+} from '@/shared/ui/buttons'
 
 const router = useRouter()
 
@@ -22,19 +25,28 @@ const isSearchVisible = ref(false)
 
 const items = [
     {
+        id: 'main',
+        title: 'Главная',
+        to: '/',
+        class: 'main-icon',
+    },
+    {
         id: 'films',
         title: 'Фильмы',
         to: '/films',
+        class: 'film-icon',
     },
     {
         id: 'serials',
         title: 'Сериалы',
         to: '/serials',
+        class: 'serial-icon',
     },
     {
         id: 'favorite',
         title: 'Избранное',
         to: '/favorite',
+        class: 'favorite-icon',
     }
 ]
 
@@ -86,30 +98,41 @@ router.beforeEach((to, from, next) => {
 				</nav>
 				<div class="header__profile">
 					<div class="header__profile--search">
-						<button
+						<VButton
 							@click="toggleSearch" 
-							class="v-button v-button--search"
+							modificator="search"
 						>
-							<UISymbol name="search" />
-						</button>
+							<UISymbol 
+								name="search"  
+								class="search-icon" 
+							/>
+						</VButton>
 						<MovieSearch 
 							v-if="isSearchVisible"
 							focus-on-mounted
 							@close="closeSearch"
 						/>
 					</div>
-					<!-- <div class="header__profile--btn header__profile--btn-promocode">
-						Промокод
-					</div> -->
-					<!-- <router-link 
-						to="/login" 
-						class="header__profile--btn"
-					>
-						Авторизация
-					</router-link> -->
 				</div>
 			</div>
 		</header>
+		<div class="header-bottom__mobile">
+			<div class="header-bottom__container">
+				<div
+					v-for="item in items"
+					:key="item.id"
+				>
+					<router-link 
+						class="header-bottom__link" 
+						:to="item.to"
+						active-class="active-link"
+					>
+						<div class="mobile-icon" :class="item.class" />
+						{{ item.title }}
+					</router-link>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 

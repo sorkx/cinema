@@ -1,14 +1,25 @@
 :root {
 	--page-background: #09090b;
 	--card-shadow: 0 4.5696px 118.81px #000,0 27.4176px 251.328px #000;
-	--vh: 1vh;
-	--defaultColorLight: hsla(0, 0%, 100%, 0.8);
-	--defaultColorBlack: hsla(0, 0%, 0%);
-	--primary-gradient: linear-gradient(45deg,#f2f452,#b4fd64 64%);
-	--rem: #{$baseRem};
-	--gContent: #{$gContent};
+	--size-md: 16px;
+
+	// Grid
+	--gContent: 46px;
 	--page-min-width: 1024px;
 	--header-height: 76px;
 	--header-z-index: 1500;
 	--content-z-index: 3;
+	--vh: 1vh;
+
+	// Colors
+	--color-palette-green-10: #b4fd64;
+	--color-palette-gray-10: #bababa;
+	--color-palette-white-base: #fff;
+	--color-palette-black-60: #09090b;
+	--color-palette-black-40: #131517;
+	--color-palette-black-20: #222;
+	--color-palette-black-solid: #000;
+	--defaultColorLight: hsla(0, 0%, 100%, 0.8);
+	--defaultColorBlack: hsla(0, 0%, 0%);
+	--primary-gradient: linear-gradient(45deg,#f2f452,#b4fd64 64%);
   }
