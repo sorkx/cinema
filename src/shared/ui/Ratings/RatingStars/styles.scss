@@ -1,34 +1,31 @@
-.stars {
-	display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-gap: 6px;
-    margin-bottom: 27px;
-    position: relative;
-    max-width: 346px;
+.star-rating {
+	display: inline-flex;
+	position: relative;
+	margin-bottom: 27px;
 
-	&__item {
-		position: relative;
-   		// cursor: pointer;
-
-		svg {
-			position: absolute;
-			top: 0;
-			left: 0;
-			fill: $cLightGrey;
-		}
+	&__colored {
+		display: inline-flex;
+		position: absolute;
+		width: 0;
+		height: 100%;
+		top: 0;
+		left: 0;
+		overflow: hidden;
 	}
 }
+  
+.star {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	margin: 0 3px;
+	flex-shrink: 0;
 
-.stars__item,
-.stars svg {
-	width: 25px;
-	height: 25px;
-}
+	&--outlined {
+		fill: $cLightGrey;
+	}
 
-.active {
-	fill: $cCaterpillar !important;
-}
-
-.inactive {
-	fill: $cLightGrey;
+	&--colored {
+		fill: $cCaterpillar;
+	}
 }
