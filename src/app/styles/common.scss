@@ -5,24 +5,26 @@
   margin: 0;
   padding: 0;
   text-decoration: none;
-  font-family: $fMontserrat;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  letter-spacing: .1px;
 }
 
 html {
-	font-size: var(--rem)
+	font-size: var(--font-size-16);
+	font-family: $fMontserrat;
 }
 
 body {
-	margin: 0;
 	min-width: 375px;
 	position: relative;
 	cursor: default;
 	background-color: var(--page-background);
-	-ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    -webkit-tap-highlight-color: transparent;
+
 	&.overlay-open {
 		overflow-y: hidden;
 		padding-right: 0px;
@@ -64,10 +66,15 @@ body {
 
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: $cWhite;
+    background: var(--color-palette-white-base);
 }
 
 ::-webkit-scrollbar-track {
-    background: #676767;
+    background: var(--color-palette-gray-40);
     border-radius: 10px;
+}
+
+::selection {
+    background: var(--color-palette-green-10);
+    color: var(--color-palette-black-50);
 }

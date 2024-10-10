@@ -1,6 +1,6 @@
 .footer {
-	background: $cBluishBlack;
     padding: 47px 0;
+	border-top: 2px solid var(--color-palette-black-40);
 
 	&__applications {
 		display: flex;
@@ -28,7 +28,7 @@
 	&__name {
 		font-size: 16px;
 		font-weight: 700;
-		color: $cWhite;
+		color: var(--color-palette-white-base);
 		margin-bottom: 21px;
 	}
 
@@ -111,7 +111,7 @@
 		max-width: -moz-fit-content;
 		max-width: fit-content;
 		border-radius: 8px;
-		background-color: $cBlack;
+		background-color: var(--color-palette-black-solid);
 		height: 50px;
 		border: 1px solid hsla(0, 0%, 100%, .65098);
 	}

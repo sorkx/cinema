@@ -48,8 +48,9 @@
 		-o-object-fit: cover;
 		object-fit: cover;
 		height: 100%;
-		background-color: $cCaterpillar;
-		color: $cBlack;
+		background-color: var(--color-palette-green-10);
+		color: var(--color-palette-black-base);
+		text-align: center;
 	}
 
 	&__content {
@@ -85,7 +86,7 @@
 		&-text {
 			font-size: 14px;
 			font-weight: 500;
-			color: #b4b9c0;
+			color: var(--color-palette-gray-15);
 		}
 	}
 }

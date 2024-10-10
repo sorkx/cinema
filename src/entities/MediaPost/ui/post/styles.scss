@@ -35,11 +35,11 @@
 		grid-area: news-label;
 		padding: 5px 8px;
 		border-radius: 4px;
-		background-color: #cd025b;
+		background-color: var(--color-palette-carmine-10);
 		font-size: 14px;
 		font-weight: 600;
 		text-align: center;
-		color: $cWhite;
+		color: var(--color-palette-white-base);
 	}
 
 	&__title {
@@ -47,7 +47,7 @@
 		margin-bottom: 0;
 		font-weight: 600;
 		max-width: 250px;
-		color: $cWhite;
+		color: var(--color-palette-white-base);
 	}
 
 	&__date {
@@ -56,7 +56,7 @@
 		font-weight: 700;
 		line-height: 2.17;
 		letter-spacing: 1.44px;
-		color: #b4b9c0;
+		color: var(--color-palette-gray-15);
 	}
 }
 

@@ -1,8 +1,7 @@
 .header {	
 	position: fixed;
     width: 100%;
-    border-bottom: 2px solid $cBluishBlack;
-    background: rgba(19, 21, 23, .8);
+    border-bottom: 2px solid var(--color-palette-black-40);
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
 	padding-top: env(safe-area-inset-top);
@@ -61,11 +60,6 @@
 			text-transform: uppercase;
 			background: rgba(5, 23, 44, .8);
 			cursor: pointer;
-
-			&-promocode {
-				color: $cWhite;
-				border-color: #ff0070;
-			}
 		}
 	}
 }
@@ -91,7 +85,7 @@
 			position: relative;
 
 			&:hover {
-				color: $cWhite;
+				color: var(--color-palette-white-base);
 			}
 		}
 	}
@@ -99,7 +93,7 @@
 
 .active-link {
 	text-decoration: none;
-	color: $cWhite !important;
+	color: var(--color-palette-white-base) !important;
 
 	&::after {
 		content: "";
@@ -146,7 +140,7 @@
 		gap: 4px;
         flex-direction: column;
         align-items: center;
-        color: $cWhite;
+        color: var(--color-palette-white-base);
         white-space: nowrap;
         font-size: 10px !important;
         font-weight: 500 !important;
@@ -159,6 +153,11 @@
 .search-icon {
 	width: 32px;
 	height: 32px;
+
+	&:hover {
+		fill: var(--color-palette-white-base);
+		transition: fill .3s ease;
+	}
 }
 
 .mobile-icon {
@@ -229,5 +228,12 @@
 @media (max-width: 1300px) and (max-width: 520px) {
 	.header-bottom__mobile {
 		width: calc(100% - 32px);
+	}
+}
+
+@media (max-width: 1024px) {
+	.search-icon {
+		width: 25px;
+		height: 25px;
 	}
 }

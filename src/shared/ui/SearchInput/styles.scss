@@ -57,7 +57,7 @@
 			svg {
 				width: 17px;
 				height: 17px;
-				fill: $cWhite
+				fill: var(--color-palette-white-base);
 			}
 		}
 
@@ -68,15 +68,12 @@
 			border-radius: 8px;
 			-webkit-backdrop-filter: blur(10px);
 			backdrop-filter: blur(10px);
-			background-color: $cBluishBlack;
-			color: $cWhite;
+			background-color: var(--color-palette-black-40);
+			color: var(--color-palette-white-base);;
 			font-size: 20px;
 			box-shadow: none;
     		border: none;
-
-			&:focus {
-				outline: 1px solid #3369ff;
-			}
+			outline: none;
 		}
 
 		&__icon {
@@ -131,4 +128,10 @@ input {
 		opacity: 0;
 		transition: opacity 0.1s ease;
 	}
+}
+
+@media (max-width: 479px) {
+    .search__container {
+        padding: 0;
+    }
 }

@@ -15,7 +15,7 @@
 			padding: 30px 0;
 			background-image:
 				linear-gradient(180deg, 
-					$cVampireBlack, 
+					var(--color-palette-black-60), 
 					rgba(9, 9, 11, .25), 
 					rgba(9, 9, 11, 0)), 
 				linear-gradient(180deg, 
@@ -23,7 +23,7 @@
 					rgba(9, 9, 11, .55), 
 					rgba(9, 9, 11, .73), 
 					rgba(9, 9, 11, .9), 
-					$cVampireBlack
+					var(--color-palette-black-60)
 			); 
 		}
 
@@ -129,14 +129,14 @@
 				background: none;
 				border: none;
 				cursor: pointer;
-				background: $cLightBlack;
+				background: var(--color-palette-black-20);
 				border-radius: 8px;
 				position: relative;
 				display: grid;
 				align-content: center;
 				justify-content: center;
 				place-content: center;
-				color: $cWhite;
+				color: var(--color-palette-white-base);
 				font-size: 16px;
 
 				svg {
@@ -159,7 +159,7 @@
 		&-title {
 			font-size: 28px;
 			font-weight: 700;
-			color: $cWhite;
+			color: var(--color-palette-white-base);
 			margin-bottom: 16px;
 		}
 
@@ -181,7 +181,7 @@
 		&__title {
 			font-size: 28px;
 			font-weight: 700;
-			color: #f2f2f2;
+			color: var(--color-palette-gray-5);
 			margin-bottom: 25px;
 		}
 
@@ -204,13 +204,13 @@
 
 		&__label, &__value {
 			font-weight: 700;
-			color: #c8cbd6;
+			color: var(--color-palette-gray-7);
 			align-self: center;
 		}
 	}
 
 	&__box-office {
-		color: $cWhite;
+		color: var(--color-palette-white-base);
 		margin: 40px 0 0;
 		display: grid;
 		grid-template-columns: repeat(2, 300px);
@@ -240,7 +240,7 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 		grid-gap: 8px;
-		background: $cBlack;
+		background: var(--color-palette-black-solid);
 		padding: 10px 15px;
 		border-radius: 5px;
 
@@ -251,7 +251,7 @@
 			transform: translateX(-50%);
 			padding: 6px 10px;
 			background: rgba(0, 0, 0, .6);
-			color: $cWhite;
+			color: var(--color-palette-white-base);
 			white-space: nowrap;
 			border-radius: 10px;
 			transition: .3s;
@@ -264,16 +264,16 @@
 			place-content: center;
 			text-decoration: none;
 			border-radius: 8px;
-			border: 1px solid $cCaterpillar;
+			border: 1px solid var(--color-palette-green-10);
 			font-size: 14px;
 			font-weight: 500;
 			line-height: 1.25;
 			letter-spacing: normal;
-			color: $cLightGrey;
+			color: var(--color-palette-gray-10);
 			padding: 8px 10px;
 
 			&:hover {
-				border-color: $cLightGrey;
+				border-color: var(--color-palette-gray-10);
 			}
 		}
 	}
@@ -281,7 +281,7 @@
 
 .voice-acting {
 	&__title {
-		color: $cLightGrey;
+		color: var(--color-palette-gray-10);
 		font-weight: 500;
 		font-size: 24px;
 	}
@@ -291,7 +291,7 @@
 		span {
 			font-weight: $fMedium;
 			font-size: 22px;
-			color: $cWhite;
+			color: var(--color-palette-white-base);
 		}
 	}
 }
@@ -299,13 +299,13 @@
 .v-title {
 	font-size: 28px;
     font-weight: 700;
-    color: $cWhite;
+    color: var(--color-palette-white-base);
 
 	&--big {
 		font-size: 38px;
 		font-weight: 700;
 		line-height: 1;
-		color: $cWhite;
+		color: var(--color-palette-white-base);
 		margin-bottom: 13px;
 	}
 }
@@ -341,18 +341,18 @@
 		height: 48px;
 		width: 48px;
 		border-radius: 8px;
-		background: $cLightGrey;
+		background: var(--color-palette-gray-10);
 		margin-right: 8px;
 		font-size: 16px;
 		font-weight: 500;
 		line-height: 1.25;
 		letter-spacing: normal;
-		color: $cBlack;
+		color: var(--color-palette-black-solid);
 		min-width: 48px;
 
 	
 		&.active, &:hover {
-			background: $cCaterpillar;
+			background: var(--color-palette-green-10);
 		}
 	}
 }
@@ -409,7 +409,7 @@
 }
 
 @media (max-width: 639px) {
-    .movie-head__bottom {
+    .movie__head--bottom {
         grid-template-columns: 1fr;
     }
 }
@@ -448,4 +448,28 @@
 			font-size: 14px;
 		}
     }
+}
+
+@media (max-width: 425px) {
+	.movie-tooltip__trailers {
+		top: 70px;
+		transform: translateX(-87%);
+	}
+
+	.trailers-list__not-found {
+		top: -2px;
+		transform: translateX(-87%);
+	}
+}
+
+@media (max-width: 375px) {
+	.movie-tooltip__trailers {
+        top: 52px;
+        transform: translateX(0);
+	}
+
+	.trailers-list__not-found {
+		top: -43px;
+		transform: translateX(18%);
+	}
 }

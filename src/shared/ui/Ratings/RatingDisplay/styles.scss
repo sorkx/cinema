@@ -7,7 +7,7 @@
 	&--value {
 		font-size: 22px;
 		font-weight: $fRegular;
-		color: $cWhite;
+		color: var(--color-palette-white-base);
 	}
 	&--small {
 		margin-right: 16px;

@@ -22,10 +22,10 @@
 	flex-shrink: 0;
 
 	&--outlined {
-		fill: $cLightGrey;
+		fill: var(--color-palette-gray-10);
 	}
 
 	&--colored {
-		fill: $cCaterpillar;
+		fill: var(--color-palette-green-10);
 	}
 }

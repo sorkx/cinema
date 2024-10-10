@@ -3,7 +3,7 @@
 	border: none;
 	box-shadow: none;
     cursor: pointer;
-    color: $cBlack;
+    color: var(--color-palette-black-solid);
     font-size: 16px;
     border-radius: 8px;
     position: relative;
@@ -21,17 +21,24 @@
 		font-size: 16px;
 		font-weight: 700;
 		letter-spacing: normal;
-		color: $cBlack;
+		color: var(--color-palette-black-solid);
 		text-transform: uppercase;
 		white-space: nowrap;
 	}
 
 	&--menu {
-		width: 32px;
-		height: 32px;
+		width: 35px;
 		display: none;
 		position: relative;
 	}
+
+	// &--search {
+
+	// 	.icon {
+	// 		width: 32px;
+	// 		height: 32px;
+	// 	}
+	// }
 }
 
 @media (max-width: 1300px) {

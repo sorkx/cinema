@@ -10,10 +10,10 @@
 	}
 
 	&__title {
-		color: $cWhite;
+		color: var(--color-palette-white-base);
 	}
 
 	&__subtitle {
-		color: $cWhite;
+		color: var(--color-palette-white-base);
 	}
 }

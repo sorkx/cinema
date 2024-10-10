@@ -1,7 +1,7 @@
 :root {
 	--page-background: #09090b;
 	--card-shadow: 0 4.5696px 118.81px #000,0 27.4176px 251.328px #000;
-	--size-md: 16px;
+	--font-size-16: 16px;
 
 	// Grid
 	--gContent: 46px;
@@ -13,12 +13,21 @@
 
 	// Colors
 	--color-palette-green-10: #b4fd64;
+	--color-palette-gray-40: #676767;
+	--color-palette-gray-20: #838ca4;
+	--color-palette-gray-15: #b4b9c0;
 	--color-palette-gray-10: #bababa;
+	--color-palette-gray-7: #c8cbd6;
+	--color-palette-gray-5: #f2f2f2;
 	--color-palette-white-base: #fff;
 	--color-palette-black-60: #09090b;
+	--color-palette-black-50: #09090c;
 	--color-palette-black-40: #131517;
 	--color-palette-black-20: #222;
 	--color-palette-black-solid: #000;
+	--color-palette-blue-80: #122337;
+	--color-palette-blue-10: #3369ff;
+	--color-palette-carmine-10: #cd025b;
 	--defaultColorLight: hsla(0, 0%, 100%, 0.8);
 	--defaultColorBlack: hsla(0, 0%, 0%);
 	--primary-gradient: linear-gradient(45deg,#f2f452,#b4fd64 64%);

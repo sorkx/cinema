@@ -127,7 +127,7 @@ router.beforeEach((to, from, next) => {
 						:to="item.to"
 						active-class="active-link"
 					>
-						<div class="mobile-icon" :class="item.class" />
+						<div :class="['mobile-icon', item.class]" />
 						{{ item.title }}
 					</router-link>
 				</div>
