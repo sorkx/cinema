@@ -25,4 +25,17 @@
 		text-transform: uppercase;
 		white-space: nowrap;
 	}
+
+	&--menu {
+		width: 32px;
+		height: 32px;
+		display: none;
+		position: relative;
+	}
+}
+
+@media (max-width: 1300px) {
+    .v-button--menu {
+        display: flex;
+    }
 }

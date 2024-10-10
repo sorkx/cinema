@@ -197,14 +197,14 @@ onMounted(() => {
 								:href="props.movie?.webUrl" 
 								target="_blank"
 							>
-								<v-button modificator="play-free">
+								<VButton modificator="play-free">
 									<span class="movie__head--play">
 										Смотреть
 									</span>
 									<span class="movie__head--look">
 										на Кинопоиске
 									</span>
-								</v-button>
+								</VButton>
 							</a>
 							<div class="movie__head--trailers">
 								<a

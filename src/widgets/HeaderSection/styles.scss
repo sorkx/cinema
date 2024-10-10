@@ -146,9 +146,15 @@
     }
 }
 
-// @media (max-width: 1300px) {
-//     .header__wrapper {
-//         grid-template-areas: "h-logo . h-profile h-center";
-//         grid-template-columns: 100px 1fr auto auto;
-//     }
-// }
+@media (max-width: 1300px) {
+    .menu--header {
+        display: none;
+    }
+}
+
+@media (max-width: 1300px) {
+    .header__wrapper {
+        grid-template-areas: "h-logo . h-profile h-center";
+        grid-template-columns: 100px 1fr auto auto;
+    }
+}
