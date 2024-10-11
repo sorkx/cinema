@@ -89,8 +89,24 @@
     }
 }
 
+@media (max-width: 479px) {
+	.card-news__title {
+		font-size: 13px;
+	}
+
+	.card-news__label {
+        font-size: 11px;
+    }
+}
+
 @media (max-width: 425px) {
     .card-news {
         height: 193px;
+    }
+}
+
+@media (max-width: 375px) {
+    .card-news {
+        height: 169px;
     }
 }

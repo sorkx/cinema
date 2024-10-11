@@ -320,7 +320,10 @@
 .series-list {
 	display: flex;
     margin-top: 32px;
-    overflow: hidden;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    white-space: nowrap;
 
 	&__wrapper {
 		position: relative;
@@ -450,7 +453,7 @@
     }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 450px) {
 	.movie-tooltip__trailers {
 		top: 70px;
 		transform: translateX(-87%);
@@ -462,10 +465,10 @@
 	}
 }
 
-@media (max-width: 375px) {
+@media (max-width: 412px) {
 	.movie-tooltip__trailers {
-        top: 52px;
-        transform: translateX(0);
+		top: 59px;
+        transform: translateX(-8%);
 	}
 
 	.trailers-list__not-found {

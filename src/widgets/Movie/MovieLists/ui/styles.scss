@@ -47,3 +47,11 @@
         grid-column-gap: 10px;
     }
 }
+
+@media (max-width: 320px) {
+    .lists {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        grid-column-gap: 10px;
+		width: 285px;
+    }
+}

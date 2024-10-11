@@ -206,13 +206,20 @@
         display: none;
     }
 
-	.header__wrapper {
-        grid-template-areas: "h-logo . h-profile h-center";
-        grid-template-columns: 100px 1fr auto auto;
-    }
+	// .header__wrapper {
+    //     grid-template-areas: "h-logo . h-profile h-center";
+    //     grid-template-columns: 100px 1fr auto auto;
+    // }
+
+	.active-link {
+		&::after {
+			bottom: -9px;
+			height: 3px;
+		}
+	}
 }
 
-@media (max-width: 1300px) and (min-width: 385px) {
+@media (max-width: 1300px) and (max-width: 385px) {
 	.header-bottom__link {
 		width: 64px;
 	}
@@ -235,5 +242,6 @@
 	.search-icon {
 		width: 25px;
 		height: 25px;
+		margin-top: 10px;
 	}
 }
