@@ -28,8 +28,7 @@ const props = defineProps({
     },
     swiperType: { 
         type: String,
-        required: true,
-        validator: value => ['movies', 'media'].includes(value),
+        validator: value => ['movies', 'media', 'genres'].includes(value),
     },
 
 })
@@ -84,11 +83,44 @@ const mediaBreakpoints = {
     }
 }
 
+const genresBreakpoints = {
+    320: {
+        slidesPerView: 3,
+        spaceBetween: 8,
+        lidesPerGroup: 1.5,
+    },
+    768: {
+        slidesPerView: 5.5,
+        spaceBetween: 8,
+        slidesPerGroup: 2.75,
+    },
+    1024: {
+        slidesPerView: 6,
+        spaceBetween: 12,
+        slidesPerGroup: 3,
+    },
+    1440: {
+        slidesPerView: 10.5,
+        spaceBetween: 12,
+        slidesPerGroup: 5,
+    },
+}
 
 const { hasNavigation, speed } = toRefs(props)
 const modules = [Pagination, Navigation]
 
-const swiperBreakpoints = computed(() => props.swiperType === 'movies' ? moviesBreakpoints : mediaBreakpoints)
+const swiperBreakpoints = computed(() => {
+    switch (props.swiperType) {
+    case 'movies':
+        return moviesBreakpoints
+    case 'media':
+        return mediaBreakpoints
+    case 'genres':
+        return genresBreakpoints
+    default:
+        return moviesBreakpoints
+    }
+})
 
 </script>
 

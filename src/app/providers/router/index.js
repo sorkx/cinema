@@ -13,14 +13,6 @@ const routeOptions = [
         name: ROUTE_NAMES.MAIN,
     },
     {
-        path: '/films',
-        name: ROUTE_NAMES.FILMS,
-    },
-    {
-        path: '/serials',
-        name: ROUTE_NAMES.SERIALS,
-    },
-    {
         path: '/popular',
         name: ROUTE_NAMES.POPULAR,
     },
@@ -49,6 +41,11 @@ const routeOptions = [
         path: '/staff/:id',
         name: ROUTE_NAMES.STAFF_DETAILS,
         props: true,
+    },
+    {
+        path: '/movies/:type',
+        name: ROUTE_NAMES.MOVIES,
+        // props: true,
     },
 ]
 

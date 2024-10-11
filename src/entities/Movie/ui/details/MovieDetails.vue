@@ -3,9 +3,6 @@ import {
     ModuleWrapper,
 } from '@/shared/ui/ModuleWrapper'
 import {
-    ROUTE_NAMES,
-} from '@/shared/lib/constants'
-import {
     RatingDisplay,
     RatingStars,
 } from '@/shared/ui/Ratings'

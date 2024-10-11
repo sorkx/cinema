@@ -54,7 +54,7 @@ const props = defineProps({
 				v-for="item in props.items"
 				:key="item.id"
 				:lazy="item.posterUrlPreview ? true : false"
-				class="swiper-slide module__item"
+				:class="[`swiper-slide--${props.swiperType}`, 'module__item', 'swiper-slide']"
 			>
 				<slot 
 					:item="item" 

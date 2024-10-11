@@ -32,17 +32,64 @@
 		position: relative;
 	}
 
-	// &--search {
+	&--genre {
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		flex-shrink: 0;
+		cursor: pointer;
+		background: transparent;
+		color: var(--color-palette-gray-10);
+		transition: .5s ease-out;
+		height: 47px;
+		padding: 6px 16px 6px 6px;
+		border-radius: 12px;
+		position: relative;
+		z-index: 1;
+		gap: 6px;
+		overflow: hidden;
+		font-size: 16px;
+		font-weight: 500;
 
-	// 	.icon {
-	// 		width: 32px;
-	// 		height: 32px;
-	// 	}
-	// }
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			border-radius: inherit;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			background: linear-gradient(180deg, hsla(0, 0%, 100%, .1), hsla(0, 0%, 100%, .13) 50%, hsla(0, 0%, 100%, .1));
+			z-index: -2;
+		}
+
+		&::after {
+			transition: opacity .5s ease-out;
+    		opacity: 0;
+		}
+
+		&:active, &:hover {
+			color: var(--color-palette-white-base);
+
+			&::before {
+				background: hsla(0, 0%, 100%, .1);
+			}
+		}
+	}
 }
 
 @media (max-width: 1300px) {
     .v-button--menu {
         display: flex;
+    }
+}
+
+@media (min-width: 960px) {
+    .v-button--genre {
+        height: 53px;
+        padding: 8px 20px 8px 10px;
+        border-radius: 12px;
+        gap: 14px;
     }
 }

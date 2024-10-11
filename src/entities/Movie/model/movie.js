@@ -17,6 +17,7 @@ export const useMovieStore = defineStore('movie', () => {
     const seasons = ref([])
     const boxOffice = ref([])
     const trailers = ref([])
+    const genresMovie = ref([])
     const isLoading = ref(false)
     const selectedMovieDetails = ref(null)
     const state = reactive({
@@ -50,6 +51,8 @@ export const useMovieStore = defineStore('movie', () => {
 
         target[category].pagination.current = page
         target[category].pagination.total = totalPages
+
+        console.log('state', state)
 
         setInitialLoading(false)
     }
@@ -117,13 +120,21 @@ export const useMovieStore = defineStore('movie', () => {
         trailers.value = data
     }
 
+    const fetchMovieFilters = async () => {
+        const { genres } = await Api.getMovieFilters()
+
+        genresMovie.value = genres
+    }
+
     return {
         similars,
         seasons,
         boxOffice,
         trailers,
+        genresMovie,
         state,
         isLoading,
+        fetchMovieFilters,
         fetchCategoryData,
         fetchCategoryNextPage,
         fetchCollectionNextPage,

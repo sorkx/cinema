@@ -66,6 +66,10 @@
     -o-transition-property: transform;
     transition-property: transform;
     transition-property: transform, -webkit-transform;
+
+	&--genres {
+		width: auto !important;
+	}
 }
 
 @media (max-width: 1300px) {

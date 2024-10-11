@@ -71,7 +71,8 @@
 	
 	&__title {
 		font-size: 16px;
-		font-weight: 700;
+		font-weight: $fMedium;
+		line-height: normal;
 		color: hsla(0, 0%, 100%, .8);
 		color: var(--defaultColorLight);
 		margin-bottom: 5px;

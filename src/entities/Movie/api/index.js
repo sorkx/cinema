@@ -69,5 +69,13 @@ export const Api = {
         } catch(e) {
             console.error('Error fetching movies collections:', e)
         }
+    },
+
+    getMovieFilters: async () => {
+        try {
+            return await fetchInstance(API_URL, '/filters')
+        } catch(e) {
+            console.error('Error fetching movie filters:', e)
+        }
     }
 }

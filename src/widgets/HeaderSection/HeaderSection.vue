@@ -33,13 +33,13 @@ const items = [
     {
         id: 'films',
         title: 'Фильмы',
-        to: '/films',
+        to: '/movies/films',
         class: 'film-icon',
     },
     {
         id: 'serials',
         title: 'Сериалы',
-        to: '/serials',
+        to: '/movies/serials',
         class: 'serial-icon',
     },
     {

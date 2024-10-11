@@ -19,12 +19,15 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    hidden: {
+        type: String	,
+    }
 })
 </script>
 
 <template>
 	<Pathway
-		v-if="props.title" 
+		v-if="props.title && !props.hidden" 
 		:title="props.title"
 	/>
 	<div

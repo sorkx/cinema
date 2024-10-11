@@ -1,2 +1,2 @@
-export * from './AddToFavorite'
 export * from './MovieSearch'
+export * from './MovieFilter'
