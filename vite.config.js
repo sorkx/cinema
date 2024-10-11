@@ -33,9 +33,4 @@ export default defineConfig({
             },
         },
     },
-    build: {
-        rollupOptions: {
-            external: ['nprogress/nprogress.css'],
-        }
-    }
 })
