@@ -85,24 +85,9 @@ const mediaBreakpoints = {
 
 const genresBreakpoints = {
     320: {
-        slidesPerView: 3,
-        spaceBetween: 8,
-        lidesPerGroup: 1.5,
-    },
-    768: {
-        slidesPerView: 5.5,
-        spaceBetween: 8,
-        slidesPerGroup: 2.75,
-    },
-    1024: {
-        slidesPerView: 6,
+        slidesPerView: 'auto',
         spaceBetween: 12,
-        slidesPerGroup: 3,
-    },
-    1440: {
-        slidesPerView: 10.5,
-        spaceBetween: 12,
-        slidesPerGroup: 5,
+        slidesPerGroup: 3.5,
     },
 }
 

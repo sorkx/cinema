@@ -69,12 +69,9 @@
     		opacity: 0;
 		}
 
-		&:active, &:hover {
+		&:hover {
 			color: var(--color-palette-white-base);
-
-			&::before {
-				background: hsla(0, 0%, 100%, .1);
-			}
+			background: hsla(0, 0%, 100%, .1);
 		}
 	}
 }

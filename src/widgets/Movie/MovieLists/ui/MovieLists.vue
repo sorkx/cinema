@@ -20,7 +20,7 @@ const props = defineProps({
         default: false,
     },
     hidden: {
-        type: String	,
+        type: String,
     }
 })
 </script>

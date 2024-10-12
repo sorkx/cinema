@@ -3,9 +3,12 @@ import {
     watch,
     computed,
     onMounted,
+    ref,
+    reactive,
 } from 'vue'
 import { 
     useRoute,
+    useRouter,
 } from 'vue-router'
 import {
     MovieLists,
@@ -33,6 +36,7 @@ import {
     MovieFilter,
 } from '@/features/Movies'
 
+const router = useRouter();
 const route = useRoute()
 const store = movieModel()
 
@@ -54,15 +58,35 @@ const routeMapping = {
 
 const contentType = computed(() => routeMapping[route.params.type])
 
-const fetchCategoryItems = async () => await store.fetchCategoryData(contentType.value, 1)
-const fetchNextPage = async () => await store.fetchCategoryNextPage(contentType.value)
+const filterParams = reactive({
+    genres: null,
+    ratingTo: null,
+    yearTo: null,
+    order: ''
+})
+
+const fetchMovies = async (page = 1) => {
+    await store.fetchCategoryData(contentType.value, page, filterParams)
+}
+
+const loadMore = async () => {
+    await store.fetchCategoryNextPage(contentType.value, filterParams)
+}
+
+const fetchCategoryItems = async () => await fetchMovies(1)
+const fetchNextPage = async () => await loadMore()
+
+const updateFilterParam = (param, value) => {
+    filterParams[param] = value
+    fetchCategoryItems()
+}
 
 const { scrollComponent } = useInfinityScroll({
     fetchData: fetchCategoryItems,
     fetchNextPage: fetchNextPage,
 })
 
-watch(() => route.params.type, fetchCategoryItems, { immediate: true })
+watch(() => route.params.type, fetchCategoryItems)
 
 onMounted(async () => {
     await store.fetchMovieFilters()
@@ -70,8 +94,6 @@ onMounted(async () => {
 </script>
 
 <template>
-	<SpinnerLoader v-if="isLoading" />
-
 	<div class="container">
 		<Pathway
 			:title="formattedTitle[contentType]"
@@ -83,7 +105,14 @@ onMounted(async () => {
 				{{ formattedTitle[contentType] }}
 			</div>
 		</div>
-		<MovieFilter :genres="genresMovie" />
+		<MovieFilter 
+			:genres="genresMovie"
+			v-model:selectedGenre="filterParams.genres"
+			@update:selectedGenre="updateFilterParam(filterParams.genres, $event)" 
+		/>
+
+		<SpinnerLoader v-if="isLoading" />
+
 		<MovieLists
 			v-if="state.categories[contentType]"
 			:movies="state.categories[contentType].data"

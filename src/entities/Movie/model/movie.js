@@ -71,13 +71,18 @@ export const useMovieStore = defineStore('movie', () => {
         }
     }
 
-    const fetchCategoryData = async (category, page = 1) => {
-        await fetchData('categories', category, page, Api.getCategories)
+    const fetchCategoryData = async (category, page = 1, genres, ratingTo, yearTo, order) => {
+        await fetchData('categories', category, page, (category, page) => 
+            Api.getCategories(category, page, genres, ratingTo, yearTo, order)
+		  )
     }
 	
-    const fetchCategoryNextPage = async (category) => {
-        await fetchNextPage('categories', category, Api.getCategories)
+    const fetchCategoryNextPage = async (category, genres, ratingTo, yearTo, order) => {
+        await fetchNextPage('categories', category, (category, page) => 
+		  Api.getCategories(category, page, genres, ratingTo, yearTo, order)
+        )
     }
+	
 	
     const fetchCollectionData = async (category, page = 1) => {
         await fetchData('collections', category, page, Api.getMovieCollections)
@@ -123,7 +128,7 @@ export const useMovieStore = defineStore('movie', () => {
     const fetchMovieFilters = async () => {
         const { genres } = await Api.getMovieFilters()
 
-        genresMovie.value = genres
+        genresMovie.value = genres.filter(genre => genre.id <= 24)
     }
 
     return {
