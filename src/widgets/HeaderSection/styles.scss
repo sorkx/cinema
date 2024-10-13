@@ -6,12 +6,12 @@
     backdrop-filter: blur(4px);
 	padding-top: env(safe-area-inset-top);
 
-	&__container.overflow {
-		z-index: 10000;
-	}
+	// &__container.overflow {
+	// 	z-index: 1;
+	// }
 
 	&--overflow {
-		z-index: 110;
+		z-index: 50;
 	}
 
 	&__center {
@@ -200,6 +200,7 @@
 		width: 480px;
 		transform: translate(-50%);
 		padding-bottom: env(safe-area-inset-bottom);
+		z-index: 50;
 	}
 
 	.menu--header {

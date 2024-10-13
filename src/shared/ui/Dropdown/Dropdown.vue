@@ -83,7 +83,7 @@ const isOptionSelected = (option) => {
 }
 
 const toggleDropdown = (force) => {
-    isDropdownOpen.value = force ?? !isDropdownOpen.value;
+    isDropdownOpen.value = force ?? !isDropdownOpen.value
 }
 </script>
 

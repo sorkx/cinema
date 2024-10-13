@@ -71,7 +71,7 @@ router.beforeEach((to, from, next) => {
 </script>
 
 <template>
-	<div class="header__container overflow">
+	<div class="header__container">
 		<header class="header header--overflow">
 			<div class="container header__wrapper">
 				<LogoLink />

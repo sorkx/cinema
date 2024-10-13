@@ -32,6 +32,13 @@
 		position: relative;
 	}
 
+	&--filter {
+		padding: 4px;
+        margin-right: 6px;
+        position: relative;
+        background-color: transparent;
+	}
+
 	&--genre {
 		display: inline-flex;
 		justify-content: center;
@@ -72,6 +79,39 @@
 		&:hover {
 			color: var(--color-palette-white-base);
 			background: hsla(0, 0%, 100%, .1);
+		}
+	}
+
+	&--mobile {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		font-size: 16px;
+		font-weight: 500;
+		border-radius: 12px;
+		flex-shrink: 0;
+		align-self: stretch;
+		gap: 6px;
+		height: 44px;
+		padding: 10px 20px;
+
+		&::after, &::before {
+			content: "";
+			position: absolute;
+			border-radius: inherit;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			z-index: -1;
+		}
+
+		&::after {
+			background: hsla(0, 0%, 100%, .3);
+			color: var(--color-palette-white-base);
+			transition: .3s ease-out;
+			opacity: 0;
 		}
 	}
 }

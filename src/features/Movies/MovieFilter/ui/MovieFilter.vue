@@ -7,6 +7,7 @@ import {
 } from '@/shared/ui/buttons'
 import {
     computed,
+    ref,
 } from 'vue'
 import {
     UISymbol,
@@ -14,6 +15,11 @@ import {
 import {
     Dropdown,
 } from '@/shared/ui/Dropdown'
+import {
+    Sidebar,
+} from '@/shared/ui/Sidebar'
+
+const openSidebar = ref(false)
 
 const props = defineProps({
     genres: {
@@ -96,6 +102,10 @@ const dropdowns = computed(() => [
         typeDropdown: 'rating'
     }
 ])
+
+const toggleDropdown = (force) => {
+    openSidebar.value = force ?? !openSidebar.value
+}
 </script>
 
 <template>
@@ -124,7 +134,7 @@ const dropdowns = computed(() => [
 	<div class="dropdown__catalog">
 		<UISymbol 
 			name="menu-left" 
-			class="icon" 
+			class="icon menu-left" 
 		/>
 		<Dropdown 
 			v-for="dropdown in dropdowns"
@@ -133,8 +143,29 @@ const dropdowns = computed(() => [
 			:options="dropdown.options"
 			v-model:selectedValue="dropdown.selectedValue"
 			:typeDropdown="dropdown.typeDropdown"
+			:class="[`${dropdown.typeDropdown}`, `hidden-${dropdown.typeDropdown}`]"
 		/>
+		<div class="dropdown__catalog--buttons">
+			<VButton
+				modificator="filter"
+				class="filter-button"
+				@click="toggleDropdown()"
+			>
+				<UISymbol 
+					name="slider"
+				/>
+			</VButton>
+		</div>
 	</div>
+	<Transition name="slide-fade">
+		<Sidebar
+			:sidebarItems="ratingsFill"
+			title="Рейтинг"
+			type="rating"
+			v-show="openSidebar"
+			@close="toggleDropdown(false)" 
+		/>
+	</Transition>
 </template>
 
 <style src="./styles.scss" lang="scss" scoped />
