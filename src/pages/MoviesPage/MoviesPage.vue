@@ -1,14 +1,13 @@
 <script setup>
 import {
-    watch,
     computed,
     onMounted,
     ref,
     reactive,
+    watch,
 } from 'vue'
 import { 
     useRoute,
-    useRouter,
 } from 'vue-router'
 import {
     MovieLists,
@@ -30,15 +29,15 @@ import {
 } from '@/shared/lib/use/useInfinityScroll'
 import {
     SpinnerLoader,
-    HorizontalLoader,
 } from '@/shared/ui/loaders'
 import {
     MovieFilter,
 } from '@/features/Movies'
 
-const router = useRouter();
 const route = useRoute()
 const store = movieModel()
+
+const currentResults = ref([])
 
 const { 
     state,
@@ -59,9 +58,9 @@ const routeMapping = {
 const contentType = computed(() => routeMapping[route.params.type])
 
 const filterParams = reactive({
-    genres: null,
-    ratingTo: null,
-    yearTo: null,
+    genres: '',
+    ratingTo: '',
+    yearFrom: '',
     order: ''
 })
 
@@ -71,9 +70,15 @@ const fetchMovies = async (page = 1) => {
 
 const loadMore = async () => {
     await store.fetchCategoryNextPage(contentType.value, filterParams)
+    currentResults.value = state.value.categories[contentType.value].data
 }
 
-const fetchCategoryItems = async () => await fetchMovies(1)
+const fetchCategoryItems = async () => {
+    currentResults.value = []
+    await fetchMovies(1)
+    currentResults.value = state.value.categories[contentType.value].data
+}
+
 const fetchNextPage = async () => await loadMore()
 
 const updateFilterParam = (param, value) => {
@@ -107,19 +112,23 @@ onMounted(async () => {
 		</div>
 		<MovieFilter 
 			:genres="genresMovie"
-			v-model:selectedGenre="filterParams.genres"
-			@update:selectedGenre="updateFilterParam(filterParams.genres, $event)" 
+			:selectedGenre="filterParams.genres"
+			:yearFrom="filterParams.yearFrom"
+			:ratingTo="filterParams.ratingTo"
+			:order="filterParams.order"
+			@update:selectedGenre="updateFilterParam('genres', $event)"
+			@update:yearFrom="updateFilterParam('yearFrom', $event)" 
+			@update:ratingTo="updateFilterParam('ratingTo', $event)" 
+			@update:order="updateFilterParam('order', $event)"
 		/>
 
 		<SpinnerLoader v-if="isLoading" />
 
 		<MovieLists
-			v-if="state.categories[contentType]"
-			:movies="state.categories[contentType].data"
+			v-if="currentResults.length > 0"
+			:movies="currentResults"
 			hidden="true"
 		/>
 		<div ref="scrollComponent" />
-
-		<HorizontalLoader v-if="isLoading" />
 	</div>
 </template>

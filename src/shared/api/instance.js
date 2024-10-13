@@ -18,7 +18,6 @@ export const fetchInstance = async (u, path = '', params = {}) => {
                 'X-API-KEY': API_KEY,
                 'Content-Type': 'application/json',
             },
-            mode: 'cors',
         })
 
         if (response.status === 402) {

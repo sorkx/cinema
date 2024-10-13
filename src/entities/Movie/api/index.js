@@ -7,10 +7,12 @@ import {
 
 export const Api = {
 
-    getCategories: async (category, page = 1, genres, ratingTo, yearTo, order) => {
+    getCategories: async (category, page = 1, filters = {}) => {
         try{
+            const { genres, ratingTo, yearFrom, order } = filters
+
             return await fetchInstance(API_URL, '', { 
-                type: category, page, genres, ratingTo, yearTo, order 
+                type: category, page, genres, ratingTo, yearFrom, order 
             })
         } catch(e) {
             console.error(`Ошибка при загрузке ${category}:`, e)

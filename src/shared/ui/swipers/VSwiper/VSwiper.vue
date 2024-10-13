@@ -87,7 +87,6 @@ const genresBreakpoints = {
     320: {
         slidesPerView: 'auto',
         spaceBetween: 12,
-        slidesPerGroup: 3.5,
     },
 }
 

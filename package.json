@@ -11,6 +11,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vueuse/components": "^11.1.0",
     "@vueuse/core": "11.1.0",
     "lodash.debounce": "4.0.8",
     "nprogress": "0.2.0",

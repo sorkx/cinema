@@ -6,9 +6,14 @@ import {
     VButton
 } from '@/shared/ui/buttons'
 import {
-    onMounted,
-    ref,
+    computed,
 } from 'vue'
+import {
+    UISymbol,
+} from '@/shared/ui/UISymbol'
+import {
+    Dropdown,
+} from '@/shared/ui/Dropdown'
 
 const props = defineProps({
     genres: {
@@ -16,28 +21,54 @@ const props = defineProps({
         default: () => [],
     },
     selectedGenre: {
-        type: Number,
-        default: null,
+        type: [Number, String],
+        default: '',
     },
+    yearFrom: {
+        type: [Number, String],
+        default: '',
+    },
+    ratingTo: {
+        type: [Number, String],
+        default: '',
+    },
+    order: {
+        type: [Number, String],
+        default: '',
+    }
 })
 
-const emit = defineEmits(['update:selectedGenre'])
+const emit = defineEmits(['update:selectedGenre', 'update:yearFrom, update:ratingTo', 'update:order'])
 
-const localSelectedGenre = ref(props.selectedGenre)
+const localSelectedGenre = computed({
+    get: () => props.selectedGenre,
+    set: (value) => emit('update:selectedGenre', value)
+})
+
+const selectedYear = computed({
+    get: () => props.yearFrom,
+    set: (value) => emit('update:yearFrom', value)
+})
+
+const selectedRating = computed({
+    get: () => props.ratingTo,
+    set: (value) => emit('update:ratingTo', value)
+})
+
+const selectedSort = computed({
+    get: () => props.order,
+    set: (value) => emit('update:order', value)
+})
 
 const selectGenre = (id) => {
-    if (localSelectedGenre.value === id) {
-        localSelectedGenre.value = null
-        emit('update:selectedGenre', null)
-    } else {
-        localSelectedGenre.value = id
-        emit('update:selectedGenre', id)
-    }
+    localSelectedGenre.value = localSelectedGenre.value === id ? null : id
 }
 
-onMounted(() => {
-    localSelectedGenre.value = props.selectedGenre;
-})
+const currentYear = new Date().getFullYear()
+
+const years = Array.from({ length: 60 }, (_, i) => currentYear - i)
+const ratings = [6.0, 7.0, 8.0, 9.0, 10.0].map(rating => rating.toFixed(1))
+const sortOptions = ['По количеству голосов', 'По дате выхода', 'По рейтингу']
 </script>
 
 <template>
@@ -54,10 +85,9 @@ onMounted(() => {
 					@click="selectGenre(item.id)"
 					:class="{ active: item.id === localSelectedGenre }"
 				>
-					<div 
-						class="genre-icon"  
-						:class="`genre-${item.id}`"
-
+					<UISymbol 
+						:name="`genre-${item.id}`"
+						class="genre-icon"
 					/>
 					{{ item.genre }}
 				</VButton>
@@ -65,25 +95,28 @@ onMounted(() => {
 		</template>
 	</ModuleWrapper>
 	<div class="dropdown__catalog">
-		<div class="icon menu-left" />
-		<div class="dropdown__catalog--container">
-			<div class="dropdown__catalog--item">
-				<p>По рейтингу</p>
-				<div class="icon chevron-icon" />
-			</div>
-		</div>
-		<div class="dropdown__catalog--container">
-			<div class="dropdown__catalog--item">
-				<p>Год выхода</p>
-				<div class="icon chevron-icon" />
-			</div>
-		</div>
-		<div class="dropdown__catalog--container">
-			<div class="dropdown__catalog--item">
-				<p>Рейтинг</p>
-				<div class="icon chevron-icon" />
-			</div>
-		</div>
+		<UISymbol 
+			name="menu-left" 
+			class="icon" 
+		/>
+		<Dropdown 
+			placeholder="Сортировка"
+			:options="sortOptions"
+			v-model:selectedValue="selectedSort"
+			typeDropdown="sort"
+		/>
+		<Dropdown 
+			placeholder="Год выхода"
+			:options="years"
+			v-model:selectedValue="selectedYear"
+			typeDropdown="year"
+		/>
+		<Dropdown 
+			placeholder="Рейтинг"
+			:options="ratings"
+			v-model:selectedValue="selectedRating"
+			typeDropdown="rating"
+		/>
 	</div>
 </template>
 
