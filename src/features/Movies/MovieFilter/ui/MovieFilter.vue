@@ -38,7 +38,11 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['update:selectedGenre', 'update:yearFrom, update:ratingTo', 'update:order'])
+const emit = defineEmits(['update:selectedGenre', 'update:yearFrom', 'update:ratingTo', 'update:order'])
+
+const selectGenre = (id) => {
+    localSelectedGenre.value = localSelectedGenre.value === id ? null : id
+}
 
 const localSelectedGenre = computed({
     get: () => props.selectedGenre,
@@ -60,15 +64,38 @@ const selectedSort = computed({
     set: (value) => emit('update:order', value)
 })
 
-const selectGenre = (id) => {
-    localSelectedGenre.value = localSelectedGenre.value === id ? null : id
-}
+const yearsFill = computed(() => Array.from(
+    { length: 60 }, 
+    (_, i) => new Date().getFullYear() - i)
+)
 
-const currentYear = new Date().getFullYear()
+const ratingsFill = computed(() => [6.0, 7.0, 8.0, 9.0, 10.0].map(rating => rating.toFixed(1)))
 
-const years = Array.from({ length: 60 }, (_, i) => currentYear - i)
-const ratings = [6.0, 7.0, 8.0, 9.0, 10.0].map(rating => rating.toFixed(1))
 const sortOptions = ['По количеству голосов', 'По дате выхода', 'По рейтингу']
+
+const dropdowns = computed(() => [
+    {
+        placeholder: 'Сортировка',
+        options: sortOptions,
+        get selectedValue() { return selectedSort.value; },
+        set selectedValue(value) { selectedSort.value = value; },
+        typeDropdown: 'sort'
+    },
+    {
+        placeholder: 'Год выхода',
+        options: yearsFill.value,
+        get selectedValue() { return selectedYear.value; },
+        set selectedValue(value) { selectedYear.value = value; },
+        typeDropdown: 'year'
+    },
+    {
+        placeholder: 'Рейтинг',
+        options: ratingsFill.value,
+        get selectedValue() { return selectedRating.value; },
+        set selectedValue(value) { selectedRating.value = value; },
+        typeDropdown: 'rating'
+    }
+])
 </script>
 
 <template>
@@ -100,22 +127,12 @@ const sortOptions = ['По количеству голосов', 'По дате 
 			class="icon" 
 		/>
 		<Dropdown 
-			placeholder="Сортировка"
-			:options="sortOptions"
-			v-model:selectedValue="selectedSort"
-			typeDropdown="sort"
-		/>
-		<Dropdown 
-			placeholder="Год выхода"
-			:options="years"
-			v-model:selectedValue="selectedYear"
-			typeDropdown="year"
-		/>
-		<Dropdown 
-			placeholder="Рейтинг"
-			:options="ratings"
-			v-model:selectedValue="selectedRating"
-			typeDropdown="rating"
+			v-for="dropdown in dropdowns"
+			:key="dropdown.typeDropdown"
+			:placeholder="dropdown.placeholder"
+			:options="dropdown.options"
+			v-model:selectedValue="dropdown.selectedValue"
+			:typeDropdown="dropdown.typeDropdown"
 		/>
 	</div>
 </template>

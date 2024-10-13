@@ -31,7 +31,10 @@ onMounted(() => {
 </script>
 
 <template>
-	<div class="search__wrapper">
+	<div
+		v-click-outside="closeSearch"
+		class="search__wrapper"
+	>
 		<div class="search__body">
 			<div class="search__content">
 				<div class="search-input">

@@ -50,12 +50,8 @@ const items = [
     }
 ]
 
-const toggleSearch = () => {
-    isSearchVisible.value = !isSearchVisible.value
-}
-
-const closeSearch = () => {
-    isSearchVisible.value = false
+const toggleSearch = (force) => {
+    isSearchVisible.value = force ?? !isSearchVisible.value
 }
 
 watch(isSearchVisible, async (newVal) => {
@@ -68,7 +64,7 @@ watch(isSearchVisible, async (newVal) => {
 
 router.beforeEach((to, from, next) => {
     if (isSearchVisible.value) {
-        closeSearch()
+        toggleSearch(false)
     }
     next()
 })
@@ -99,7 +95,7 @@ router.beforeEach((to, from, next) => {
 				<div class="header__profile">
 					<div class="header__profile--search">
 						<VButton
-							@click="toggleSearch" 
+							@click="toggleSearch()" 
 							modificator="search"
 						>
 							<UISymbol 
@@ -110,7 +106,7 @@ router.beforeEach((to, from, next) => {
 						<MovieSearch 
 							v-if="isSearchVisible"
 							focus-on-mounted
-							@close="closeSearch"
+							@close="toggleSearch(false)"
 						/>
 					</div>
 				</div>

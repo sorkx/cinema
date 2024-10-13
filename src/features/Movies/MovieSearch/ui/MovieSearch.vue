@@ -107,7 +107,6 @@ onBeforeUnmount(() => {
 				:key="searchMovies.length"
 			/>
 
-			<HorizontalLoader v-if="isLoading" />
 			<div ref="scrollComponent" />
 		</SearchInput>
 	</Transition>

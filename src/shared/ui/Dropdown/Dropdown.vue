@@ -6,20 +6,15 @@ import {
 import {
     UISymbol,
 } from '@/shared/ui/UISymbol'
-import { 
-    onClickOutside,
-} from '@vueuse/core'
-
-const dropdown = ref(null)
 
 const props = defineProps({
     selectedValue: {
         type: [String, Number],
-        default: null
+        default: null,
     },
     placeholder: {
         type: String,
-        default: ''
+        default: '',
     },
     options: {
         type: Array,
@@ -27,19 +22,20 @@ const props = defineProps({
     },
     typeDropdown: {
         type: String,
+        default: '',
     }
 })
+
+const emit = defineEmits(['update:selectedValue'])
+
+const isDropdownOpen = ref(false)
+const searchQuery = ref('')
 
 const orderFormatted = {
     RATING: 'По рейтингу',
     YEAR: 'По дате выхода',
     NUM_VOTE: 'По количеству голосов',
 }
-
-const emit = defineEmits(['update:selectedValue'])
-
-const isDropdownOpen = ref(false)
-const searchQuery = ref('')
 
 const displayOptions = computed(() => {
     if (props.typeDropdown === 'sort') {
@@ -57,8 +53,6 @@ const selectedLabel = computed(() => {
     return props.selectedValue
 })
 
-
-const handleToggle = () => isDropdownOpen.value = !isDropdownOpen.value
 const handleInputClick = (event) => event.stopPropagation()
 
 const selectOption = (option) => {
@@ -88,14 +82,16 @@ const isOptionSelected = (option) => {
     return props.selectedValue === option
 }
 
-onClickOutside(dropdown, () => isDropdownOpen.value = false)
+const toggleDropdown = (force) => {
+    isDropdownOpen.value = force ?? !isDropdownOpen.value;
+}
 </script>
 
 <template>
 	<div
-		ref="dropdown" 
+		v-click-outside="() => toggleDropdown(false)"
 		class="dropdown__catalog--container"
-		@click="handleToggle"
+		@click="toggleDropdown()"
 	>
 		<div class="dropdown__catalog--item">
 			<p>{{ selectedLabel || props.placeholder }}</p>
