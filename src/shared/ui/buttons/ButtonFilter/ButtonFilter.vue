@@ -8,9 +8,6 @@ const props = defineProps({
         type: String,
         required: true
     },
-    itemLength: {
-        type: Number,
-    },
     active: {
         type: Boolean,
         default: false
@@ -30,7 +27,7 @@ const onClick = () => emit('click')
 		:class="['v-button-filter', { active: isActive }]"
 		@click="onClick"
 	>
-		{{ props.title }} {{ props.itemLength }}
+		{{ props.title }}
 	</button>
 </template>
 

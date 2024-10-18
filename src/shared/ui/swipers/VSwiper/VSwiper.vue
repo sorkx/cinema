@@ -28,7 +28,7 @@ const props = defineProps({
     },
     swiperType: { 
         type: String,
-        validator: value => ['movies', 'media', 'genres'].includes(value),
+        validator: value => ['movies', 'media', 'genres', 'actor-filter'].includes(value),
     },
 
 })
@@ -36,25 +36,25 @@ const props = defineProps({
 const moviesBreakpoints = reactive({
     320: {
         slidesPerView: 2.5,
-        spaceBetween: 10,
+        spaceBetween: 16,
     },
     640: {
-        slidesPerView: 2.5,
-        spaceBetween: 20,
+        slidesPerView: 3.8,
+        spaceBetween: 16,
     },
     768: {
-        slidesPerView: 3.5,
-        spaceBetween: 20,
+        slidesPerView: 2.8,
+        spaceBetween: 24,
         slidesPerGroup: 2,
     },
     968: {
-        slidesPerView: 4.5,
-        spaceBetween: 20,
+        slidesPerView: 3.5,
+        spaceBetween: 24,
         slidesPerGroup: 2,
     },
     1024: {
-        slidesPerView: 4.5,
-        spaceBetween: 20,
+        slidesPerView: 3.7,
+        spaceBetween: 24,
         slidesPerGroup: 2,
     },
     1440: {
@@ -90,6 +90,13 @@ const genresBreakpoints = {
     },
 }
 
+const actorFilterBreakpoints = {
+    320: {
+        slidesPerView: 'auto',
+        spaceBetween: 24,
+    },
+}
+
 const { hasNavigation, speed } = toRefs(props)
 const modules = [Pagination, Navigation]
 
@@ -101,6 +108,8 @@ const swiperBreakpoints = computed(() => {
         return mediaBreakpoints
     case 'genres':
         return genresBreakpoints
+    case 'actor-filter':
+        return actorFilterBreakpoints
     default:
         return moviesBreakpoints
     }

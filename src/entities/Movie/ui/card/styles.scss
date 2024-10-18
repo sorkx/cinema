@@ -1,7 +1,13 @@
 .movie {
-	height: 400px; // 350px;
-    display: flex;
-    flex-direction: column;
+	display: grid;
+    gap: 16px;
+    grid-template-rows: auto 1fr;
+    position: relative;
+    transition: 1s;
+    width: 100%;
+	// height: 400px; // 350px;
+    // display: flex;
+    // flex-direction: column;
 
 	&:hover .movie__image--inner {
 		transform: scale(1.05);
@@ -10,9 +16,18 @@
 	
 	&__body {
 		position: relative;
+		max-width: 282px;
+		min-width: 156px;
+		width: 100%;
+		border-radius: 32px;
+		aspect-ratio: 2 / 3;
+		cursor: pointer;
+		height: 384px;
 		overflow: hidden;
-		border-radius: 8px;
-		height: 100%;
+		// position: relative;
+		// overflow: hidden;
+		// border-radius: 32px;
+		// height: 100%;
 	}
 
 	&__image {
@@ -32,11 +47,8 @@
 	}
 	
 	&__overlay {
+		inset: 0;
 		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		left: 0;
 	}
 
 	&__content {
@@ -70,17 +82,24 @@
 	}
 	
 	&__title {
-		font-size: 16px;
-		font-weight: $fMedium;
-		line-height: normal;
-		color: hsla(0, 0%, 100%, .8);
-		color: var(--defaultColorLight);
-		margin-bottom: 5px;
-		transition: .3s;
-		margin-top: 10px;
-		white-space: nowrap;
+		color: var(--color-palette-white-base);
+		font-size: 21px;
+		font-weight: 700;
+		line-height: 32px;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		white-space: nowrap;
+		// font-size: 16px;
+		// font-weight: $fMedium;
+		// line-height: normal;
+		// color: hsla(0, 0%, 100%, .8);
+		// color: var(--defaultColorLight);
+		// margin-bottom: 5px;
+		// transition: .3s;
+		// margin-top: 10px;
+		// white-space: nowrap;
+		// overflow: hidden;
+		// text-overflow: ellipsis;
 	}
 }
 
@@ -96,20 +115,35 @@
     }
 }
 
-@media (max-width: 968px) {
-    .movie {
-		height: 417px;
+// @media (max-width: 968px) {
+//     .movie {
+// 		height: 417px;
+// 	}
+// }
+
+// @media (max-width: 680px) {
+//     .movie {
+// 		height: 235px;
+// 	}
+// }
+
+@media (max-width: 640px) {
+	.movie{
+		&__title {
+			font-size: 16px;
+			line-height: 24px;
+		}
+
+		&__body {
+			border-radius: 16px;
+			height: 232px;
+			width: 156px;
+		}
 	}
 }
 
-@media (max-width: 680px) {
-    .movie {
-		height: 235px;
-	}
-}
-
-@media (max-width: 320px) {
-	.movie {
-		width: 139px;
-	}
-}
+// @media (max-width: 320px) {
+// 	.movie {
+// 		width: 139px;
+// 	}
+// }

@@ -5,6 +5,9 @@ import {
 import {
     UISymbol,
 } from '@/shared/ui/UISymbol'
+import {
+    ModuleWrapper,
+} from '@/shared/ui/ModuleWrapper'
 import{
     ButtonFilter,
 } from '@/shared/ui/buttons'
@@ -16,6 +19,7 @@ import {
 } from '@/shared/ui/loaders'
 import {
     computed,
+    onMounted,
     ref,
 } from 'vue'
 
@@ -36,13 +40,13 @@ const professionMapping ={
     'HIMSELF': 'Сам себя',
     'PRODUCER': 'Продюсер',
     'WRITER': 'Сценарист',
-	'VOICE_MALE': 'Мужской голос',
+    'VOICE_MALE': 'Мужской голос',
     'VOICE_FEMALE': 'Женский голос',
     'DIRECTOR': 'Режиссер',
     'HRONO_TITR_MALE': 'Указан в титрах',
 }
 
-const currentFilter = ref('ALL')
+const currentFilter = ref('')
 
 const filters = computed(() => {
     if (!Array.isArray(props.person.films)) {
@@ -67,12 +71,10 @@ const setFilter = (key) => {
 }
 
 const filteredFilms = computed(() => {
-    if (currentFilter.value === 'ALL') {
-        return props.person.films
-    }
     return props.person.films.filter(film => film.professionKey === currentFilter.value)
 })
 
+onMounted(() => setFilter('ACTOR'))
 </script>
 
 <template>
@@ -85,45 +87,41 @@ const filteredFilms = computed(() => {
 		<Pathway title="Актер" />
 		<div class="actor__header">
 			<div class="actor__image">
-				<div class="person">
-					<UISymbol name="person" />
-					<div class="person__overlay">
-						<img 
-							:src="props.person?.posterUrl" 
-							:alt="props.person?.nameEn || props.person?.nameRu"
-							class="person__image"
-						/>
-					</div>
-				</div>	
+				<img 
+					:src="props.person?.posterUrl" 
+					:alt="props.person?.nameEn || props.person?.nameRu"
+					class="actor__image"
+					loading="eager"
+				/>
 			</div>
 			<div class="actor__title">
 				<a 
 					:href="props.person?.webUrl" 
 					target="_blank"
 				>
-					<div class="actor__name">
+					<h2>
 						{{ props.person?.nameEn || props.person?.nameRu }}
-					</div>
+					</h2>
 				</a>
-				<div class="actor__subtitle">
+				<span>
 					{{ props.person?.profession }}
-				</div>
+				</span>
 			</div>
 		</div>
-		<div class="actor__filter">
-			<ButtonFilter
-				title="Всё"
-				:active="currentFilter === 'ALL'"
-				@click="setFilter('ALL')"
-     		 />
-			<ButtonFilter
-				v-for="filter in filters"
-				:key="filter.professionKey"
-				:title="professionMapping[filter.professionKey]"
-				:active="currentFilter === filter.professionKey"
-				:itemLength="filter.count"
-				@click="setFilter(filter.professionKey)"
-			/>
+		<div class="actor__filters">
+			<ModuleWrapper
+				:items="filters"
+				swiper-type="genres"
+			>
+				<template #slide="{ item }">
+					<ButtonFilter
+						:key="item.professionKey"
+						:title="professionMapping[item.professionKey]"
+						:active="currentFilter === item.professionKey"
+						@click="setFilter(item.professionKey)"
+					/>
+				</template>
+			</ModuleWrapper>
 		</div>
 		<div class="actor__body">
 			<MovieLists 

@@ -38,5 +38,3 @@ const props = defineProps({
 		</template>
 	</ModuleWrapper>
 </template>
-
-<!-- <style src="./styles.scss" lang="scss" scoped /> -->

@@ -3,7 +3,7 @@ import {
     storeToRefs,
 } from 'pinia'
 import {
-    onMounted,
+    onBeforeMount,
     ref,
 } from 'vue'
 import { 
@@ -57,7 +57,7 @@ const fetchData = async () => {
     loading.value = false
 }
 
-onMounted(async () => await fetchData())
+onBeforeMount(async () => await fetchData())
 
 onBeforeRouteLeave(() => {
     state.collections = {}
