@@ -1,0 +1,213 @@
+.v-selector {
+	--color-label: #fff;
+}
+
+.multiselect-range {
+	padding: 24px;
+}
+
+.multiselect {
+	align-items: center;
+    background: var(--color-palette-white-base);
+    border: 1px solid var(--color-palette-gray-6);
+    border-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    font-size: 1rem;
+    justify-content: flex-end;
+    margin: 0 auto;
+    min-height: calc(1px * 2 + 1rem * 1.375 + .5rem * 2);
+    outline: none;
+    position: relative;
+    width: 100%;
+}
+
+.v-selector .multiselect {
+	background: transparent;
+    border: none;
+    border-radius: 32px;
+    box-shadow: none;
+    padding: 12px 0;
+    width: -moz-fit-content;
+    width: fit-content;
+}
+
+.v-selector .multiselect.range .multiselect__dropdown {
+    width: 470px;
+}
+
+.v-selector .multiselect__wrapper {
+	display: flex;
+    gap: 8px;
+    min-height: auto;
+}
+
+.multiselect-icon {
+	display: block;
+    width: 24px;
+    height: 24px;
+	fill: none;
+}
+
+.multiselect-clear {
+	display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    opacity: 1;
+    position: relative;
+    z-index: 10;
+}
+
+.v-selector .multiselect-clear {
+	color: var(--color-label);
+    order: 2;
+    padding: 0;
+}
+
+.is-open {
+	transition: .2s ease;
+}
+
+.v-selector .multiselect-caret {
+	color: var(--color-label);
+}
+
+.v-selector .multiselect:hover:not(.v-selector .multiselect.selected) {
+    --color-label: #b4fd64;
+}
+
+.v-selector .multiselect.selected {
+	background-color: var(--color-palette-green-10);
+    padding: 12px 16px;
+    --color-label: #0b0b0b;
+}
+
+.v-selector .multiselect.is-open:not(.v-selector .multiselect.selected) {
+    --color-label: #b4fd64;
+}
+
+.v-selector .multiselect.is-open .multiselect-caret {
+    transform: rotate(180deg)
+}
+
+.multiselect__wrapper {
+	align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 auto;
+    min-height: calc(1px * 2 + 1rem * 1.375 + .5rem * 2);
+    outline: none;
+    position: relative;
+    width: 100%;
+}
+
+.v-selector .multiselect-label.single {
+    gap: 8px;
+    line-height: 24px;
+}
+
+.v-selector .multiselect-label {
+    display: flex;
+}
+
+.v-selector .multiselect-label, .v-selector .multiselect-placeholder {
+	color: var(--color-label);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: $fMedium;
+    padding: 0;
+    position: relative;
+    white-space: nowrap;
+}
+
+.v-selector .multiselect__dropdown {
+	background: var(--color-palette-black-30);
+    border: none;
+    border-radius: 16px;
+    max-height: 430px;
+    max-width: 530px;
+    min-width: 250px;
+    overflow-y: auto;
+    scrollbar-color: var(--color-palette-green-10) var(--color-palette-black-30);
+    scrollbar-width: thin;
+   	transform: translateY(calc(100% + 8px));
+    width: -moz-max-content;
+    width: max-content;
+}
+
+.multiselect__dropdown {
+	-webkit-overflow-scrolling: touch;
+    background: var(--color-palette-white-base);
+    border: 1px solid var(--color-palette-gray-6);
+    border-radius: 0 0 4px 4px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    left: calc(1px * -1);
+    margin-top: calc(1px * -1);
+    max-height: 10rem;
+    outline: none;
+    overflow-y: scroll;
+    position: absolute;
+    right: calc(1px * -1);
+    transform: translateY(100%);
+    z-index: 100;
+}
+
+.multiselect-options {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.multiselect-option {
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    font-size: 1rem;
+    justify-content: flex-start;
+    line-height: 1.375;
+    padding: .5rem .75rem;
+    text-align: left;
+    text-decoration: none;
+}
+
+.v-selector .multiselect-option {
+    color: var(--color-palette-white-base);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: $fRegular;
+    line-height: 28px;
+    padding: 8px 16px;
+}
+
+.v-selector .multiselect-option .single-option {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.v-selector .multiselect.single .multiselect__dropdown {
+    padding: 8px 0;
+}
+
+.v-selector .multiselect-option .single-option.is-selected {
+    color: var(--color-palette-green-10);
+}
+
+.v-selector .multiselect-option:hover {
+    color: var(--color-palette-green-10);
+}
+
+.v-selector .multiselect-option.is-pointed, .v-selector .multiselect-option.is-selected {
+    background: var(--color-palette-black-30);
+	color: var(--color-palette-green-10);
+}

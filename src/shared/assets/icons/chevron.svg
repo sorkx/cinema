@@ -1,3 +1,1 @@
-<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'>
-	<path d='M8.19531 13.138L15.8046 20.7474L23.414 13.138L21.5286 11.2527L15.8046 16.9767L10.0806 11.2527L8.19531 13.138Z' fill='rgba(255, 255, 255, 1)'></path>
-</svg>
+<svg fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path fill="currentColor" d="m8.195 13.138 7.61 7.61 7.609-7.61-1.885-1.885-5.724 5.724-5.724-5.724z"/></svg>

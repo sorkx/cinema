@@ -33,6 +33,7 @@ import {
 import {
     MovieFilter,
 } from '@/features/Movies'
+import debounce from 'lodash.debounce'
 
 const route = useRoute()
 const store = movieModel()
@@ -59,7 +60,9 @@ const contentType = computed(() => routeMapping[route.params.type])
 
 const filterParams = reactive({
     genres: '',
+    ratingFrom: '',
     ratingTo: '',
+    yearTo: '',
     yearFrom: '',
     order: ''
 })
@@ -76,15 +79,15 @@ const loadMore = async () => {
 const fetchCategoryItems = async () => {
     currentResults.value = []
     await fetchMovies(1)
-    currentResults.value = state.value.categories[contentType.value].data
+    currentResults.value = state.value.categories[contentType.value]?.data
 }
 
 const fetchNextPage = async () => await loadMore()
 
-const updateFilterParam = (param, value) => {
+const updateFilterParam = debounce((param, value) => {
     filterParams[param] = value
     fetchCategoryItems()
-}
+}, 500)
 
 const { scrollComponent } = useInfinityScroll({
     fetchData: fetchCategoryItems,
@@ -93,9 +96,7 @@ const { scrollComponent } = useInfinityScroll({
 
 watch(() => route.params.type, fetchCategoryItems)
 
-onMounted(async () => {
-    await store.fetchMovieFilters()
-})
+onMounted(async () => await store.fetchMovieFilters())
 </script>
 
 <template>
@@ -112,13 +113,17 @@ onMounted(async () => {
 		</div>
 		<MovieFilter 
 			:genres="genresMovie"
-			:selectedGenre="filterParams.genres"
-			:yearFrom="filterParams.yearFrom"
-			:ratingTo="filterParams.ratingTo"
-			:order="filterParams.order"
-			@update:selectedGenre="updateFilterParam('genres', $event)"
-			@update:yearFrom="updateFilterParam('yearFrom', $event)" 
-			@update:ratingTo="updateFilterParam('ratingTo', $event)" 
+			v-model:selected-genre="filterParams.genres"
+			v-model:order="filterParams.order"
+			v-model:year-from="filterParams.yearFrom"
+			v-model:year-to="filterParams.yearTo"
+			v-model:rating-from="filterParams.ratingFrom"
+			v-model:rating-to="filterParams.ratingTo"
+			@update:selected-genre="updateFilterParam('genres', $event)"
+			@update:year-from="updateFilterParam('yearFrom', $event)"
+			@update:year-to="updateFilterParam('yearTo', $event)" 
+			@update:rating-fromo="updateFilterParam('ratingFrom', $event)" 
+			@update:rating-to="updateFilterParam('ratingTo', $event)" 
 			@update:order="updateFilterParam('order', $event)"
 		/>
 

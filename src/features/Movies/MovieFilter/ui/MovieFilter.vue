@@ -1,25 +1,24 @@
 <script setup>
 import {
+    computed,
+    ref,
+    watch,
+} from 'vue'
+import {
     ModuleWrapper,
 } from '@/shared/ui/ModuleWrapper'
 import {
     VButton
 } from '@/shared/ui/buttons'
 import {
-    computed,
-    ref,
-} from 'vue'
-import {
     UISymbol,
 } from '@/shared/ui/UISymbol'
 import {
-    Dropdown,
-} from '@/shared/ui/Dropdown'
-import {
     Sidebar,
 } from '@/shared/ui/Sidebar'
-
-const openSidebar = ref(false)
+import {
+    VSelect,
+} from '@/shared/ui/VSelect'
 
 const props = defineProps({
     genres: {
@@ -34,6 +33,14 @@ const props = defineProps({
         type: [Number, String],
         default: '',
     },
+    yearTo: {
+        type: [Number, String],
+        default: '',
+    },
+    ratingFrom: {
+        type: [Number, String],
+        default: '',
+    },
     ratingTo: {
         type: [Number, String],
         default: '',
@@ -44,7 +51,16 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['update:selectedGenre', 'update:yearFrom', 'update:ratingTo', 'update:order'])
+const emit = defineEmits([
+    'update:selectedGenre',  
+    'update:yearFrom', 
+    'update:yearTo',
+    'update:ratingFrom',  
+    'update:ratingTo', 
+    'update:order'
+])
+
+const openSidebar = ref(false)
 
 const selectGenre = (id) => {
     localSelectedGenre.value = localSelectedGenre.value === id ? null : id
@@ -55,12 +71,22 @@ const localSelectedGenre = computed({
     set: (value) => emit('update:selectedGenre', value)
 })
 
-const selectedYear = computed({
+const updateYearFrom = computed({
     get: () => props.yearFrom,
     set: (value) => emit('update:yearFrom', value)
 })
 
-const selectedRating = computed({
+const updateYearTo = computed({
+    get: () => props.yearTo,
+    set: (value) => emit('update:yearTo', value)
+})
+
+const updateRatingFrom = computed({
+    get: () => props.ratingFrom,
+    set: (value) => emit('update:ratingFrom', value)
+})
+
+const updateRatingTo = computed({
     get: () => props.ratingTo,
     set: (value) => emit('update:ratingTo', value)
 })
@@ -70,102 +96,121 @@ const selectedSort = computed({
     set: (value) => emit('update:order', value)
 })
 
-const yearsFill = computed(() => Array.from(
-    { length: 60 }, 
-    (_, i) => new Date().getFullYear() - i)
-)
-
-const ratingsFill = computed(() => [6.0, 7.0, 8.0, 9.0, 10.0].map(rating => rating.toFixed(1)))
-
-const sortOptions = ['По количеству голосов', 'По дате выхода', 'По рейтингу']
-
-const dropdowns = computed(() => [
+const sidebarItems = computed(() => [
     {
-        placeholder: 'Сортировка',
-        options: sortOptions,
-        get selectedValue() { return selectedSort.value; },
-        set selectedValue(value) { selectedSort.value = value; },
-        typeDropdown: 'sort'
+        title: 'Год выхода',
+        min: 1925,
+        max: new Date().getFullYear(),
+        type: 'range',
+        step: 1,
+        range: {
+            from: updateYearFrom.value,
+            to: updateYearTo.value
+        },
+        updateFrom: (value) => updateYearFrom.value = value,
+        updateTo: (value) => updateYearTo.value = value
     },
     {
-        placeholder: 'Год выхода',
-        options: yearsFill.value,
-        get selectedValue() { return selectedYear.value; },
-        set selectedValue(value) { selectedYear.value = value; },
-        typeDropdown: 'year'
-    },
-    {
-        placeholder: 'Рейтинг',
-        options: ratingsFill.value,
-        get selectedValue() { return selectedRating.value; },
-        set selectedValue(value) { selectedRating.value = value; },
-        typeDropdown: 'rating'
+        title: 'Рейтинг',
+        min: 0,
+        max: 10,
+        type: 'range',
+        step: 0.1,
+        range: {
+            from: updateRatingFrom.value,
+            to: updateRatingTo.value
+        },
+        updateFrom: (value) => updateRatingFrom.value = value,
+        updateTo: (value) => updateRatingTo.value = value
     }
 ])
+
+
+const resetFilters = () => {
+    updateYearFrom.value = 1925
+    updateYearTo.value = new Date().getFullYear()
+    updateRatingFrom.value = 0
+    updateRatingTo.value = 10
+}
 
 const toggleDropdown = (force) => {
     openSidebar.value = force ?? !openSidebar.value
 }
+
+watch(openSidebar, async (newVal) => {
+    if (newVal) {
+        document.documentElement.classList.add('sidebar-page')
+    } else {
+        document.documentElement.classList.remove('sidebar-page')
+    }
+})
 </script>
 
 <template>
-	<ModuleWrapper
-			:items="props.genres"
-			swiper-type="genres"
-			style="margin-bottom: 40px"
-	>
-		<template #slide="{ item }">
-			<div :key="item.id">
+	<div class="page-filters">
+		<ModuleWrapper
+				:items="props.genres"
+				swiper-type="genres"
+				class="page-filters__genres"
+		>
+			<template #slide="{ item }">
+				<div :key="item.id">
+					<VButton
+						modificator="genre" 
+						class="genre-button"
+						@click="selectGenre(item.id)"
+						:class="{ 'active-genre': item.id === localSelectedGenre }"
+					>
+						<UISymbol 
+							:name="`genre-${item.id}`"
+							class="genre-icon"
+						/>
+						{{ item.genre }}
+					</VButton>
+				</div>
+			</template>
+		</ModuleWrapper>
+		<div class="page-filters__selectors">
+			<div class="page-filters__selectors-wrap">
+				<VSelect
+					title="Сортировка"
+					select-type="single"
+					v-model:selected-value="selectedSort"
+				/>
+				<div class="page-filters__selectors-wrap__slider">
+					<VSelect
+						v-for="item in sidebarItems"
+						:key="item.title"
+						:step="item.step"
+						:title="item.title"
+						:select-type="item.type"
+						:min="item.min"
+						:max="item.max" 
+						@update:min="item.updateFrom($event)"
+						@update:max="item.updateTo($event)" 
+					/> 
+				</div>
+			</div>
+			<div class="browse-filters">
 				<VButton
-					modificator="genre" 
-					class="genre-button"
-					@click="selectGenre(item.id)"
-					:class="{ active: item.id === localSelectedGenre }"
+					modificator="filter"
+					class="filter-button"
+					@click="toggleDropdown()"
 				>
 					<UISymbol 
-						:name="`genre-${item.id}`"
-						class="genre-icon"
+						name="slider"
 					/>
-					{{ item.genre }}
 				</VButton>
 			</div>
-		</template>
-	</ModuleWrapper>
-	<div class="dropdown__catalog">
-		<UISymbol 
-			name="menu-left" 
-			class="icon menu-left" 
-		/>
-		<Dropdown 
-			v-for="dropdown in dropdowns"
-			:key="dropdown.typeDropdown"
-			:placeholder="dropdown.placeholder"
-			:options="dropdown.options"
-			v-model:selectedValue="dropdown.selectedValue"
-			:typeDropdown="dropdown.typeDropdown"
-			:class="[`${dropdown.typeDropdown}`, `hidden-${dropdown.typeDropdown}`]"
-		/>
-		<div class="dropdown__catalog--buttons">
-			<VButton
-				modificator="filter"
-				class="filter-button"
-				@click="toggleDropdown()"
-			>
-				<UISymbol 
-					name="slider"
-				/>
-			</VButton>
 		</div>
 	</div>
-	<Transition name="slide-fade">
-		<Sidebar
-			:sidebarItems="ratingsFill"
-			title="Рейтинг"
-			type="rating"
-			v-show="openSidebar"
-			@close="toggleDropdown(false)" 
-		/>
-	</Transition>
+	<Sidebar
+		:items="sidebarItems"
+		v-show="openSidebar"
+		:animation="openSidebar"
+		@reset="resetFilters"
+		@close="toggleDropdown(false)"
+	/>
 </template>
 
 <style src="./styles.scss" lang="scss" scoped />

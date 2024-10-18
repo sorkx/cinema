@@ -1,6 +1,6 @@
 <script setup>
 import {
-    computed,
+    onMounted,
     ref,
 } from 'vue'
 import {
@@ -9,33 +9,78 @@ import {
 import {
     VButton
 } from '@/shared/ui/buttons'
+import {
+    VRangeSlider,
+} from '@/shared/ui/VRangeSlider'
 
 const props = defineProps({
-    sidebarItems: {
+    items: {
         type: Array,
         default: () => [],
     },
-    type: {
-        type: String,
-        default: '',
-    },
-    title: {
-        type: String,
-        default: '',
+    animation: {
+        type: Boolean,
     }
 })
 
-const emit = defineEmits(['close', 'reset', 'apply'])
+const emit = defineEmits(['close', 'reset'])
+
+const localItems = ref(props.items)
+const filtersChanged = ref(false)
 
 const closeSidebar = () => {
     emit('close')
 }
+
+const initializeItems = () => {
+    localItems.value = props.items.map(item => ({
+        ...item,
+        range: {
+            from: item.min,
+            to: item.max
+        }
+    }))
+}
+
+const applyFilter = () => {
+	    if (filtersChanged.value) {
+        localItems.value.forEach(item => {
+            item.updateFrom(item.range.from)
+            item.updateTo(item.range.to)
+        })
+        filtersChanged.value = false
+        closeSidebar()
+    } else {
+        closeSidebar()
+    }
+}
+
+const resetFilter = () => {
+    initializeItems()
+    emit('reset')
+    closeSidebar()
+}
+
+const isDefaultRange = (item) => {
+    return item.range.from === item.min && item.range.to === item.max
+}
+
+const updateRange = (item, type, value) => {
+    item.range[type] = value
+    filtersChanged.value = true
+}
+
+onMounted(() => {
+    initializeItems()
+})
 </script>
 
 <template>
-	<div class="sidebar__notifications sidebar__background sidebar__top">
-		<div 
+	<div class="sidebar__notifications sidebar__background sidebar__background-in">
+		<div
+			id="sidebar" 
 			class="sidebar__wrapper"
+			:class="{ 'sidebar-open': props.animation }"
 		>
 			<div class="sidebar__notifications--body">
 				<div class="sidebar__notifications--header">
@@ -48,43 +93,50 @@ const closeSidebar = () => {
 				</div>
 				<div class="sidebar-filters">
 					<div class="sidebar-filters__body">
-						<h2 class="sidebar-filters__title">
-							{{ props.title }}
-						</h2>
-						<input
-							v-if="type === 'year'" 
-							class="sidebar-filters__input-text" 
-							type="text" 
-							placeholder="Ищу..."
-						/>
-						<div class="sidebar-filters__content">
-							<div
-								v-for="item in props.sidebarItems"
-								:key="item.type" 
-								class="sidebar-filters__item"
-							>
-								<div class="sidebar-filters__input-wrapper">
-									<input 
-										type="radio" 
-										:value="item"
-									/>
-									<label :for="item">
-										{{ item }}
-									</label>
+						<div
+							v-for="item in localItems"
+							:key="item" 
+							class="sidebar-filters__item"
+						>
+							<div class="sidebar-filters__item-header">
+								<div class="sidebar-filters__item-label">
+									{{ item.title }}
+								</div>
+								<div
+									v-if="!isDefaultRange(item)" 
+									class="sidebar-filters__item-value"
+								>
+									{{ item.range.from }} - {{ item.range.to }}
+								</div>
+								<div 
+									v-else
+									class="sidebar-filters__item-value"
+								>
+									Любой
 								</div>
 							</div>
+							<VRangeSlider
+								:min="item.min"
+								:max="item.max"
+								:step="item.step"
+								@update:min="updateRange(item, 'from', $event)"
+								@update:max="updateRange(item, 'to', $event)" 
+								responsive="mobile"
+							/>
 						</div>
 					</div>
 					<div class="sidebar-filters__footer">
 						<VButton
 							modificator="mobile"
 							class="button-soft footer-button"
+							@click="resetFilter"
 						>
 							Сбросить
 						</VButton>
 						<VButton
 							modificator="mobile"
 							class="button-primary footer-button"
+							@click="applyFilter"
 						>
 							Применить
 						</VButton>

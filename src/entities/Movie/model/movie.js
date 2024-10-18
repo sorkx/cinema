@@ -71,15 +71,15 @@ export const useMovieStore = defineStore('movie', () => {
         }
     }
 
-    const fetchCategoryData = async (category, page = 1, genres, ratingTo, yearTo, order) => {
+    const fetchCategoryData = async (category, page = 1, genres, ratingFrom, ratingTo, yearFrom, yearTo, order) => {
         await fetchData('categories', category, page, (category, page) => 
-            Api.getCategories(category, page, genres, ratingTo, yearTo, order)
+            Api.getCategories(category, page, genres, ratingFrom, ratingTo, yearFrom, yearTo, order)
 		  )
     }
 	
-    const fetchCategoryNextPage = async (category, genres, ratingTo, yearFrom, order) => {
+    const fetchCategoryNextPage = async (category, genres, ratingFrom, ratingTo, yearFrom, yearTo, order) => {
         await fetchNextPage('categories', category, (category, page) => 
-		  Api.getCategories(category, page, genres, ratingTo, yearFrom, order)
+		  Api.getCategories(category, page, genres, ratingFrom, ratingTo, yearFrom, yearTo, order)
         )
     }
 	

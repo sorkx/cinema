@@ -9,10 +9,10 @@ export const Api = {
 
     getCategories: async (category, page = 1, filters = {}) => {
         try{
-            const { genres, ratingTo, yearFrom, order } = filters
+            const { genres, ratingFrom, ratingTo, yearFrom, yearTo, order } = filters
 
             return await fetchInstance(API_URL, '', { 
-                type: category, page, genres, ratingTo, yearFrom, order 
+                type: category, page, genres, ratingFrom, ratingTo, yearFrom, yearTo, order 
             })
         } catch(e) {
             console.error(`Ошибка при загрузке ${category}:`, e)
