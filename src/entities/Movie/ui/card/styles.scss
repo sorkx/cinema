@@ -1,149 +1,222 @@
-.movie {
+// .movie {
+// 	display: grid;
+//     gap: 16px;
+//     grid-template-rows: auto 1fr;
+//     position: relative;
+//     transition: 1s;
+//     width: 100%;
+
+// 	&:hover .movie__image--inner {
+// 		transform: scale(1.05);
+// 		filter: brightness(.8);
+// 	}
+	
+// 	&__body {
+// 		position: relative;
+// 		aspect-ratio: 2 / 3;
+// 		border-radius: 32px;
+// 		cursor: pointer;
+// 		height: 384px;
+// 		overflow: hidden;
+// 		width: 256px;
+// 	}
+
+// 	&__image {
+// 		width: 100%;
+// 		transition: .4s;
+// 		-o-object-fit: cover;
+// 		object-fit: cover;
+// 		height: 100%;
+
+// 		&--not-found {
+// 			display: flex;
+// 			align-items: center;
+// 			height: 100%;
+// 			justify-content: center;
+// 			color: var(--color-palette-white-base);
+// 		}
+// 	}
+	
+// 	&__overlay {
+// 		inset: 0;
+// 		position: absolute;
+// 	}
+
+// 	&__content {
+// 		position: absolute;
+// 		width: 100%;
+// 		height: 100%;
+// 		top: 0;
+// 		left: 0;
+// 		z-index: 2;
+// 		background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, .6));
+// 		padding: 15px;
+// 		display: grid;
+// 		grid-template-columns: 1fr 1fr;
+// 		grid-template-rows: 1fr auto;
+// 		grid-template-areas:
+// 			"card-kp card-imdb card-flex";
+// 	}
+
+// 	&__movie {
+// 		grid-area: card-kp;
+// 		margin-right: 0;
+// 		justify-content: flex-start;
+// 		margin-top: auto;
+// 	}
+
+// 	&__imdb {
+// 		grid-area: card-imdb;
+// 		margin-right: 0;
+// 		justify-content: center;
+// 		margin-top: auto;
+// 	}
+	
+// 	&__title {
+// 		color: var(--color-palette-white-base);
+// 		font-size: 21px;
+// 		font-weight: 700;
+// 		line-height: 32px;
+// 		overflow: hidden;
+// 		text-overflow: ellipsis;
+// 		white-space: nowrap;
+// 		// font-size: 16px;
+// 		// font-weight: $fMedium;
+// 		// line-height: normal;
+// 		// color: hsla(0, 0%, 100%, .8);
+// 		// color: var(--defaultColorLight);
+// 		// margin-bottom: 5px;
+// 		// transition: .3s;
+// 		// margin-top: 10px;
+// 		// white-space: nowrap;
+// 		// overflow: hidden;
+// 		// text-overflow: ellipsis;
+// 	}
+// }
+
+// .extertal__rating--small {
+// 	margin-right: 16px;
+// 	grid-template-columns: 16px auto;
+// 	grid-column-gap: 4px;
+// }
+
+// @media (max-width: 1409px) {
+//     .movie__content {
+//         padding:10px;
+//     }
+// }
+
+// // @media (max-width: 968px) {
+// //     .movie {
+// // 		height: 417px;
+// // 	}
+// // }
+
+// // @media (max-width: 680px) {
+// //     .movie {
+// // 		height: 235px;
+// // 	}
+// // }
+
+// @media (max-width: 640px) {
+// 	.movie{
+// 		&__title {
+// 			font-size: 16px;
+// 			line-height: 24px;
+// 		}
+
+// 		&__body {
+// 			border-radius: 16px;
+// 			height: 232px;
+// 			width: 156px;
+// 		}
+// 	}
+// }
+
+// // @media (max-width: 320px) {
+// // 	.movie {
+// // 		width: 139px;
+// // 	}
+// // }
+
+.movie-card {
 	display: grid;
     gap: 16px;
     grid-template-rows: auto 1fr;
     position: relative;
     transition: 1s;
     width: 100%;
-	// height: 400px; // 350px;
-    // display: flex;
-    // flex-direction: column;
 
 	&:hover .movie__image--inner {
 		transform: scale(1.05);
 		filter: brightness(.8);
 	}
-	
-	&__body {
-		position: relative;
-		max-width: 282px;
-		min-width: 156px;
-		width: 100%;
-		border-radius: 32px;
-		aspect-ratio: 2 / 3;
-		cursor: pointer;
-		height: 384px;
-		overflow: hidden;
-		// position: relative;
-		// overflow: hidden;
-		// border-radius: 32px;
-		// height: 100%;
-	}
 
 	&__image {
-		width: 100%;
-		transition: .4s;
+		height: 100%;
 		-o-object-fit: cover;
 		object-fit: cover;
-		height: 100%;
+		transition: .4s;
+		width: 100%;
 
-		&--not-found {
-			display: flex;
-			align-items: center;
-			height: 100%;
-			justify-content: center;
-			color: var(--color-palette-white-base);
+		&-container {
+			aspect-ratio: 2 / 3;
+			border-radius: 32px;
+			cursor: pointer;
+			height: 384px;
+			overflow: hidden;
+			width: 256px;
 		}
 	}
-	
+
 	&__overlay {
 		inset: 0;
+		padding: 20px;
 		position: absolute;
 	}
 
-	&__content {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		left: 0;
-		z-index: 2;
-		background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, .6));
-		padding: 15px;
+	&__info {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: 1fr auto;
-		grid-template-areas:
-			"card-kp card-imdb card-flex";
+		gap: 8px;
+		grid-template-rows: min-content;
+		width: 256px;
 	}
 
-	&__movie {
-		grid-area: card-kp;
-		margin-right: 0;
-		justify-content: flex-start;
-		margin-top: auto;
-	}
-
-	&__imdb {
-		grid-area: card-imdb;
-		margin-right: 0;
-		justify-content: center;
-		margin-top: auto;
-	}
-	
 	&__title {
 		color: var(--color-palette-white-base);
-		font-size: 21px;
+		font-size: 24px;
 		font-weight: 700;
 		line-height: 32px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		// font-size: 16px;
-		// font-weight: $fMedium;
-		// line-height: normal;
-		// color: hsla(0, 0%, 100%, .8);
-		// color: var(--defaultColorLight);
-		// margin-bottom: 5px;
-		// transition: .3s;
-		// margin-top: 10px;
-		// white-space: nowrap;
-		// overflow: hidden;
-		// text-overflow: ellipsis;
 	}
 }
 
-.extertal__rating--small {
-	margin-right: 16px;
-	grid-template-columns: 16px auto;
-	grid-column-gap: 4px;
+.movie-card .movie-card__image-container .movie-card__info {
+	max-width: 282px;
+    min-width: 156px;
+    width: 100%;
 }
-
-@media (max-width: 1409px) {
-    .movie__content {
-        padding:10px;
-    }
-}
-
-// @media (max-width: 968px) {
-//     .movie {
-// 		height: 417px;
-// 	}
-// }
-
-// @media (max-width: 680px) {
-//     .movie {
-// 		height: 235px;
-// 	}
-// }
 
 @media (max-width: 640px) {
-	.movie{
-		&__title {
-			font-size: 16px;
-			line-height: 24px;
-		}
+    .movie-card .movie-card__image-container {
+        height: 100%;
+        width: 100%;
+    }
 
-		&__body {
-			border-radius: 16px;
-			height: 232px;
-			width: 156px;
-		}
-	}
+	.movie-card__image-container {
+        border-radius: 16px;
+        height: 232px;
+        width: 156px;
+    }
+
+	.movie-card__info {
+        width: 100%;
+    }
+
+	.movie-card__title {
+        font-size: 16px;
+        line-height: 24px;
+    }
 }
-
-// @media (max-width: 320px) {
-// 	.movie {
-// 		width: 139px;
-// 	}
-// }

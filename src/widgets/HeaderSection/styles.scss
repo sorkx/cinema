@@ -1,9 +1,10 @@
 .header {	
-	position: fixed;
+	backdrop-filter: blur(10px);
+    background: radial-gradient(circle, #12101167 0, #94bbe900);
+    position: fixed;
+    top: 0;
     width: 100%;
-    border-bottom: 2px solid var(--color-palette-black-40);
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
+    z-index: 999;
 	padding-top: env(safe-area-inset-top);
 
 	// &__container.overflow {
@@ -104,7 +105,7 @@
 		position: absolute;
 		left: 0;
 		z-index: -1;
-		bottom: 0;
+		bottom: 3px;
 	}
 }
 

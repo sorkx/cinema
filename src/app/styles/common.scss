@@ -20,7 +20,12 @@ html {
 }
 
 body {
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
 	min-width: 375px;
+	min-height: 100%;
+	width: 100%;
 	position: relative;
 	cursor: default;
 	background-color: var(--page-background);

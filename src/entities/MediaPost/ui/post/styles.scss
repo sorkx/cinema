@@ -84,29 +84,27 @@
 }
 
 @media (max-width: 768px) {
-    .card-news {
-        height: 280px;
-    }
-}
-
-@media (max-width: 479px) {
 	.card-news__title {
-		font-size: 13px;
+		font-size: 12px;
 	}
 
 	.card-news__label {
         font-size: 11px;
     }
+
+	.card-news__date {
+		font-size: 12px;
+	}
 }
 
-@media (max-width: 425px) {
+@media (max-width: 680px) {
     .card-news {
-        height: 193px;
+        height: 240px;
     }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 520px) {
     .card-news {
-        height: 169px;
+        height: 193px;
     }
 }

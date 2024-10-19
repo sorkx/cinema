@@ -20,28 +20,40 @@
 
 	&__title {
 		color: var(--color-palette-white-base);
-		font-size: 32px;
-		font-weight: 600;
+		font-size: 36px;
+		line-height: 50px;
+		font-weight: $fBold;
 		display: grid;
 		grid-template-columns: auto 1fr;
 		grid-column-gap: 15px;
 		position: relative;
+	}
 
-		h2 {
-			font-size: 32px;
-			font-style: normal;
-			font-weight: 600;
-			line-height: normal;
+	&__link {
+		padding: 0;
+		width: -moz-fit-content;
+		width: fit-content;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: row-reverse;
+		gap: 8px;
+		font-size: 14px;
+		color: var(--color-palette-green-10);
+
+		&:hover {
+			color: var(--color-palette-green-20);
+		}
+
+		&::after {
+			content: attr(data-link);
 		}
 
 		svg {
-			opacity: 0;
+			width: 18px;
+			height: 18px;
+			fill: var(--color-palette-green-10);
 			transition: .3s;
-			align-self: center;
-			width: 22px;
-			height: 22px;
-			stroke: var(--color-palette-white-base);
-			margin-left: 10px;
 		}
 	}
 
@@ -55,17 +67,15 @@
 }
 
 .swiper-slide {
-	-webkit-flex-shrink: 0;
-    -ms-flex-negative: 0;
+	display: flex;
+	flex-direction: column;
     flex-shrink: 0;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    -webkit-transition-property: -webkit-transform;
-    transition-property: -webkit-transform;
-    -o-transition-property: transform;
-    transition-property: transform;
-    transition-property: transform, -webkit-transform;
+    height: -moz-fit-content;
+    height: fit-content;
+    margin-right: 24px;
+    max-height: 100%;
+    transform: none !important;
+    width: auto;
 
 	&--genres {
 		width: auto !important;
@@ -79,25 +89,36 @@
     }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
     .module__title {
-		h2 {
-			font-size: 24px;
-		}
+        font-size: 44px;
+        line-height: 50px;
 	}
 }
 
-@media (max-width: 639px) {
+@media (max-width: 640px) {
     .module {
         margin-bottom: 40px;
+
+		&__title {
+			font-size: 28px;
+			line-height: 36px;
+		}
+
+		&__link {
+			&::after {
+				content: 'Все';
+			}
+		}
     }
 }
 
-@media (max-width: 439px) {
+@media (max-width: 480px) {
     .module__title {
-		h2 {
-			font-size: 18px;
-		}
+		font-size: 28px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 36px;
 	}
 }
 

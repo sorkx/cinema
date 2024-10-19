@@ -35,52 +35,35 @@ const props = defineProps({
 
 const moviesBreakpoints = reactive({
     320: {
-        slidesPerView: 2.5,
-        spaceBetween: 16,
+        slidesPerView: 'auto',
+        spaceBetween: 20,
     },
     640: {
-        slidesPerView: 3.8,
+        slidesPerView: 'auto',
         spaceBetween: 16,
     },
     768: {
-        slidesPerView: 2.8,
-        spaceBetween: 24,
-        slidesPerGroup: 2,
-    },
-    968: {
-        slidesPerView: 3.5,
-        spaceBetween: 24,
+        slidesPerView: 'auto',
+        spaceBetween: 20,
         slidesPerGroup: 2,
     },
     1024: {
-        slidesPerView: 3.7,
-        spaceBetween: 24,
+        slidesPerView: '4.5',
+        spaceBetween: 25,
         slidesPerGroup: 2,
     },
-    1440: {
-        slidesPerView: 6.5,
-        spaceBetween: 28,
+    1439: {
+        slidesPerView: 4.5,
+        spaceBetween: 20,
         slidesPerGroup: 4,
     }
 })
 
 const mediaBreakpoints = {
     320: {
-        slidesPerView: 1.5,
-        spaceBetween: 10,
-    },
-    768: {
-        slidesPerView: 1.5,
-        spaceBetween: 20,
-    },
-    1024: {
         slidesPerView: 2.5,
         spaceBetween: 20,
     },
-    1440: {
-        slidesPerView: 3.5,
-        spaceBetween: 28,
-    }
 }
 
 const genresBreakpoints = {
@@ -135,14 +118,18 @@ const swiperBreakpoints = computed(() => {
   
 	  <!-- eslint-disable-next-line vue/no-deprecated-slot-attribute -->
 		<div slot="container-end">
-			<SwiperButton
-				v-if="hasNavigation"
-				class="v-swiper__button v-swiper__button--next"
-			/>
-			<SwiperButton
-				v-if="hasNavigation"
-				class="v-swiper__button v-swiper__button--prev"
-			/>
+			<div class="slider-control right">
+				<SwiperButton
+					v-if="hasNavigation"
+					class="v-swiper__button v-swiper__button--next"
+				/>
+			</div>
+			<div class="slider-control left">
+				<SwiperButton
+					v-if="hasNavigation"
+					class="v-swiper__button v-swiper__button--prev"
+				/>
+			</div>
 		</div>
 	</swiper-container>
   </template>

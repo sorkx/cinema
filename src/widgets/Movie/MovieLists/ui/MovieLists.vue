@@ -32,7 +32,7 @@ const props = defineProps({
 	/>
 	<div
 		v-if="props.movies.length && props.movies" 
-		class="lists"
+		class="infinite-container"
 	>
 		<Movie
 			v-for="item in props.movies"

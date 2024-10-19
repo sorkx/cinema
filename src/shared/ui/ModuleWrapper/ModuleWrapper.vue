@@ -32,14 +32,21 @@ const props = defineProps({
 <template>
 	<div class="module">
 		<div class="module__wrap">
+			<h2
+				class="module__title"
+			>
+				{{ props.title }}
+			</h2>
 			<router-link
 				v-if="props.link" 
 				:to="{ 
 					name: props.link, 
 				}"
-				class="module__title"
+				data-link="Смотреть все"
+				data-size="large"
+				aria-label="Смотреть все"
+				class="module__link"
 			>
-				<h2>{{ props.title }}</h2>
 				<UISymbol
 					v-if="props.icon" 
 					:name="props.icon" 
