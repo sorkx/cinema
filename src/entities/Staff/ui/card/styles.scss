@@ -1,10 +1,10 @@
 .person {
-	aspect-ratio: 2 / 3;
-	border-radius: 32px;
-	cursor: pointer;
-	height: 384px;
-	overflow: hidden;
-	width: 256px;
+	position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+	height: 350px;
+    display: flex;
+    flex-direction: column;
 
 	&:hover &__image {
 		transform: scale(1.03);

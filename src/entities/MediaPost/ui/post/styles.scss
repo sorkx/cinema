@@ -85,7 +85,7 @@
 
 @media (max-width: 768px) {
 	.card-news__title {
-		font-size: 12px;
+		font-size: 10px;
 	}
 
 	.card-news__label {
@@ -94,6 +94,10 @@
 
 	.card-news__date {
 		font-size: 12px;
+	}
+
+	.card-news__content {
+		padding: 10px;
 	}
 }
 
