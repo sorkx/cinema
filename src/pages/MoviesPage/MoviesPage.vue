@@ -1,10 +1,10 @@
 <script setup>
 import {
     computed,
-    onMounted,
     ref,
     reactive,
     watch,
+    onBeforeMount,
 } from 'vue'
 import { 
     useRoute,
@@ -28,7 +28,7 @@ import {
     useInfinityScroll
 } from '@/shared/lib/use/useInfinityScroll'
 import {
-    SpinnerLoader,
+    CircleLoader,
 } from '@/shared/ui/loaders'
 import {
     MovieFilter,
@@ -39,11 +39,12 @@ const route = useRoute()
 const store = movieModel()
 
 const currentResults = ref([])
+const isLoadingMore = ref(false)
+const isLoading = ref(true)
 
 const { 
     state,
     genresMovie,
-    isLoading,
 } = storeToRefs(store)
 
 const formattedTitle = {
@@ -67,22 +68,26 @@ const filterParams = reactive({
     order: ''
 })
 
-const fetchMovies = async (page = 1) => {
-    await store.fetchCategoryData(contentType.value, page, filterParams)
-}
-
 const loadMore = async () => {
+    if (isLoading.value) return
+
+    isLoadingMore.value = true
+
     await store.fetchCategoryNextPage(contentType.value, filterParams)
-    currentResults.value = state.value.categories[contentType.value].data
+    currentResults.value = state.value.categories[contentType.value]?.data
+
+    isLoadingMore.value = false
 }
 
 const fetchCategoryItems = async () => {
-    currentResults.value = []
-    await fetchMovies(1)
-    currentResults.value = state.value.categories[contentType.value]?.data
-}
+    isLoading.value = true
 
-const fetchNextPage = async () => await loadMore()
+    currentResults.value = []
+    await store.fetchCategoryData(contentType.value, 1, filterParams)
+    currentResults.value = state.value.categories[contentType.value]?.data
+
+    isLoading.value = false
+}
 
 const updateFilterParam = debounce((param, value) => {
     filterParams[param] = value
@@ -91,12 +96,12 @@ const updateFilterParam = debounce((param, value) => {
 
 const { scrollComponent } = useInfinityScroll({
     fetchData: fetchCategoryItems,
-    fetchNextPage: fetchNextPage,
+    fetchNextPage: loadMore,
 })
 
-watch(() => route.params.type, fetchCategoryItems)
+watch(() => [route.params.type], fetchCategoryItems)
 
-onMounted(async () => await store.fetchMovieFilters())
+onBeforeMount(async () => await store.fetchMovieFilters())
 </script>
 
 <template>
@@ -111,6 +116,7 @@ onMounted(async () => await store.fetchMovieFilters())
 				{{ formattedTitle[contentType] }}
 			</div>
 		</div>
+		
 		<MovieFilter 
 			:genres="genresMovie"
 			v-model:selected-genre="filterParams.genres"
@@ -127,13 +133,18 @@ onMounted(async () => await store.fetchMovieFilters())
 			@update:order="updateFilterParam('order', $event)"
 		/>
 
-		<SpinnerLoader v-if="isLoading" />
+		<CircleLoader v-if="isLoading" />
 
-		<MovieLists
-			v-if="currentResults.length > 0"
-			:movies="currentResults"
-			hidden="true"
-		/>
+		<template v-else>
+			<MovieLists
+				v-if="currentResults.length > 0"
+				:movies="currentResults"
+				hidden="true"
+			/>
+		</template>
+
+		<CircleLoader v-if="isLoadingMore && !isLoading" />
+
 		<div ref="scrollComponent" />
 	</div>
 </template>

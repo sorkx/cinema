@@ -2,7 +2,6 @@
 import {
     computed,
     ref,
-    onMounted,
 } from 'vue'
 import {
     UISymbol,
@@ -63,7 +62,7 @@ const updateMaxValue = (value) => {
 
 const displayLabel = computed(() => {
     if (props.selectType === 'single') {
-        return orderFormatted[props.selectedValue]
+        return orderFormatted[props.selectedValue] || props.title
     }
 
     if (props.selectType === 'range' && minValue.value === props.min && maxValue.value === props.max) {
@@ -104,12 +103,6 @@ const selectOption = (option) => {
 const isOptionSelected = (option) => {
     return orderFormatted[props.selectedValue] === option
 }
-
-onMounted(() => {
-    if (props.selectType === 'single' && !props.selectedValue) {
-        emit('update:selected-value', 'RATING')
-    }
-})
 </script>
 
 <template>

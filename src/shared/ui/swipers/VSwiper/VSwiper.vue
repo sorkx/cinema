@@ -35,7 +35,7 @@ const props = defineProps({
 
 const moviesBreakpoints = reactive({
     320: {
-        slidesPerView: 'auto',
+        slidesPerView: 2.5,
         spaceBetween: 20,
     },
     640: {

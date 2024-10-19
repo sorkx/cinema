@@ -30,7 +30,7 @@ export const useMovieStore = defineStore('movie', () => {
     }
 
     const fetchData = async (type, category, page, apiFunction) => {
-        setInitialLoading(true)
+        // setInitialLoading(true)
 
         const target = state[type]
 	
@@ -54,11 +54,11 @@ export const useMovieStore = defineStore('movie', () => {
 
         console.log('state', state)
 
-        setInitialLoading(false)
+        // setInitialLoading(false)
     }
 
     const fetchNextPage = async (type, category, apiFunction) => {
-        if (isLoading.value) return
+        // if (isLoading.value) return
 	
         const target = state[type][category]
         if (!target) {

@@ -1,5 +1,9 @@
 <script setup>
 import {
+    onMounted,
+    ref,
+} from 'vue'
+import {
     UISymbol,
 } from '@/shared/ui/UISymbol'
 import {
@@ -12,25 +16,42 @@ const props = defineProps({
         default: () => {},
     },
 })
+
+const imageLoaded = ref(false)
+
+function onImageLoad() {
+    imageLoaded.value = true
+}
+
+onMounted(() => {
+    if (props.movie.posterUrlPreview) {
+        const img = new Image()
+        img.onload = onImageLoad
+        img.src = props.movie.posterUrlPreview
+    }
+})
 </script>
 
 <template>
 	<div class="movie-card">
 		<span class="movie-card__image-container">
 			<img
-				v-if="props.movie.posterUrlPreview"
+				v-if="props.movie.posterUrlPreview && imageLoaded"
 				:src="props.movie.posterUrlPreview"
-				loading="eager"
+				@load="onImageLoad"
 				:alt="movie.nameRu || movie.nameEn"
 				class="movie-card__image movie__image--inner"
 			/>
-			<span v-else>
-				<UISymbol
-					name="vertical"
-					class="movie-card__image" 
-					loading="eager"
-				/>
-			</span>
+			<div
+				v-else 
+				class="loader loader--movie movie__card-image"
+			>
+				<div class="logo loader-logo">
+					<UISymbol 
+						name="logo"
+					/>
+				</div>
+			</div>
 		</span>
 		
 		<router-link
