@@ -7,11 +7,12 @@
 	position: relative;
 	box-sizing: border-box;
 	animation: rotation 2s linear infinite;
+	z-index: 10;
 
 	&-container {
 		display: flex;
 		height: 80px;
-		margin: 50px auto;
+		margin: 80px auto;
 		position: relative;
 		width: 80px;
 	}

@@ -133,17 +133,13 @@ onBeforeMount(async () => await store.fetchMovieFilters())
 			@update:order="updateFilterParam('order', $event)"
 		/>
 
-		<CircleLoader v-if="isLoading" />
+		<MovieLists
+			v-if="currentResults.length > 0"
+			:movies="currentResults"
+			hidden="true"
+		/>
 
-		<template v-else>
-			<MovieLists
-				v-if="currentResults.length > 0"
-				:movies="currentResults"
-				hidden="true"
-			/>
-		</template>
-
-		<CircleLoader v-if="isLoadingMore && !isLoading" />
+		<CircleLoader v-if="isLoadingMore || isLoading" />
 
 		<div ref="scrollComponent" />
 	</div>

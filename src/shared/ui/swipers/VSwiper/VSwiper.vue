@@ -48,7 +48,7 @@ const moviesBreakpoints = reactive({
         slidesPerGroup: 2,
     },
     1024: {
-        slidesPerView: '4.5',
+        slidesPerView: 3.8,
         spaceBetween: 25,
         slidesPerGroup: 2,
     },
