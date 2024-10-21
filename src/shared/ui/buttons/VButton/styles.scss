@@ -8,6 +8,30 @@
     border-radius: 8px;
     position: relative;
 
+	&--main {
+		align-items: center;
+		background: var(--color-palette-green-10);
+		border: none;
+		border-radius: 32px;
+		color: var(--color-palette-black-70);
+		cursor: pointer;
+		display: flex;
+		font-size: 18px;
+		font-style: normal;
+		font-weight: $fMedium;
+		gap: 8px;
+		justify-content: center;
+		line-height: 28px;
+		padding: 16px 24px;
+		transition: .3s;
+		white-space: nowrap;
+		width: 100%;
+
+		&:hover {
+			background: var(--color-palette-green-20);
+		}
+	}
+
 	&--play-free {
 		cursor: pointer;
 		max-width: 315px;

@@ -45,17 +45,14 @@ const moviesBreakpoints = reactive({
     768: {
         slidesPerView: 'auto',
         spaceBetween: 20,
-        slidesPerGroup: 2,
     },
     1024: {
         slidesPerView: 3.8,
         spaceBetween: 25,
-        slidesPerGroup: 2,
     },
     1439: {
         slidesPerView: 4.5,
         spaceBetween: 20,
-        slidesPerGroup: 4,
     }
 })
 

@@ -5,6 +5,12 @@ import {
 import {
     Pathway,
 } from '@/shared/ui/Pathway'
+import {
+    VButton,
+} from '@/shared/ui/buttons'
+import {
+    ROUTE_NAMES,
+} from '@/shared/lib/constants'
 
 const props = defineProps({
     movies: {
@@ -21,7 +27,11 @@ const props = defineProps({
     },
     hidden: {
         type: String,
-    }
+    },
+    empty: {
+        type: Boolean,
+        default: false,
+    },
 })
 </script>
 
@@ -39,6 +49,25 @@ const props = defineProps({
 			:movie="item"
 			:key="item.id"
 		/>
+	</div>
+
+	<div 
+		v-if="!props.movies.length && props.empty"
+		class="infinite-container__empty"
+	>
+		<div class="empty-block">
+			<div class="empty-block__header">
+				Поиск не дал результата
+			</div>
+			<router-link :to="{ name: ROUTE_NAMES.MAIN }">
+				<VButton 
+					modificator="main"
+					class="empty-block__button"
+				>
+					Перейти на главную
+				</VButton>
+			</router-link>
+		</div>
 	</div>
 </template>
 

@@ -41,17 +41,20 @@ const {
 } = storeToRefs(searchStore)
 
 const loading = ref(false)
+const searchPerformed = ref(false)
 
 const emit = defineEmits(['close'])
 
 const closeSearch = () => {
     emit('close')
     searchStore.resetSearch()
+    searchPerformed.value = false
 }
 
 const debouncedFetch = debounce(async (key) => {
     try {
         await searchStore.fetchKeywordMovie(key, 1)
+        searchPerformed.value = true
     } finally {
         loading.value = false
     }
@@ -82,6 +85,7 @@ watch(keywordMovies, (newKeyword) => {
     } else {
         debouncedFetch.cancel()
         loading.value = false
+        searchPerformed.value = false
         searchStore.resetSearch()
     }
 })
@@ -104,9 +108,10 @@ onBeforeUnmount(() => {
 			v-else
 			:movies="searchMovies"
 			:key="searchMovies.length"
+			:empty="searchPerformed"
 		/>
 
-		<CircleLoader v-if="isLoading" />
+		<CircleLoader v-if="isLoading && !loading" />
 
 		<div ref="scrollComponent" />
 	</SearchInput>

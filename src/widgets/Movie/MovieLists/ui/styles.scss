@@ -1,11 +1,4 @@
 .infinite-container {
-	// display: grid;
-    // grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    // grid-column-gap: 28px;
-    // grid-row-gap: 32px;
-    // justify-content: center;
-    // margin-bottom: 32px;
-
 	display: grid;
     grid-template-columns: repeat(4, minmax(auto, 1fr));
     grid-column-gap: 58px;
@@ -22,6 +15,36 @@
 		inset: 200px 0 0;
 		position: absolute;
 		z-index: -1;
+	}
+
+	&__empty {
+		color: var(--color-palette-white-base);
+		font-size: 18px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 28px;
+		text-align: center;
+	}
+}
+
+.empty-block {
+	display: grid;
+    gap: 24px;
+    justify-content: center;
+    padding: 56px 0;
+
+	&__header {
+		color: var(--color-palette-white-base);
+		font-size: 18px;
+		font-weight: 400;
+		line-height: 28px;
+		text-align: center;
+	}
+
+	&__button {
+		justify-self: center;
+		width: -moz-fit-content;
+		width: fit-content;
 	}
 }
 
