@@ -11,6 +11,7 @@ const props = defineProps({
 	<button 
 		class="v-button" 
 		type="button"
+		data-size="large"
 		:class="`v-button--${props.modificator}`"
 	>
 		<slot />

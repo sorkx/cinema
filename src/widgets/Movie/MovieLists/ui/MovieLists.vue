@@ -59,7 +59,10 @@ const props = defineProps({
 			<div class="empty-block__header">
 				Поиск не дал результата
 			</div>
-			<router-link :to="{ name: ROUTE_NAMES.MAIN }">
+			<router-link
+				class="empty-block__link" 
+				:to="{ name: ROUTE_NAMES.MAIN }"
+			>
 				<VButton 
 					modificator="main"
 					class="empty-block__button"

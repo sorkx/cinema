@@ -47,12 +47,11 @@ onMounted(() => {
 				type="search"
 				name="search" 
 				:placeholder="props.placeholder"
-				autocomplete="off"
 				class="v-input__field transparent"
 				v-model="modelValue"
 			/>
 			<div 
-				v-if="modelValue"
+				v-if="modelValue.length > 0"
 				@click="clearInput"
 				class="v-input__icon v-input__icon--toggle">
 				<UISymbol 

@@ -74,3 +74,18 @@
 	will-change: transform;
 	z-index: 1;
 }
+
+@media (max-width: 640px) {
+    .search__panel .title {
+        font-size: 34px;
+    }
+
+	.search__wrapper[data-size=full] .search__close {
+        right: 10px;
+        top: 55px;
+    }
+
+	.search__wrapper[data-size=full] {
+        padding: 48px 16px 24px;
+    }
+}
