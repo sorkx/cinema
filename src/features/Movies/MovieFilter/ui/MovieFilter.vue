@@ -19,6 +19,9 @@ import {
 import {
     VSelect,
 } from '@/shared/ui/VSelect'
+import {
+    VSkeleton,
+} from '@/shared/ui/VSkeleton'
 
 const props = defineProps({
     genres: {
@@ -48,7 +51,10 @@ const props = defineProps({
     order: {
         type: [Number, String],
         default: '',
-    }
+    },
+    isLoading: {
+        type: Boolean,
+    },
 })
 
 const emit = defineEmits([
@@ -147,7 +153,33 @@ watch(openSidebar, async (newVal) => {
 </script>
 
 <template>
-	<div class="page-filters">
+	<div
+		v-if="props.isLoading" 
+		class="skeleton-filters"
+	>
+		<div class="skeleton-filters__genres">
+			<VSkeleton 
+				count="6"
+				maxWidth="100%"
+				height="53px"
+				radius="12px"
+				gap="16px"
+			/>
+		</div>
+		<div class="skeleton-filters__selectors">
+			<VSkeleton 
+				count="6"
+				maxWidth="160px"
+				height="38px"
+				radius="0.5rem"
+				gap="0.5rem"
+			/>
+		</div>
+	</div>
+	<div
+		v-else 
+		class="page-filters"
+	>
 		<ModuleWrapper
 				:items="props.genres"
 				swiper-type="genres"

@@ -25,7 +25,7 @@ import {
     onBeforeRouteLeave,
 } from 'vue-router'
 
-const loading = ref(false)
+const isLoading = ref(true)
 
 const postStore = newsModel()
 const movieStore = movieModel()
@@ -51,10 +51,12 @@ const routingMapping = {
 }
 
 const fetchData = async () => {
-    loading.value = true
+    isLoading.value = true
+
     await movieStore.fetchAllCategories(),
     await postStore.fetchMediaPosts(1)
-    loading.value = false
+	
+    isLoading.value = false
 }
 
 onBeforeMount(async () => await fetchData())
@@ -66,7 +68,7 @@ onBeforeRouteLeave(() => {
 </script>
 
 <template>
-	<SpinnerLoader v-if="loading && !state?.collections.length && !posts.length" />
+	<SpinnerLoader v-if="isLoading && !state?.collections.length && !posts.length" />
 
 	<main
 		v-else 
@@ -86,5 +88,3 @@ onBeforeRouteLeave(() => {
 			/>
 	</main>
 </template>
-
-<style src="./styles.scss" lang="scss" scoped />

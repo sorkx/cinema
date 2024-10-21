@@ -41,6 +41,7 @@ const store = movieModel()
 const currentResults = ref([])
 const isLoadingMore = ref(false)
 const isLoading = ref(true)
+const isLoadingFilters = ref(true)
 
 const { 
     state,
@@ -101,7 +102,13 @@ const { scrollComponent } = useInfinityScroll({
 
 watch(() => [route.params.type], fetchCategoryItems)
 
-onBeforeMount(async () => await store.fetchMovieFilters())
+onBeforeMount(async () => {
+    isLoadingFilters.value = true
+
+    await store.fetchMovieFilters()
+
+    isLoadingFilters.value = false
+})
 </script>
 
 <template>
@@ -119,6 +126,7 @@ onBeforeMount(async () => await store.fetchMovieFilters())
 		
 		<MovieFilter 
 			:genres="genresMovie"
+			:is-loading="isLoadingFilters"
 			v-model:selected-genre="filterParams.genres"
 			v-model:order="filterParams.order"
 			v-model:year-from="filterParams.yearFrom"

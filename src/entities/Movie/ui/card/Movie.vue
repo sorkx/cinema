@@ -19,7 +19,7 @@ const props = defineProps({
 
 const imageLoaded = ref(false)
 
-function onImageLoad() {
+const onImageLoad = () => {
     imageLoaded.value = true
 }
 

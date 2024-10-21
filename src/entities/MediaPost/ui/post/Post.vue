@@ -14,21 +14,26 @@ const formattedDate = date.toLocaleDateString('ru-RU')
 </script>
 
 <template>
+	<div
+		v-if="props.post.length" 
+		class="loader loader--news card-news__image"
+	>
+		<div class="logo loader-logo">
+			<UISymbol 
+				name="logo"
+			/>
+		</div>
+	</div>
 	<a
+		v-else
 		:href="props.post?.url"
 		target="_blank"
 		class="card-news"
 	>
-		<UISymbol 
-			name="horizontal"
-			class="card-news__image"
-			loading="lazy"
-		/>
 		<div class="card-news__overlay">
 			<img
 				:src="props.post?.imageUrl" 
 				class="card-news__image card-news__image--inner"
-				loading="lazy"
 			/>
 			<div class="card-news__content">
 				<div class="card-news__label">

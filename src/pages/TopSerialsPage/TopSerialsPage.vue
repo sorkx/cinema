@@ -1,5 +1,8 @@
 <script setup>
 import {
+    ref,
+} from 'vue'
+import {
     MovieLists,
 } from '@/widgets/Movie'
 import {
@@ -15,19 +18,37 @@ import {
     useInfinityScroll
 } from '@/shared/lib/use/useInfinityScroll'
 import {
-    HorizontalLoader,
+    CircleLoader,
     SpinnerLoader,
 } from '@/shared/ui/loaders'
 
 const store = movieModel()
 
+const isLoadingMore = ref(false)
+const isLoading = ref(true)
+
 const { 
     state,
-    isLoading,
 } = storeToRefs(store)
 
-const fetchDataSerialItems = async () => await store.fetchCollectionData(CINEMA_NAMES.TOP_250_TV_SHOWS, 1)
-const fetchNextPage = async () => await store.fetchCollectionNextPage(CINEMA_NAMES.TOP_250_TV_SHOWS)
+const fetchDataSerialItems = async () => {
+
+    isLoading.value = true
+
+    await store.fetchCollectionData(CINEMA_NAMES.TOP_250_TV_SHOWS, 1)
+
+    isLoading.value = false
+}
+
+const fetchNextPage = async () => {
+    if (isLoading.value) return
+
+    isLoadingMore.value = true
+
+    await store.fetchCollectionNextPage(CINEMA_NAMES.TOP_250_TV_SHOWS)
+
+    isLoadingMore.value = false
+}
 
 const { scrollComponent } = useInfinityScroll({
     fetchData: fetchDataSerialItems,
@@ -43,8 +64,9 @@ const { scrollComponent } = useInfinityScroll({
 			:movies="state?.collections.TOP_250_TV_SHOWS?.data"
 			title="Топ 250 сериалов"
 		/>
-		<div ref="scrollComponent" />
 
-		<HorizontalLoader v-if="isLoading" />
+		<CircleLoader v-if="isLoadingMore" />
+
+		<div ref="scrollComponent" />
 	</div>
 </template>

@@ -1,0 +1,45 @@
+.v-skeleton-loading {
+	display: flex;
+    flex: 0 1 auto;
+    flex-direction: row;
+    width: 100%;
+
+	&--chunk {
+		background: hsla(0, 100%, 99%, 0.071);
+		color: transparent;
+		display: block;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		user-select: none;
+	}
+
+	&__wave {
+		overflow: hidden;
+		position: relative;
+
+		&::after {
+			animation: wave 1.5s linear 0s infinite;
+			background: linear-gradient(90deg, transparent, hsla(0, 0%, 100%, .5), transparent);
+			content: "";
+			inset: 0;
+			position: absolute;
+			transform: translate3d(-100%, 0, 0);
+			will-change: transform;
+		}
+	}
+}
+
+
+@keyframes wave {
+	0% {
+		transform: translate3d(-100%, 0, 0);
+	}
+
+	60% {
+		transform: translate3d(100%, 0, 0);
+	}
+
+	100% {
+		transform: translate3d(100%, 0, 0);
+	}
+}

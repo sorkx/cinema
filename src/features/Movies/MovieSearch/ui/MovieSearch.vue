@@ -17,14 +17,12 @@ import {
     MovieLists,
 } from '@/widgets/Movie'
 import {
-    HorizontalLoader,
+    CircleLoader,
 } from '@/shared/ui/loaders'
 import {
     useInfinityScroll
 } from '@/shared/lib/use/useInfinityScroll'
 import debounce from 'lodash.debounce'
-
-const loading = ref(false)
 
 const props = defineProps({
     focusOnMounted: {
@@ -42,6 +40,8 @@ const {
     isLoading,
 } = storeToRefs(searchStore)
 
+const loading = ref(false)
+
 const emit = defineEmits(['close'])
 
 const closeSearch = () => {
@@ -55,7 +55,7 @@ const debouncedFetch = debounce(async (key) => {
     } finally {
         loading.value = false
     }
-}, 500)
+}, 1000)
 
 const fetchMovies = async () => {
     if (!isLoading.value && currentPage.value < searchCount.value) {
@@ -93,21 +93,21 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-	<Transition name="fade">
-		<SearchInput
-			:focus-on-mounted="props.focusOnMounted"
-			v-model="keywordMovies" 
-			@close="closeSearch"
-		>
-			<HorizontalLoader v-if="loading" />
+	<SearchInput
+		:focus-on-mounted="props.focusOnMounted"
+		v-model="keywordMovies" 
+		@close="closeSearch"
+	>
+		<CircleLoader v-if="loading" />
 
-			<MovieLists
-				v-else
-				:movies="searchMovies"
-				:key="searchMovies.length"
-			/>
+		<MovieLists
+			v-else
+			:movies="searchMovies"
+			:key="searchMovies.length"
+		/>
 
-			<div ref="scrollComponent" />
-		</SearchInput>
-	</Transition>
+		<CircleLoader v-if="isLoading" />
+
+		<div ref="scrollComponent" />
+	</SearchInput>
 </template>

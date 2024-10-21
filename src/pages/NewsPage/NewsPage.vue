@@ -1,5 +1,8 @@
 <script setup>
 import {
+    ref,
+} from 'vue'
+import {
     PostLists,
 } from '@/widgets/Post'
 import {
@@ -9,7 +12,7 @@ import {
     newsModel,
 } from '@/entities/MediaPost'
 import {
-    HorizontalLoader,
+    CircleLoader,
     SpinnerLoader,
 } from '@/shared/ui/loaders'
 import {
@@ -18,13 +21,30 @@ import {
 
 const store = newsModel()
 
+const isLoadingMore = ref(false)
+const isLoading = ref(true)
+
 const { 
     posts,
-    isLoading,
 } = storeToRefs(store)
 
-const fetchPosts = async () => await store.fetchMediaPosts(1)
-const fetchNextPage = async () => await store.fetchNextPostsPage()
+const fetchPosts = async () => {
+    isLoading.value = true
+
+    await store.fetchMediaPosts(1)
+
+    isLoading.value = false
+}
+
+const fetchNextPage = async () => {
+    if (isLoading.value) return
+
+    isLoadingMore.value = true
+
+    await store.fetchNextPostsPage()
+
+    isLoadingMore.value = false
+}
 
 const { scrollComponent } = useInfinityScroll({
     fetchData: fetchPosts,
@@ -40,8 +60,9 @@ const { scrollComponent } = useInfinityScroll({
 			:posts="posts"
 			title="Новости"
 		/>
-		<div ref="scrollComponent" />
 
-		<HorizontalLoader v-if="isLoading" />
+		<CircleLoader v-if="isLoadingMore" />
+
+		<div ref="scrollComponent" />
 	</div>
 </template>

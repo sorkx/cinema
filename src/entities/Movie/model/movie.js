@@ -18,20 +18,13 @@ export const useMovieStore = defineStore('movie', () => {
     const boxOffice = ref([])
     const trailers = ref([])
     const genresMovie = ref([])
-    const isLoading = ref(false)
     const selectedMovieDetails = ref(null)
     const state = reactive({
         categories: {},
         collections: {},
     })
 
-    const setInitialLoading = (value) => {
-        isLoading.value = value
-    }
-
     const fetchData = async (type, category, page, apiFunction) => {
-        // setInitialLoading(true)
-
         const target = state[type]
 	
         const { items, totalPages } = await apiFunction(category, page)
@@ -51,20 +44,12 @@ export const useMovieStore = defineStore('movie', () => {
 
         target[category].pagination.current = page
         target[category].pagination.total = totalPages
-
-        console.log('state', state)
-
-        // setInitialLoading(false)
     }
 
     const fetchNextPage = async (type, category, apiFunction) => {
-        // if (isLoading.value) return
-	
         const target = state[type][category]
-        if (!target) {
-            console.warn(`No data found for ${type} with category ${category}`);
-            return
-        }
+
+        if (!target) return
 	
         if (target.pagination.current < target.pagination.total) {
             await fetchData(type, category, target.pagination.current + 1, apiFunction)
@@ -82,7 +67,6 @@ export const useMovieStore = defineStore('movie', () => {
 		  Api.getCategories(category, page, genres, ratingFrom, ratingTo, yearFrom, yearTo, order)
         )
     }
-	
 	
     const fetchCollectionData = async (category, page = 1) => {
         await fetchData('collections', category, page, Api.getMovieCollections)
@@ -138,7 +122,6 @@ export const useMovieStore = defineStore('movie', () => {
         trailers,
         genresMovie,
         state,
-        isLoading,
         fetchMovieFilters,
         fetchCategoryData,
         fetchCategoryNextPage,

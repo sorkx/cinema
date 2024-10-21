@@ -1,4 +1,7 @@
 <script setup>
+import { 
+    ref,
+} from 'vue'
 import {
     MovieLists,
 } from '@/widgets/Movie'
@@ -15,19 +18,35 @@ import {
     useInfinityScroll
 } from '@/shared/lib/use/useInfinityScroll'
 import {
-    HorizontalLoader,
+    CircleLoader,
     SpinnerLoader,
 } from '@/shared/ui/loaders'
 
 const store = movieModel()
 
+const isLoadingMore = ref(false)
+const isLoading = ref(true)
+
 const { 
     state,
-    isLoading,
 } = storeToRefs(store)
 
-const fetchDataPopularItems = async () => await store.fetchCollectionData(CINEMA_NAMES.TOP_POPULAR_ALL, 1)
-const fetchNextPage = async () => await store.fetchCollectionNextPage(CINEMA_NAMES.TOP_POPULAR_ALL)
+const fetchDataPopularItems = async () => {
+    isLoading.value = true
+
+    await store.fetchCollectionData(CINEMA_NAMES.TOP_POPULAR_ALL, 1)
+
+    isLoading.value = false
+}
+const fetchNextPage = async () => {
+    if (isLoading.value) return
+
+    isLoadingMore.value = true
+
+    await store.fetchCollectionNextPage(CINEMA_NAMES.TOP_POPULAR_ALL)
+
+    isLoadingMore.value = false
+}
 
 const { scrollComponent } = useInfinityScroll({
     fetchData: fetchDataPopularItems,
@@ -45,8 +64,9 @@ const { scrollComponent } = useInfinityScroll({
 			:movies="state?.collections.TOP_POPULAR_ALL?.data"
 			title="Популярное"
 		/>
-		<div ref="scrollComponent" />
 
-		<HorizontalLoader v-if="isLoading" />
+		<CircleLoader v-if="isLoadingMore" />
+
+		<div ref="scrollComponent" />
 	</div>
 </template>

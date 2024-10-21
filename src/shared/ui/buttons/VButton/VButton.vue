@@ -2,7 +2,7 @@
 const props = defineProps({
     modificator: {
         type: String,
-        required: true
+        default: '',
     }
 })
 </script>

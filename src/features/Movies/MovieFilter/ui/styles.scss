@@ -66,6 +66,17 @@
 	display: none;
 }
 
+.skeleton-filters {
+	display: grid;
+    gap: 32px;
+    margin-bottom: 32px;
+
+	&__selectors {
+		display: flex;
+		padding: 5px 0;
+	}
+}
+
 @media screen and (max-width: 519px) {
 	.page-filters__selectors-wrap__slider {
 		display: none;
