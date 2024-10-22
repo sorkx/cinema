@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-	<div class="container">
+	<div class="wrapper offset">
 		<h1 class="title">Страница в процессе разработки</h1>
 	</div>
 </template>

@@ -10,7 +10,9 @@ import {
 <template>
 	<Header />
 
-	<slot />
+	<main class="container">
+		<slot />
+	</main>
 	
 	<Footer />
 </template>

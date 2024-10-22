@@ -27,20 +27,28 @@ const ratingWidthStyle = computed(() => {
 </script>
 
 <template>
-	<div class="star-rating">
-		<span v-for="index in starsSystem" :key="index">
-			<UISymbol 
-				name="star"
-				class="star star--outlined" 
-			/>
-		</span>
-		<div class="star-rating__colored" :style="ratingWidthStyle">
-			<span v-for="index in starsSystem" :key="index">
+	<div class="vote-rating">
+		<div class="star-rating">
+			<div
+				class="vote-rating__item" 
+				v-for="index in starsSystem" :key="index"
+			>
 				<UISymbol 
 					name="star"
-					class="star star--colored" 
+					class="star star--outlined" 
 				/>
-			</span>
+				<span class="vote-rating__label">
+					{{ index }}
+				</span>
+			</div>
+			<div class="star-rating__colored" :style="ratingWidthStyle">
+				<div v-for="index in starsSystem" :key="index">
+					<UISymbol 
+						name="star"
+						class="star star--colored" 
+					/>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>

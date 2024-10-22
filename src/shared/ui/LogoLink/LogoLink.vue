@@ -10,4 +10,4 @@ import {
     </router-link>
 </template>
 
-<style src="./logoLink.scss" lang="scss" scoped />
+<style src="./styles.scss" lang="scss" scoped />

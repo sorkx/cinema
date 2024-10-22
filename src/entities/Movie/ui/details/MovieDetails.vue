@@ -3,7 +3,7 @@ import {
     ModuleWrapper,
 } from '@/shared/ui/ModuleWrapper'
 import {
-    RatingDisplay,
+    // RatingDisplay,
     RatingStars,
 } from '@/shared/ui/Ratings'
 import {
@@ -19,20 +19,20 @@ import {
 import {
     UISymbol,
 } from '@/shared/ui/UISymbol'
-import {
-    useRatings,
-} from '@/shared/lib/use/useRatings'
+// import {
+//     useRatings,
+// } from '@/shared/lib/use/useRatings'
 import {
     computed,
     ref,
     onMounted,
-    toRef,
+    // toRef,
 } from 'vue'
 
 const props = defineProps({
     movie: {
         type: Object,
-        default: () => ({}),
+        default: () => {},
     },
     staff: {
         type: Array,
@@ -46,29 +46,25 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
-    boxOffice: {
-        type: Array,
-        default: () => [],
-    },
     trailers: {
         type: Array,
         default: () => [],
     },
+    id: {
+        type: String,
+        default: '',
+    },
+    type: {
+        type: String,
+        default: '',
+    }
 })
-
-const typingMapping ={
-    'BUDGET': 'Бюджет',
-    'RUS': 'РФ',
-    'USA': 'США',
-    'WORLD': 'В мире',
-    'MARKETING': 'Потрачено на маркетинг',
-}
 
 const showAll = ref(false)
 const showTrailers = ref(false)
 const selectedSeason = ref(null)
 
-const { ratings } = useRatings(toRef(() => props.movie))
+// const { ratings } = useRatings(toRef(() => props.movie))
 
 const directors = computed(() => props.staff.filter(member => member.professionKey === 'DIRECTOR'))
 
@@ -127,6 +123,10 @@ const fomrattedDirectors = computed(() => {
 
 const addedZeroRating = (rating) => Number.isInteger(rating) ? `${rating}.0` : rating
 
+const toggleTrailers = (force) => {
+    showTrailers.value = force ?? !showTrailers.value
+}
+
 onMounted(() => {
     if (props.seasons.length > 0) {
         selectedSeason.value = props.seasons[0].number
@@ -135,184 +135,180 @@ onMounted(() => {
 </script>
 
 <template>
-	<section
-		v-if="props.movie"
-		class="movie__page"
-	>
-		<div 
-			class="movie__head" 
-			:style="`background-image: url(${props.movie?.coverUrl || props.movie?.posterUrl})`"
-		>
-			<div class="movie__head--overlay">
-				<div class="container">
-					<div class="movie__head--original">
-						{{ props.movie?.nameOriginal || props.movie?.nameEn || 'Неизвестно' }} 
-					</div>
-					<h1 class="v-title v-title--big movie__head--name">
-						{{ props.movie?.nameRu }}
-					</h1>
-					<div class="movie__head--infos">
-						<div class="movie__head--infos-info">
-							{{ props.movie?.year }}
+	<template v-if="props.movie"> 
+		<section class="movie-header wrapper breakout">
+			<div class="movie-header__wrapper">
+				<div class="movie-header__image">
+					<img
+						:src="props.movie?.coverUrl || props.movie?.posterUrl" 
+						fetchpriority="high"
+						:alt="props.movie.nameRu || props.movie.nameEn"
+					/>
+				</div>
+				<div class="movie-header__overlay container">
+					<div class="movie-header__content">
+						<div class="movie-header__name">
+							<div class="movie-header__title">
+								{{ props.movie?.nameRu }}
+							</div>
+							<div class="movie-header__original-title">
+								{{ props.movie?.nameOriginal || props.movie?.nameEn || 'Неизвестно' }}
+							</div>
 						</div>
-						<div class="movie__head--infos-info">
-							{{ modificationAgeLimits }}
+						<div class="movie-header__filters">
+							<div class="movie-rating movie-rating--kp">
+								<UISymbol name="kp" />
+								{{ addedZeroRating(props.movie?.ratingKinopoisk) }}
+							</div>
+							<div class="movie-rating movie-rating--imdb">
+								<UISymbol name="imdb" />
+								{{ addedZeroRating(props.movie?.ratingImdb) }}
+							</div>
+							<div 
+								class="movie-info-group"
+								style="gap: 16px;"
+							>
+								<span>
+									{{ props.movie?.year }}
+								</span>
+								<div class="movie-info-group__divider"/>
+								<span>
+									{{ countries }}
+								</span>
+								<div class="movie-info-group__divider"/>
+								<span>
+									{{ genres }}
+								</span>
+								<div class="movie-info-group__divider"/>
+								<span>
+									{{ filmDuration }}
+								</span>
+								<div class="movie-info-group__divider"/>
+								<span>
+									{{ modificationAgeLimits }}
+								</span>
+							</div>
 						</div>
-						<div 
-							class="movie__head--infos-info" 
-							style="text-align: start"
-						>
-							{{ countries }}
+						<div class="movie-header__description">
+							<UISymbol 
+								name="full-hd"
+							/>
+							<UISymbol 
+								name="sound"
+							/>
 						</div>
-						<div 
-							class="movie__head--infos-info" 
-							style="text-align: start"
-						>
-							{{ genres }}
-						</div>
-						<div 
-							class="movie__head--infos-info" 
-							style="text-align: start"
-						>
-							{{ filmDuration }}
-						</div>
-					</div>
-					<div class="movie__head--desc">
-						{{ props.movie?.description }}
-					</div>
-					<div class="movie__head--ratings">
-						<RatingDisplay 
-							v-for="rating in ratings"
-							:key="rating.source"
-							:rating="rating.value"
-							:source="rating.source"
-						/>
-					</div>
-					<div class="movie__head--bottom">
-						<div class="movie__head--bottom-btns">
-							<a 
+						<div class=movie-header__control>
+							<a
 								:href="props.movie?.webUrl" 
 								target="_blank"
 							>
-								<VButton modificator="play-free">
-									<span class="movie__head--play">
-										Смотреть
-									</span>
-									<span class="movie__head--look">
-										на Кинопоиске
-									</span>
+								<VButton 
+									modificator="main"
+								>
+									Перейти на кинопоиск
 								</VButton>
 							</a>
-							<div class="movie__head--trailers">
-								<a
-									@click="showTrailers = !showTrailers"
+							<VButton 
+								@click="toggleTrailers()"
+								modificator="outline"
+							>
+								Трейлер
+							</VButton>
+							<Transition name="fade">
+								<div
+									v-if="showTrailers"
+									class="movie-tooltip__trailers"
 								>
-									<button class="movie__head--trailers-btn">
-										<UISymbol name="trailers" />
-									</button>
-								</a>
-								<Transition
-									name="fade"
-								>
-									<div 
-										v-if="showTrailers"
-										class="movie-tooltip__trailers"
+									<div
+										v-if="trailersFilter.length > 0" 
+										class="trailers-list"
 									>
-										<div
-											v-if="trailersFilter.length > 0" 
-											class="trailers-list"
+										<a
+											v-for="trailer in trailersFilter"
+											:key="trailer.name"
+											:href="trailer.url"
+											target="_blank"
+											class="trailers-list__link"
 										>
-											<a
-												v-for="trailer in trailersFilter"
-												:key="trailer.name"
-												:href="trailer.url"
-												target="_blank"
-												class="trailers-list__link"
-											>
-												{{ trailer.name }}
-											</a>
-										</div>
-										<div
-											v-else 
-											class="trailers-list__not-found"
-										>
-											Трейлеров не обнаружено
-										</div>
+											{{ trailer.name }}
+										</a>
 									</div>
-								</Transition>
-							</div>
-							<div class="voice-acting-block">
-								<div class="voice-acting__title">
-									Озвучка:
+									<div
+										v-else 
+										class="trailers-list__not-found"
+									>
+										Трейлеров не обнаружено
+									</div>
 								</div>
-								<div class="voice-acting__name">
-									<span>
-										Дубляж
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div
-						v-if="props.boxOffice.length > 0" 
-						class="movie__box-office"
-					>
-						<div 
-							v-for="box in props.boxOffice"
-							:key="box.type"
-							class="movie__box-office--item"
-						>
-							<div>
-								<p class="movie__box-office--title">
-									{{ typingMapping[box.type] }}
-								</p>
-								<p class="movie__box-office--amount">
-								{{ box.symbol }} {{ box.amount.toLocaleString() }}
-								</p>
-							</div>
+							</Transition>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div 
-			v-if="props.seasons.length > 0"
-			class="container"
+		</section>
+		<section
+			v-if="props.seasons.length > 0" 
+			class="wrapper seasons__wrapper"
 		>
-			<div class="container-head">
-				<div class="container-title">
-					 Сезоны и сериалы
+			<div class="content-right">
+				<div class="wrapper-header">
+					<div class="wrapper-title">
+						Сезоны
+					</div>
 				</div>
-			</div>
-			<div class="series-list__wrapper">
-				<div class="series-list">
-					<a 
-						v-for="season in props.seasons"
-						:key="season.number"
-						class="link--module--seasons link series-list__season"
-						@click="selectedSeason = season.number"
-						:class="{ active: selectedSeason === season.number }"
-					>
-						<div 
-							class="series-list__season__number"
+				<div class="series-list__wrapper">
+					<div class="series-list">
+						<a 
+							v-for="season in props.seasons"
+							:key="season.number"
+							class="link--module--seasons link series-list__season"
+							@click="selectedSeason = season.number"
+							:class="{ active: selectedSeason === season.number }"
 						>
-							{{ season.number }}
-						</div>
-					</a>
-				</div>
-				<div v-if="currentSeason">
-					<ModuleWrapper 
-						:items="currentSeason.episodes"
-						swiper-type="movies"
-					>
-						<template #slide="{ item }">
-							<Episode :item="item" />
-						</template>
-					</ModuleWrapper>
+							<div 
+								class="series-list__season__number"
+							>
+								{{ season.number }}
+							</div>
+						</a>
+					</div>
+					<div v-if="currentSeason">
+						<ModuleWrapper 
+							:items="currentSeason.episodes"
+							swiper-type="movies"
+						>
+							<template #slide="{ item }">
+								<Episode :item="item" />
+							</template>
+						</ModuleWrapper>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="container">
+		</section>
+		<section class="wrapper movie-description">
+			<div class="movie-description__info">
+				<h2 class="movie-description__header">
+					Описание
+				</h2>
+				<p class="movie-description__text">
+					{{ props.movie?.description }}
+				</p>
+			</div>
+			<div class="movie-description__votes">
+				<h2 class="movie-description__header">
+					Рейтинг
+				</h2>
+				<div class="movie-description__vote-block">
+					<p class="movie-description__text">
+						Оценка зрителей
+					</p>
+					<RatingStars 
+							:rating="props.movie?.ratingKinopoisk || props.movie?.ratingImdb || 0"
+						/>
+				</div>
+			</div>
+		</section>
+		<section class="wrapper full-width">
 			<div class="movie__body">
 				<div class="movie-page__left">
 					<div class="movie__body-item">
@@ -320,7 +316,7 @@ onMounted(() => {
 							v-if="directors.length > 0"
 							class="movie__body-title"
 						>
-							{{ staff[0]?.professionText }}
+							{{ props.staff[0]?.professionText }}
 						</div>
 						<div 
 							class="movie__body-desc"
@@ -337,78 +333,55 @@ onMounted(() => {
 						</a>
 					</div>
 				</div>
-				<div
-					v-if="props.movie?.ratingKinopoisk || props.movie?.ratingImdb" 
-					class="movie-body__right"
-				>
-					<div class="movie-vote">
-						<div class="movie-vote__title">
-							Рейтинг
-							{{ props.movie?.type === 'FILM' ? 'фильма' : 'сериала' }}
-						</div>
-						<RatingStars 
-							:rating="props.movie?.ratingKinopoisk || props.movie?.ratingImdb || 0"
-						/>
-						<div class="stars-vote__values">
-							<div class="movie-vote__item">
-								<div class="movie-vote__value">
-									{{ 
-										addedZeroRating(props.movie?.ratingKinopoisk) ||
-										addedZeroRating(props.movie?.ratingImdb)
-									}}
-								</div>
-								<div class="movie-vote__label">
-									ОБЩАЯ ОЦЕНКА
-								</div>
-							</div>
-						</div>
-					</div>
+			</div>
+		</section>
+		<section class="wrapper staff__wrapper">
+			<div
+				v-if="props.staff.length > 0" 
+				class="content-right"
+			>
+				<div class="wrapper-header">
+					<h2 class="wrapper-title">
+						Актерский состав
+					</h2>
 				</div>
+				<ModuleWrapper
+					:items="actors"
+					swiper-type="movies"
+				>
+					<template #slide="{ item }">
+						<StaffCard 
+							:person="item"
+							:key="item.staffId"
+						/>
+					</template>
+				</ModuleWrapper>
 			</div>
-		</div>
-		<div
-			v-if="props.staff.length > 0" 
-			class="container"
-		>
-			<div class="container-head">
-				<h2 class="container-title">
-					Актерский состав
-				</h2>
-			</div>
-			<ModuleWrapper
-				:items="actors"
-				swiper-type="movies"
+		</section>
+		<section class="wrapper similars__wrapper">
+			<div
+				v-if="props.similars.length > 0" 
+				class="content-right"
 			>
-				<template #slide="{ item }">
-					<StaffCard 
-						:person="item"
-						:key="item.staffId"
-					/>
-				</template>
-			</ModuleWrapper>
-		</div>
-		<div
-			v-if="props.similars.length > 0" 
-			class="container"
-		>
-			<div class="container-head">
-				<h2 class="container-title">
-					Смотреть позже
-				</h2>
+				<div class="wrapper-header">
+					<h2 class="wrapper-title">
+						Смотрите также
+					</h2>
+				</div>
+				<ModuleWrapper
+					:items="props.similars"
+					swiper-type="movies"
+				>
+					<template #slide="{ item }">
+						<Movie 
+							:movie="item"
+							:key="item.filmId"
+						/>
+					</template>
+				</ModuleWrapper>	
 			</div>
-			<ModuleWrapper
-				:items="props.similars"
-				swiper-type="movies"
-			>
-				<template #slide="{ item }">
-					<Movie 
-						:movie="item"
-						:key="item.filmId"
-					/>
-				</template>
-			</ModuleWrapper>	
-		</div>
-	</section>
+		</section>
+	</template>
 </template>
   
 <style src="./styles.scss" lang="scss" scoped />

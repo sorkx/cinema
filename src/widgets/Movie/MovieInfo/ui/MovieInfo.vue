@@ -31,7 +31,6 @@ let {
     selectedMovieDetails,
     similars,
     seasons,
-    boxOffice,
     trailers,
 } = storeToRefs(movieDetailsStore)
 
@@ -52,7 +51,6 @@ const fetchData = async (id) => {
         const fetchPromises = [
             staffDetailsStore.fetchStaff(id),
             movieDetailsStore.fetchMovieSimilars(id),
-            movieDetailsStore.fetchMovieBoxOffice(id),
             movieDetailsStore.fetchMovieTrailers(id)
         ]
 
@@ -80,7 +78,6 @@ watch(() => route.params.id, fetchData, { immediate: true })
 		:staff="staff"
 		:similars="similars"
 		:seasons="seasons"
-		:boxOffice="boxOffice"
 		:trailers="trailers"
 	/>
 </template>

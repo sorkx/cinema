@@ -2,9 +2,6 @@
 import {
     Post,
 } from '@/entities/MediaPost'
-import {
-    Pathway,
-} from '@/shared/ui/Pathway'
 
 const props = defineProps({
     posts: {
@@ -23,15 +20,6 @@ const props = defineProps({
 </script>
 
 <template>
-	<Pathway
-		v-if="props.title" 
-		:title="props.title"
-	/>
-	<div class="container-head">
-		<div class="container-title">
-			Новости
-		</div>
-	</div>
 	<div
 		v-if="props.posts.length && props.posts" 
 		class="media-posts"

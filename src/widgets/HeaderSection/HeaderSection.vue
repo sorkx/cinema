@@ -71,62 +71,57 @@ router.beforeEach((to, from, next) => {
 </script>
 
 <template>
-	<div class="header__container">
-		<header class="header header--overflow">
-			<div class="container header__wrapper">
-				<LogoLink />
-				<nav class="header__center">
-					<ul class="menu menu--header">
-						<li 
-							v-for="item in items" 
-							:key="item.id"
-						>
-							<router-link
-								:to="item.to"
-								active-class="active-link"
-							>
-								<span>
-									{{ item.title }}
-								</span>
-							</router-link>
-						</li>
-					</ul>
-				</nav>
-				<div class="header__profile">
-					<div class="header__profile--search">
-						<VButton
-							@click="toggleSearch()" 
-							modificator="search"
-						>
-							<UISymbol 
-								name="search"  
-								class="search-icon" 
-							/>
-						</VButton>
-						<MovieSearch 
-							v-if="isSearchVisible"
-							focus-on-mounted
-							@close="toggleSearch(false)"
-						/>
-					</div>
-				</div>
-			</div>
-		</header>
-		<div class="header-bottom__mobile">
-			<div class="header-bottom__container">
-				<div
-					v-for="item in items"
+	<header class="header container">
+		<div class="header__container">
+			<LogoLink />
+			<div class="header__spacer" />
+			<ul class="header-menu">
+				<li 
+					v-for="item in items" 
 					:key="item.id"
+					class="header-menu__item"
 				>
-					<router-link 
-						class="header-bottom__link" 
+					<router-link
 						:to="item.to"
 						active-class="active-link"
+						class="header-menu__link"
+						aria-current="page"
 					>
-						<div :class="['mobile-icon', item.class]" />
 						{{ item.title }}
 					</router-link>
-				</div>
+				</li>
+			</ul>
+			<div class="header__spacer" />
+			<VButton
+				@click="toggleSearch()" 
+				modificator="search"
+			>
+				<UISymbol 
+					name="search"  
+					class="search-icon" 
+				/>
+			</VButton>
+			<MovieSearch 
+				v-if="isSearchVisible"
+				focus-on-mounted
+				@close="toggleSearch(false)"
+			/>
+		</div>
+	</header>
+	<div class="header-bottom__mobile">
+		<div class="header-bottom__container">
+			<div
+				v-for="item in items"
+				:key="item.id"
+			>
+				<router-link 
+					class="header-bottom__link" 
+					:to="item.to"
+					active-class="active-link--mobile"
+				>
+					<div :class="['mobile-icon', item.class]" />
+					{{ item.title }}
+				</router-link>
 			</div>
 		</div>
 	</div>

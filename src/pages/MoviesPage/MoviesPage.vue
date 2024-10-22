@@ -116,30 +116,33 @@ onBeforeMount(async () => {
 		<Pathway
 			:title="formattedTitle[contentType]"
 		/>
-		<div
-			class="container-head"
-		>
-			<div class="container-title">
-				{{ formattedTitle[contentType] }}
+
+		<section class="wrapper offset section-genres">
+			<div
+				class="wrapper-header"
+			>
+				<div class="wrapper-title">
+					{{ formattedTitle[contentType] }}
+				</div>
 			</div>
-		</div>
-		
-		<MovieFilter 
-			:genres="genresMovie"
-			:is-loading="isLoadingFilters"
-			v-model:selected-genre="filterParams.genres"
-			v-model:order="filterParams.order"
-			v-model:year-from="filterParams.yearFrom"
-			v-model:year-to="filterParams.yearTo"
-			v-model:rating-from="filterParams.ratingFrom"
-			v-model:rating-to="filterParams.ratingTo"
-			@update:selected-genre="updateFilterParam('genres', $event)"
-			@update:year-from="updateFilterParam('yearFrom', $event)"
-			@update:year-to="updateFilterParam('yearTo', $event)" 
-			@update:rating-fromo="updateFilterParam('ratingFrom', $event)" 
-			@update:rating-to="updateFilterParam('ratingTo', $event)" 
-			@update:order="updateFilterParam('order', $event)"
-		/>
+			
+			<MovieFilter 
+				:genres="genresMovie"
+				:is-loading="isLoadingFilters"
+				v-model:selected-genre="filterParams.genres"
+				v-model:order="filterParams.order"
+				v-model:year-from="filterParams.yearFrom"
+				v-model:year-to="filterParams.yearTo"
+				v-model:rating-from="filterParams.ratingFrom"
+				v-model:rating-to="filterParams.ratingTo"
+				@update:selected-genre="updateFilterParam('genres', $event)"
+				@update:year-from="updateFilterParam('yearFrom', $event)"
+				@update:year-to="updateFilterParam('yearTo', $event)" 
+				@update:rating-fromo="updateFilterParam('ratingFrom', $event)" 
+				@update:rating-to="updateFilterParam('ratingTo', $event)" 
+				@update:order="updateFilterParam('order', $event)"
+			/>
+		</section>
 
 		<MovieLists
 			v-if="currentResults.length > 0"

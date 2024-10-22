@@ -58,11 +58,17 @@ const { scrollComponent } = useInfinityScroll({
 	<SpinnerLoader v-if="isLoading && !state.collections.TOP_POPULAR_ALL?.data.length" />
 
 	<div
-		class="container" 
+		class="wrapper offset" 
 	>
+		<div class="wrapper-header">
+			<div class="wrapper-title">
+				Популярные фильмы и сериалы
+			</div>
+		</div>
+		<div class="wrapper-subheader" />
+		
 		<MovieLists
 			:movies="state?.collections.TOP_POPULAR_ALL?.data"
-			title="Популярное"
 		/>
 
 		<CircleLoader v-if="isLoadingMore" />

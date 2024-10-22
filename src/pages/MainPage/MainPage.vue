@@ -70,10 +70,7 @@ onBeforeRouteLeave(() => {
 <template>
 	<SpinnerLoader v-if="isLoading && !state?.collections.length && !posts.length" />
 
-	<main
-		v-else 
-		class="container main__container"
-	>
+	<template v-else>
 		<MovieCategoryRow 
 			v-for="(collection, key) in state?.collections"
 			:key="key"
@@ -86,5 +83,5 @@ onBeforeRouteLeave(() => {
 			title="Новости"
 			name="News"
 			/>
-	</main>
+	</template>
 </template>

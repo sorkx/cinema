@@ -36,6 +36,7 @@ const closeSearch = () => {
 				<VButton
 					@click="closeSearch" 
 					class="search__close"
+					modificator="empty"
 				>
 					<UISymbol name="close" />
 				</VButton>

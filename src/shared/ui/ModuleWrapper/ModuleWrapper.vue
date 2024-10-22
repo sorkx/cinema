@@ -30,13 +30,16 @@ const props = defineProps({
 </script>
 
 <template>
-	<div class="module">
-		<div class="module__wrap">
-			<h2
-				class="module__title"
+	<section 
+		class="module full-width"
+		:class="props.link.toLocaleLowerCase()"
+	>
+		<div class="wrapper-header">
+			<h1
+				class="wrapper-title"
 			>
 				{{ props.title }}
-			</h2>
+			</h1>
 			<router-link
 				v-if="props.link" 
 				:to="{ 
@@ -53,22 +56,28 @@ const props = defineProps({
 				/>
 			</router-link>
 		</div>
-		<v-swiper 
-			class="module__movies--swiper"
-			:swiper-type="props.swiperType"
-		>
-			<swiper-slide
-				v-for="item in props.items"
-				:key="item.id"
-				:class="[`swiper-slide--${props.swiperType}`, 'module__item', 'swiper-slide']"
+		<div class="container-right swiper-top">
+			<VSwiper 
+				class="module__movies--swiper"
+				:swiper-type="props.swiperType"
 			>
-				<slot 
-					:item="item" 
-					name="slide" 
-				/>
-			</swiper-slide>
-		</v-swiper>
-	</div>
+				<swiper-slide
+					v-for="item in props.items"
+					:key="item.id"
+					:class="[
+						`swiper-slide--${props.swiperType}`, 
+						'module__item', 
+						'swiper-slide',
+					]"
+				>
+					<slot 
+						:item="item" 
+						name="slide" 
+					/>
+				</swiper-slide>
+			</VSwiper>
+		</div>
+	</section>
 </template>
 
 <style src="./styles.scss" lang="scss" scoped />

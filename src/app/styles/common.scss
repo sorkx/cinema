@@ -36,24 +36,24 @@ body {
   }
 }
 
-.app {
-	display: flex;
-	flex-direction: column;
-	min-height: calc(100 * (var(--vh)));
-	overflow: hidden;
-}
+// .app {
+// 	display: flex;
+// 	flex-direction: column;
+// 	min-height: calc(100 * (var(--vh)));
+// 	overflow: hidden;
+// }
 
-.page-container {
-	display: grid;
-    min-height: 100vh;
-    grid-template-rows: 76px 1fr auto;
-    grid-template-columns: 100%;
-    overflow: hidden;
+// .page-container {
+// 	display: grid;
+//     min-height: 100vh;
+//     grid-template-rows: 76px 1fr auto;
+//     grid-template-columns: 100%;
+//     overflow: hidden;
 
-	&__main {
-		position: relative;
-	}
-}
+// 	&__main {
+// 		position: relative;
+// 	}
+// }
 
 .search-page {
 	overflow: hidden;

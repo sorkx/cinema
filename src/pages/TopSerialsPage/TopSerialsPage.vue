@@ -59,7 +59,14 @@ const { scrollComponent } = useInfinityScroll({
 <template>
 	<SpinnerLoader v-if="isLoading && !state.collections.TOP_250_TV_SHOWS?.data.length" />
 
-	<div class="container">
+	<div class="wrapper offset">
+		<div class="wrapper-header">
+			<div class="wrapper-title">
+				Топ 250 сериалов
+			</div>
+		</div>
+		<div class="wrapper-subheader" />
+
 		<MovieLists
 			:movies="state?.collections.TOP_250_TV_SHOWS?.data"
 			title="Топ 250 сериалов"

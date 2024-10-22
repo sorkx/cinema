@@ -55,11 +55,15 @@ const { scrollComponent } = useInfinityScroll({
 <template>
 	<SpinnerLoader v-if="isLoading && !posts.length" />
 
-	<div class="container">
-		<PostLists
-			:posts="posts"
-			title="Новости"
-		/>
+	<div class="wrapper offset">
+		<div class="wrapper-header">
+			<div class="wrapper-title">
+				Новости
+			</div>
+		</div>
+		<div class="wrapper-subheader" />
+
+		<PostLists :posts="posts" />
 
 		<CircleLoader v-if="isLoadingMore" />
 

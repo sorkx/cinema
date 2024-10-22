@@ -47,16 +47,6 @@ export const Api = {
         }
     },
 
-    getMovieBoxOffice: async (id) => {
-        try{
-            const { items } = await fetchInstance(API_URL, `/${id}/box_office`)
-
-            return items
-        }catch(e) {
-            console.error('Error fetching movie box office:', e)
-        }
-    },
-
     getMovieTrailers: async (id) => {
         try{
             const { items } = await fetchInstance(API_URL, `/${id}/videos`)

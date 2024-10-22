@@ -36,10 +36,6 @@ const props = defineProps({
 </script>
 
 <template>
-	<Pathway
-		v-if="props.title && !props.hidden" 
-		:title="props.title"
-	/>
 	<div
 		v-if="props.movies.length && props.movies" 
 		class="infinite-container"

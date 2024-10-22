@@ -2,30 +2,7 @@
 	position: relative;
 	margin-bottom: 80px;
 
-	&__item {
-		padding-top: 10px;
-	}
-
 	&__slider {
-		position: relative;
-	}
-
-	&__wrap {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		margin-bottom: 32px;
-	}
-
-	&__title {
-		color: var(--color-palette-white-base);
-		font-size: 36px;
-		line-height: 50px;
-		font-weight: $fBold;
-		display: grid;
-		grid-template-columns: auto 1fr;
-		grid-column-gap: 15px;
 		position: relative;
 	}
 
@@ -66,6 +43,10 @@
 	}
 }
 
+.swiper-top {
+	margin: 64px 0 56px;
+}
+
 .swiper-slide {
 	display: flex;
 	flex-direction: column;
@@ -82,49 +63,13 @@
 	}
 }
 
-@media (max-width: 1300px) {
-    .module__title svg {
-        width: 16px;
-        height: 16px;
-    }
-}
-
-@media (max-width: 1024px) {
-    .module__title {
-        font-size: 44px;
-        line-height: 50px;
-	}
-}
-
 @media (max-width: 640px) {
     .module {
         margin-bottom: 40px;
-
-		&__title {
-			font-size: 28px;
-			line-height: 36px;
-		}
-
 		&__link {
 			&::after {
 				content: 'Все';
 			}
 		}
-    }
-}
-
-@media (max-width: 480px) {
-    .module__title {
-		font-size: 28px;
-		font-style: normal;
-		font-weight: 700;
-		line-height: 36px;
-	}
-}
-
-@media (max-width: 639px) {
-    .module__item {
-        width: 128px;
-        min-width: 128px;
     }
 }

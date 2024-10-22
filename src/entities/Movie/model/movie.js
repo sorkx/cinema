@@ -15,7 +15,6 @@ import {
 export const useMovieStore = defineStore('movie', () => {
     const similars = ref([])
     const seasons = ref([])
-    const boxOffice = ref([])
     const trailers = ref([])
     const genresMovie = ref([])
     const selectedMovieDetails = ref(null)
@@ -99,11 +98,6 @@ export const useMovieStore = defineStore('movie', () => {
         seasons.value = data
     }
 
-    const fetchMovieBoxOffice = async (id) => {
-        const data = await Api.getMovieBoxOffice(id)
-        boxOffice.value = data
-    }
-
     const fetchMovieTrailers = async (id) => {
         const data = await Api.getMovieTrailers(id)
         trailers.value = data
@@ -118,7 +112,7 @@ export const useMovieStore = defineStore('movie', () => {
     return {
         similars,
         seasons,
-        boxOffice,
+
         trailers,
         genresMovie,
         state,
@@ -129,7 +123,6 @@ export const useMovieStore = defineStore('movie', () => {
         fetchCollectionData,
         fetchNextPage,
         fetchMovieTrailers,
-        fetchMovieBoxOffice,
         fetchSerialSeasons,
         fetchMovieSimilars,
         fetchAllCategories,

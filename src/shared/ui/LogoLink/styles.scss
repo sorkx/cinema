@@ -1,0 +1,23 @@
+.logo-link {
+    // text-decoration: none;
+    // display: grid;
+    // align-content: center;
+    // justify-content: center;
+    // place-content: center;
+	align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 0 16px;
+
+	svg {
+		width: 100px;
+	}
+
+	&__title {
+		color: var(--color-palette-white-base);
+	}
+
+	&__subtitle {
+		color: var(--color-palette-white-base);
+	}
+}
