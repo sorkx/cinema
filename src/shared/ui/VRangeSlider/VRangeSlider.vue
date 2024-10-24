@@ -47,18 +47,11 @@ const rightPosition = computed(() => {
     return ((roundToStep(maxValue.value) - props.min) / (props.max - props.min)) * 100
 })
 
-const onMouseDown = (event, thumb) => {
-    isDragging.value = true
-    activeThumb.value = thumb
-    document.addEventListener('mousemove', onMouseMove)
-    document.addEventListener('mouseup', onMouseUp)
-}
-
-const onMouseMove = (event) => {
+const handleMove = (clientX) => {
     if (!isDragging.value || !trackRef.value) return
 
     const rect = trackRef.value.getBoundingClientRect()
-    const position = (event.clientX - rect.left) / rect.width
+    const position = (clientX - rect.left) / rect.width
     const rawValue = position * (props.max - props.min) + props.min
     const steppedValue = roundToStep(rawValue)
 
@@ -72,11 +65,43 @@ const onMouseMove = (event) => {
     emit('update:min', minValue.value)
 }
 
+const onMouseDown = (event, thumb) => {
+    isDragging.value = true
+    activeThumb.value = thumb
+    document.addEventListener('mousemove', onMouseMove)
+    document.addEventListener('mouseup', onMouseUp)
+}
+
+const onMouseMove = (event) => {
+    handleMove(event.clientX)
+}
+
 const onMouseUp = () => {
     isDragging.value = false
     activeThumb.value = null
     document.removeEventListener('mousemove', onMouseMove)
     document.removeEventListener('mouseup', onMouseUp)
+}
+
+const onTouchStart = (event, thumb) => {
+    event.preventDefault()
+    isDragging.value = true
+    activeThumb.value = thumb
+    document.addEventListener('touchmove', onTouchMove, { passive: false })
+    document.addEventListener('touchend', onTouchEnd)
+}
+
+const onTouchMove = (event) => {
+    event.preventDefault()
+    const touch = event.touches[0]
+    handleMove(touch.clientX)
+}
+
+const onTouchEnd = () => {
+    isDragging.value = false
+    activeThumb.value = null
+    document.removeEventListener('touchmove', onTouchMove)
+    document.removeEventListener('touchend', onTouchEnd)
 }
 
 const leftPositionStyle = computed(() => {
@@ -108,7 +133,8 @@ onMounted(() => {
 		</div>
 		<div
 			ref="trackRef"
-			@mousedown="onMouseDown($event, 'track')" 
+			@mousedown="onMouseDown($event, 'track')"
+			@touchstart="onTouchStart($event, 'track')" 
 			class="v-range-slider__wrapper"
 		>
 			<div class="v-range-slider__track" />
@@ -119,12 +145,14 @@ onMounted(() => {
 			<div 
 				class="v-range-slider__thumb" 
 				:style="leftPositionStyle"
-				@mousedown.stop="onMouseDown($event, 'min')" 
+				@mousedown.stop="onMouseDown($event, 'min')"
+				@touchstart.stop="onTouchStart($event, 'min')" 
 			/>
 			<div 
 				class="v-range-slider__thumb" 
 				:style="rightPositionStyle"
 				@mousedown="onMouseDown($event, 'max')"
+				@touchstart="onTouchStart($event, 'max')"
 			/>
 		</div>
 		<div class="v-range-slider__bounds">
