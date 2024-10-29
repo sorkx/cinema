@@ -225,7 +225,8 @@ watch(openSidebar, async (newVal) => {
 			</div>
 			<div class="browse-filters">
 				<VButton
-					modificator="filter"
+					size="small"
+					appearance="text"
 					class="filter-button"
 					@click="toggleDropdown()"
 				>

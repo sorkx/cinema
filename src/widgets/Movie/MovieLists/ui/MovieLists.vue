@@ -60,7 +60,7 @@ const props = defineProps({
 				:to="{ name: ROUTE_NAMES.MAIN }"
 			>
 				<VButton 
-					modificator="main"
+					size="large"
 					class="empty-block__button"
 				>
 					Перейти на главную

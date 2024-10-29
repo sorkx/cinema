@@ -98,35 +98,8 @@
 	animation-name: fadeIn;
 }
 
-.button-soft {
-    color: var(--color-palette-white-base) !important;
-
-	&::after, &::before {
-		background: hsla(0, 0%, 100%, .1);
-	}
-
-	&:hover {
-		color: var(--color-palette-white-base) !important;
-
-		&::after {
-			opacity: 1;
-		}
-	}
-}
-
-.button-primary {
-    color: var(--color-palette-black-50) !important;
-
-	&::after, &::before {
-		background: linear-gradient(46.47deg, var(--color-palette-yellow-10) 2.44%, var(--color-palette-green-20) 64.88%);
-	}
-}
-
 .footer-button {
-	position: relative;
-    background: transparent;
 	margin-bottom: 8px;
-	z-index: 1;
 }
 
 .close-icon {

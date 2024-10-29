@@ -3,13 +3,10 @@ import {
     Pathway,
 } from '@/shared/ui/Pathway'
 import {
-    UISymbol,
-} from '@/shared/ui/UISymbol'
-import {
     ModuleWrapper,
 } from '@/shared/ui/ModuleWrapper'
 import{
-    ButtonFilter,
+    VButton,
 } from '@/shared/ui/buttons'
 import {
     MovieLists,
@@ -114,12 +111,16 @@ onMounted(() => setFilter('ACTOR'))
 				swiper-type="genres"
 			>
 				<template #slide="{ item }">
-					<ButtonFilter
+					<VButton
 						:key="item.professionKey"
-						:title="professionMapping[item.professionKey]"
 						:active="currentFilter === item.professionKey"
 						@click="setFilter(item.professionKey)"
-					/>
+						modificator="color-gray"
+						size="normal"
+						appearance="fill"
+					>
+						{{ professionMapping[item.professionKey] }}
+					</VButton>
 				</template>
 			</ModuleWrapper>
 		</div>

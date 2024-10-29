@@ -82,6 +82,6 @@ onBeforeRouteLeave(() => {
 			:items="posts"
 			title="Новости"
 			name="News"
-			/>
+		/>
 	</template>
 </template>

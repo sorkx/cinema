@@ -296,21 +296,31 @@
     cursor: pointer;
 
 	&--module--seasons {
-		height: 48px;
-		width: 48px;
-		border-radius: 8px;
-		background: var(--color-palette-gray-10);
-		margin-right: 8px;
-		font-size: 16px;
-		font-weight: 500;
-		line-height: 1.25;
-		letter-spacing: normal;
-		color: var(--color-palette-black-solid);
-		min-width: 48px;
-
+		align-items: center;
+		border: 1px solid hsla(0, 0%, 100%, .3);
+		border-radius: 100%;
+		color: #fff;
+		cursor: pointer;
+		display: flex;
+		font-size: 32px;
+		font-style: normal;
+		font-weight: 400;
+		justify-content: center;
+		line-height: 26px;
+		transition: border .3s;
+		height: 88px;
+		width: 88px;
+		margin-right: 24px;
 	
-		&.active, &:hover {
-			background: var(--color-palette-green-10);
+		&.active {
+			border-color: var(--color-palette-green-10);
+			border-width: 2px;
+			color: var(--color-palette-green-10);
+			font-weight: $fSemiBold;
+		}
+
+		&:hover {
+			border-color: var(--color-palette-green-10);
 		}
 	}
 }
@@ -358,6 +368,13 @@
 }
 
 @media (max-width: 640px) {
+	.link--module--seasons {
+		font-size: 18px;
+		margin-right: 16px;
+		height: 40px;
+		width: 40px;
+	}
+
 	.movie {
 		&-description {
 			&__header {

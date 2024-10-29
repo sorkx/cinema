@@ -17,29 +17,51 @@ const props = defineProps({
     },
 })
 
+const imageRef = ref(null)
+const imageSrc = ref('')
 const imageLoaded = ref(false)
-
-const onImageLoad = () => {
-    imageLoaded.value = true
-}
+const isLoading = ref(true)
 
 onMounted(() => {
-    if (props.movie.posterUrlPreview) {
-        const img = new Image()
-        img.onload = onImageLoad
-        img.src = props.movie.posterUrlPreview
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && props.movie.posterUrlPreview) {
+                const img = new Image()
+                img.src = props.movie.posterUrlPreview
+                img.onload = () => {
+                    imageSrc.value = props.movie.posterUrlPreview
+                    imageLoaded.value = true
+                    isLoading.value = false
+                }
+                img.onerror = () => {
+                    isLoading.value = false
+                }
+                observer.disconnect()
+            }
+        });
+    }, {
+        threshold: 0.1
+    })
+
+    if (imageRef.value) {
+        observer.observe(imageRef.value)
     }
 })
 </script>
 
 <template>
 	<div class="movie-card">
-		<span class="movie-card__image-container">
+		<span
+			ref="imageRef" 
+			class="movie-card__image-container"
+		>
 			<img
-				v-if="props.movie.posterUrlPreview && imageLoaded"
-				:src="props.movie.posterUrlPreview"
-				@load="onImageLoad"
-				:alt="movie.nameRu || movie.nameEn"
+				v-if="!isLoading && imageLoaded"
+				:src="imageSrc"
+				:alt="props.movie.nameRu || props.movie.nameEn"
+				loading="eager"
+				transition="fade"
+				transitionall="true"
 				class="movie-card__image movie__image--inner"
 			/>
 			<div

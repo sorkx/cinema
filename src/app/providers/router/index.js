@@ -45,7 +45,6 @@ const routeOptions = [
     {
         path: '/movies/:type',
         name: ROUTE_NAMES.MOVIES,
-        // props: true,
     },
 ]
 

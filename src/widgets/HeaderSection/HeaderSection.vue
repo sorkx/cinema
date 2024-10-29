@@ -93,8 +93,10 @@ router.beforeEach((to, from, next) => {
 			</ul>
 			<div class="header__spacer" />
 			<VButton
-				@click="toggleSearch()" 
-				modificator="search"
+				@click="toggleSearch()"
+				modificator="rounded" 
+				appearance="text"
+				data-size="normal"
 			>
 				<UISymbol 
 					name="search"  

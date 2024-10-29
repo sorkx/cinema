@@ -37,15 +37,6 @@ const footerItems = reactive([
         ]
     },
     {
-        name: 'Скачать мобильное приложение',
-        items: [
-            { image: 'android' },
-            { image: 'appstore' },
-            { image: 'googleplay' },
-            { image: 'rustore' },
-        ]
-    },
-    {
         name: 'Подписаться на нас',
         items: [
             { icon: 'vk' },
@@ -68,22 +59,7 @@ const footerItems = reactive([
 						<div class="footer__name"> 
 							{{ section.name }}
 						</div>
-						<div v-if="section.name === 'Скачать мобильное приложение'">
-							<div class="footer__applications">
-								<router-link
-									v-for="item in section.items"
-									:key="item.image"
-									class="application application--img application--footer"
-									to="#"
-								>
-									<img 
-										:src="`/images/${item.image}.png`" 
-										:alt="item.image" 
-									/>
-								</router-link>
-							</div>
-						</div>
-						<div v-else-if="section.name === 'Подписаться на нас'">
+						<div v-if="section.name === 'Подписаться на нас'">
 							<div class="socials socials--footer">
 								<router-link
 									v-for="item in section.items"

@@ -103,6 +103,7 @@ const swiperBreakpoints = computed(() => {
 		:modules="modules"
 		:speed="speed"
 		mode="vertical"
+		lazy="true"
 		calculateHeight="true"
 		:breakpoints="swiperBreakpoints"
 		:navigation="{

@@ -127,14 +127,15 @@ onMounted(() => {
 					</div>
 					<div class="sidebar-filters__footer">
 						<VButton
-							modificator="mobile"
+							size="large"
+							appearance="outline"
 							class="button-soft footer-button"
 							@click="resetFilter"
 						>
 							Сбросить
 						</VButton>
 						<VButton
-							modificator="mobile"
+							size="large"
 							class="button-primary footer-button"
 							@click="applyFilter"
 						>

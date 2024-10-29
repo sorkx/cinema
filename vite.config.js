@@ -33,4 +33,11 @@ export default defineConfig({
             },
         },
     },
+    build: {
+        minify: 'esbuild',
+        target: 'es2015',
+        outDir: 'dist',
+        assetsDir: 'assets',
+        sourcemap: true
+    }
 })

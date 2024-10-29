@@ -203,14 +203,15 @@ onMounted(() => {
 								target="_blank"
 							>
 								<VButton 
-									modificator="main"
+									data-size="large"
 								>
 									Перейти на кинопоиск
 								</VButton>
 							</a>
 							<VButton 
 								@click="toggleTrailers()"
-								modificator="outline"
+								appearance="outline"
+								data-size="large"
 							>
 								Трейлер
 							</VButton>
