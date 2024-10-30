@@ -32,11 +32,17 @@
 	}
 }
 
-@media (max-width: 968px) {
-	:deep(.v-swiper__button--next),
-	:deep(.v-swiper__button--prev) {
+@media (max-width: 1366px) {
+	.slider-control {
 		display: none;
 	}
 }
+
+// @media (max-width: 968px) {
+// 	:deep(.v-swiper__button--next),
+// 	:deep(.v-swiper__button--prev) {
+// 		display: none;
+// 	}
+// }
   
 

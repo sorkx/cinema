@@ -17,6 +17,12 @@
 		z-index: -1;
 	}
 
+	&.disabled-backdrop {
+		&::before {
+			background: transparent;
+		}
+	}
+
 	&__empty {
 		color: var(--color-palette-white-base);
 		font-size: 18px;

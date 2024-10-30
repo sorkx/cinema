@@ -72,6 +72,13 @@
 			justify-content: center;
 			position: absolute;
 
+			&::after {
+				background: linear-gradient(180deg, #0a0a0a00, #0b0b0b), #d4d4d400 50% / cover no-repeat;
+				content: "";
+				inset: 0;
+				position: absolute;
+			}
+
 			img {
 				height: 100%;
 				inset: 0;

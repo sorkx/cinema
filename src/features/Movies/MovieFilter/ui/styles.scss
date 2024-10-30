@@ -3,6 +3,7 @@
     height: 67px !important;
 	position: relative;
     background: none;
+	fill: var(--defaultColorLight);
 
 	&::before,
 	&::after {

@@ -1,4 +1,8 @@
 <script setup>
+import {
+    computed,
+} from 'vue'
+
 const props = defineProps({
     modificator: {
         type: String,
@@ -12,10 +16,10 @@ const props = defineProps({
         type: String,
         default: '',
     },
-    active: {
-        type: Boolean,
-        default: false
-    }
+})
+
+const modificatorClasses = computed(() => {
+    return props.modificator.split(' ').map(mod => `v-button--${mod}`);
 })
 </script>
 
@@ -25,7 +29,7 @@ const props = defineProps({
 		type="button"
 		:data-size="size"
 		:data-appearance="appearance"
-		:class="[`v-button--${props.modificator}`, { active: props.active }]"
+		:class="[...modificatorClasses]"
 	>
 		<slot />
 	</button>

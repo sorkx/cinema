@@ -38,11 +38,12 @@ const closeSearch = () => {
 					class="search__close"
 					appearance="text"
 					size="icon"
+					modificator="color-white"
 				>
 					<UISymbol name="close" />
 				</VButton>
 				<div class="search__header">
-					<div class="search__panel">
+					<div class="search__panel container">
 						<h5 class="title">
 							Поиск
 						</h5>

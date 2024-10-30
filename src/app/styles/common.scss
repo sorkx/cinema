@@ -48,6 +48,13 @@ body {
 	overflow: hidden;
 }
 
+.logo {
+	align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 0 16px;
+}
+
 ::-webkit-scrollbar {
     width: 5px;
     height: 5px;

@@ -188,7 +188,7 @@ watch(openSidebar, async (newVal) => {
 			<template #slide="{ item }">
 				<div :key="item.id">
 					<VButton
-						modificator="genre" 
+						modificator="genre color-gray" 
 						class="genre-button"
 						@click="selectGenre(item.id)"
 						:class="{ 'active-genre': item.id === localSelectedGenre }"

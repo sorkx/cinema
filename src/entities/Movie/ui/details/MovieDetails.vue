@@ -19,14 +19,10 @@ import {
 import {
     UISymbol,
 } from '@/shared/ui/UISymbol'
-// import {
-//     useRatings,
-// } from '@/shared/lib/use/useRatings'
 import {
     computed,
     ref,
     onMounted,
-    // toRef,
 } from 'vue'
 
 const props = defineProps({
@@ -64,15 +60,13 @@ const showAll = ref(false)
 const showTrailers = ref(false)
 const selectedSeason = ref(null)
 
-// const { ratings } = useRatings(toRef(() => props.movie))
-
 const directors = computed(() => props.staff.filter(member => member.professionKey === 'DIRECTOR'))
 
 const actors = computed(() => props.staff.filter(member => member.professionKey === 'ACTOR'))
 
 const currentSeason = computed(() => props.seasons.find(season => season.number === selectedSeason.value))
 
-const countries = computed(() => props.movie?.countries.map((item) => item.country).join(', '))
+const countries = computed(() => props.movie?.countries.map((item) => item.country)[0])
 
 const trailersFilter = computed(() => props.trailers.filter(trailer => trailer.site === 'YOUTUBE'))
 
@@ -87,7 +81,7 @@ const genres = computed(() => {
     return props.movie?.genres.map((item) => {
         const char = item.genre.charAt(0)
         return char.toUpperCase() + item.genre.slice(1)
-    }).join(', ')
+    })[0]
 })
 
 const filmDuration = computed(() => {
@@ -212,6 +206,7 @@ onMounted(() => {
 								@click="toggleTrailers()"
 								appearance="outline"
 								data-size="large"
+								modificator="color-white rounded"
 							>
 								Трейлер
 							</VButton>
@@ -248,7 +243,7 @@ onMounted(() => {
 			</div>
 		</section>
 		<section
-			v-if="props.seasons.length > 0" 
+			v-if="movie.type === 'TV_SERIES' && seasons.length"
 			class="wrapper seasons__wrapper"
 		>
 			<div class="content-right">
@@ -286,7 +281,10 @@ onMounted(() => {
 				</div>
 			</div>
 		</section>
-		<section class="wrapper movie-description">
+		<section
+			v-if="props.movie?.description" 
+			class="wrapper movie-description"
+		>
 			<div class="movie-description__info">
 				<h2 class="movie-description__header">
 					Описание

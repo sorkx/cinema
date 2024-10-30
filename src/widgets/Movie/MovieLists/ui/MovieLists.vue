@@ -32,6 +32,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    backdrop: {
+        type: Boolean,
+        default: false
+    }
 })
 </script>
 
@@ -39,6 +43,7 @@ const props = defineProps({
 	<div
 		v-if="props.movies.length && props.movies" 
 		class="infinite-container"
+		:class="{ 'disabled-backdrop': props.backdrop }"
 	>
 		<Movie
 			v-for="item in props.movies"

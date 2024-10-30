@@ -109,6 +109,7 @@ onBeforeUnmount(() => {
 			:movies="searchMovies"
 			:key="searchMovies.length"
 			:empty="searchPerformed"
+			:backdrop="true"
 		/>
 
 		<CircleLoader v-if="isLoading && !loading" />

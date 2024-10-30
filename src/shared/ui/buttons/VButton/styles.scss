@@ -1,9 +1,15 @@
 .v-button {
+	--button-hover: var(--color-palette-green-20);
+	--button-color: #0b0b0b;
+	--button-background: var(--color-palette-green-10);
+	--button-outline-hover: #232323;
+	--button-outline-active: #141925;
+	--button-disabled: #383d2b;
 	align-items: center;
-	background: var(--color-palette-green-10);
+	background: var(--button-background);
 	border: none;
 	border-radius: 32px;
-	color: var(--color-palette-black-70);
+	color: var(--button-color);
 	cursor: pointer;
 	display: flex;
 	font-size: 18px;
@@ -16,20 +22,6 @@
 	transition: .3s;
 	white-space: nowrap;
 	width: 100%;
-
-	&:hover {
-		background: var(--color-palette-green-20);
-	}
-
-	&.active {
-		background: var(--color-palette-green-10);
-		color: #141925;
-
-		&:hover {
-			background: var(--color-palette-green-20);
-			color: #141925;
-		}
-	}
 
 	&--genre {
 		display: inline-flex;
@@ -69,8 +61,8 @@
 		}
 
 		&:hover {
-			color: var(--color-palette-white-base);
-			background: hsla(0, 0%, 100%, .1);
+			--button-background: #232730;
+			--button-color: var(--color-palette-white-base);
 		}
 	}
 
@@ -79,15 +71,48 @@
 		width: fit-content;
 	}
 
-	&--color-gray {
-		background-color: #232730;
-		color: var(--color-palette-white-base);
+	&--color-main {
+		--button-background: var(--color-palette-green-10);
+		--button-color: var(--color-palette-black-70);
 
 		&:hover {
-			background-color: #232730;
-			color: #9d9d9d;
+			--button-hover: var(--color-palette-green-20);
+			--button-color: var(--color-palette-black-70);
 		}
 	}
+
+	&--color-gray {
+		--button-background: #232730;
+		--button-color: var(--color-palette-white-base);
+
+		&:hover {
+			--button-hover: #232730;
+			--button-color: #9d9d9d;
+		}
+	}
+
+	&--color-white {
+		--button-background: var(--color-palette-white-base);
+		--button-color: #0b0b0b;
+
+		&:hover {
+			--button-hover: #9d9d9d;	
+			--button-color: #0b0b0b;
+		}
+	}
+
+	&:deep(svg) {
+		width: 24px;
+		height: 24px;
+	}
+}
+
+.v-button--mobile.v-button[data-size=normal] {
+    padding: 2px 0;
+}
+
+.v-button--search.v-button[data-size=normal] {
+    padding: 2px 0;
 }
 
 .v-button[data-size=normal] {
@@ -108,20 +133,58 @@
     line-height: 20px;
 }
 
-.v-button[data-appearance=outline] {
-    background-color: transparent;
-    box-shadow: inset 0 0 0 1px var(--color-palette-white-base);
-    color: var(--color-palette-white-base);
+.v-button:hover:not(.v-button[disabled]) {
+    background-color: var(--button-hover);
+}
 
-	&:hover {
-		background-color: #232323;
-		color: #9d9d9d;
-	}
+.v-button[disabled] {
+    background-color: var(--button-disabled);
+    cursor: default;
+    pointer-events: none
 }
 
 .v-button[data-appearance=text] {
+	background-color: transparent;
+    --button-color: var(--color-palette-white-base);
+
+	:deep(svg) {
+		color: var(--button-color);
+		transition: .3s;
+		fill: var(--button-color);
+	}
+}
+
+.v-button[data-appearance=outline] {
+	background-color: transparent;
+    box-shadow: inset 0 0 0 1px var(--button-background);
+    --button-color: var(--button-background);
+
+	:deep(svg) {
+		color: var(--button-background);
+		transition: .3s;
+		fill: var(--button-background)
+	}
+}
+
+.v-button[data-appearance=outline][disabled] {
     background-color: transparent;
-    color: var(--color-palette-white-base);
+    --button-background: var(--button-disabled);
+    --button-color: var(--button-disabled)
+}
+
+.v-button:hover:not(.v-button[disabled]) {
+    background-color: var(--button-hover);
+}
+
+.v-button[data-appearance=outline]:hover:not(.v-button[data-appearance=outline]:disabled) {
+    background-color: var(--button-outline-hover);
+    --button-background: var(--button-hover);
+    --button-color: var(--button-hover);
+}
+
+.v-button[data-appearance=text]:hover:not(.v-button[data-appearance=text]:disabled) {
+    background-color: transparent;
+	--button-color: var(--button-hover);
 }
 
 @media (min-width: 960px) {

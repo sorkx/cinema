@@ -113,9 +113,8 @@ onMounted(() => setFilter('ACTOR'))
 				<template #slide="{ item }">
 					<VButton
 						:key="item.professionKey"
-						:active="currentFilter === item.professionKey"
 						@click="setFilter(item.professionKey)"
-						modificator="color-gray"
+						:modificator="currentFilter === item.professionKey ? 'color-main' : 'color-gray'"
 						size="normal"
 						appearance="fill"
 					>

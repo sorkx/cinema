@@ -4,9 +4,6 @@ import {
     watch,
 } from 'vue'
 import {
-    LogoLink,
-} from '@/shared/ui/LogoLink'
-import {
     UISymbol,
 } from '@/shared/ui/UISymbol'
 import {
@@ -73,7 +70,21 @@ router.beforeEach((to, from, next) => {
 <template>
 	<header class="header container">
 		<div class="header__container">
-			<LogoLink />
+			<div class="mobile__button">
+				<template v-if="router.currentRoute.value.path !== '/'">
+					<VButton
+						@click="router.go(-1)"
+						appearance="text"
+						size="normal"
+						modificator="mobile rounded color-white"
+					>
+						<UISymbol name="arrow-left" />
+					</VButton>
+				</template>
+			</div>
+			<router-link to="/" class="logo header__logo">
+				<UISymbol name="logo" />
+			</router-link>
 			<div class="header__spacer" />
 			<ul class="header-menu">
 				<li 
@@ -94,13 +105,13 @@ router.beforeEach((to, from, next) => {
 			<div class="header__spacer" />
 			<VButton
 				@click="toggleSearch()"
-				modificator="rounded" 
+				modificator="search rounded color-white"
 				appearance="text"
 				data-size="normal"
+				class="search__icon"
 			>
 				<UISymbol 
-					name="search"  
-					class="search-icon" 
+					name="search"
 				/>
 			</VButton>
 			<MovieSearch 
