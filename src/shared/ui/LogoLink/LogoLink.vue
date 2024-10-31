@@ -5,7 +5,7 @@ import {
 </script>
 
 <template>
-    <router-link to="/" class="logo-link">
+    <router-link to="/" class="logo">
         <UISymbol name="logo" />
     </router-link>
 </template>

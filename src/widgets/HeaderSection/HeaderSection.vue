@@ -14,7 +14,10 @@ import {
 } from 'vue-router'
 import {
     VButton,
-} from '@/shared/ui/buttons'
+} from '@/shared/ui/VButton'
+import {
+	LogoLink,
+} from '@/shared/ui/LogoLink'
 
 const router = useRouter()
 
@@ -82,9 +85,7 @@ router.beforeEach((to, from, next) => {
 					</VButton>
 				</template>
 			</div>
-			<router-link to="/" class="logo header__logo">
-				<UISymbol name="logo" />
-			</router-link>
+			<LogoLink class="header__logo" />
 			<div class="header__spacer" />
 			<ul class="header-menu">
 				<li 

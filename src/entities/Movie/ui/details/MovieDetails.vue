@@ -3,7 +3,6 @@ import {
     ModuleWrapper,
 } from '@/shared/ui/ModuleWrapper'
 import {
-    // RatingDisplay,
     RatingStars,
 } from '@/shared/ui/Ratings'
 import {
@@ -15,7 +14,7 @@ import {
 } from '@/entities/Movie'
 import {
     VButton,
-} from '@/shared/ui/buttons'
+} from '@/shared/ui/VButton'
 import {
     UISymbol,
 } from '@/shared/ui/UISymbol'
@@ -66,7 +65,7 @@ const actors = computed(() => props.staff.filter(member => member.professionKey 
 
 const currentSeason = computed(() => props.seasons.find(season => season.number === selectedSeason.value))
 
-const countries = computed(() => props.movie?.countries.map((item) => item.country)[0])
+const countries = computed(() => props.movie?.countries.map((item) => item.country))
 
 const trailersFilter = computed(() => props.trailers.filter(trailer => trailer.site === 'YOUTUBE'))
 
@@ -81,7 +80,7 @@ const genres = computed(() => {
     return props.movie?.genres.map((item) => {
         const char = item.genre.charAt(0)
         return char.toUpperCase() + item.genre.slice(1)
-    })[0]
+    })
 })
 
 const filmDuration = computed(() => {
@@ -167,11 +166,11 @@ onMounted(() => {
 								</span>
 								<div class="movie-info-group__divider"/>
 								<span>
-									{{ countries }}
+									{{ countries[0] }}
 								</span>
 								<div class="movie-info-group__divider"/>
 								<span>
-									{{ genres }}
+									{{ genres[0] }}
 								</span>
 								<div class="movie-info-group__divider"/>
 								<span>
@@ -198,6 +197,9 @@ onMounted(() => {
 							>
 								<VButton 
 									data-size="large"
+									modificator="color-main"
+									appearance="fill"
+									class="movie-header__control-button"
 								>
 									Перейти на кинопоиск
 								</VButton>
@@ -210,7 +212,7 @@ onMounted(() => {
 							>
 								Трейлер
 							</VButton>
-							<Transition name="fade">
+							<!-- <Transition name="fade">
 								<div
 									v-if="showTrailers"
 									class="movie-tooltip__trailers"
@@ -236,7 +238,7 @@ onMounted(() => {
 										Трейлеров не обнаружено
 									</div>
 								</div>
-							</Transition>
+							</Transition> -->
 						</div>
 					</div>
 				</div>

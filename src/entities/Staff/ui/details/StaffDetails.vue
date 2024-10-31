@@ -7,7 +7,7 @@ import {
 } from '@/shared/ui/ModuleWrapper'
 import{
     VButton,
-} from '@/shared/ui/buttons'
+} from '@/shared/ui/VButton'
 import {
     MovieLists,
 } from '@/widgets/Movie/MovieLists'

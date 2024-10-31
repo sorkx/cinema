@@ -4,7 +4,7 @@ import {
 } from '@/shared/ui/UISymbol'
 import {
     VButton,
-} from '@/shared/ui/buttons'
+} from '@/shared/ui/VButton'
 import {
     VInput
 } from '@/shared/ui/VInput'

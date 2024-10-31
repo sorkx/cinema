@@ -8,7 +8,7 @@ import {
 } from '@/shared/ui/UISymbol'
 import {
     VButton
-} from '@/shared/ui/buttons'
+} from '@/shared/ui/VButton'
 import {
     VRangeSlider,
 } from '@/shared/ui/VRangeSlider'

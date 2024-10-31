@@ -410,7 +410,7 @@
 		
 				svg {
 					height: 24px;
-					   width: 60px;
+					width: 60px;
 				}
 			}
 
@@ -459,11 +459,9 @@
 	.movie-header, .movie-header__wrapper {
         position: relative;
     }
-}
 
-@media (max-width: 639px) {
-    .movie__head--bottom {
-        grid-template-columns: 1fr;
+	.movie-header__control-button {
+        width: 100%;
     }
 }
 

@@ -9,7 +9,7 @@ import {
 } from '@/shared/ui/ModuleWrapper'
 import {
     VButton
-} from '@/shared/ui/buttons'
+} from '@/shared/ui/VButton'
 import {
     UISymbol,
 } from '@/shared/ui/UISymbol'

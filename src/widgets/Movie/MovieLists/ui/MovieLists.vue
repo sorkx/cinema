@@ -3,11 +3,8 @@ import {
     Movie,
 } from '@/entities/Movie'
 import {
-    Pathway,
-} from '@/shared/ui/Pathway'
-import {
     VButton,
-} from '@/shared/ui/buttons'
+} from '@/shared/ui/VButton'
 import {
     ROUTE_NAMES,
 } from '@/shared/lib/constants'
