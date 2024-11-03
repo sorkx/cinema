@@ -48,7 +48,7 @@
 	&__title {
 		color: var(--color-palette-white-base);
 		font-size: 24px;
-		font-weight: 700;
+		font-weight: $fBold;
 		line-height: 32px;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -99,7 +99,7 @@
 } 
 
 @media (max-width: 640px) {
-    .movie-card .movie-card__image-container {
+	.movie-card.resize .movie-card__image-container {
         height: 100%;
         width: 100%;
     }
@@ -115,7 +115,7 @@
 	}
 
 	.movie-card__info {
-        width: 100%;
+        width: 156px;
     }
 
 	.movie-card__title {

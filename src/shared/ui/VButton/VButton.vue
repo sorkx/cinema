@@ -16,6 +16,10 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    tag: {
+        type: String,
+        default: 'button',
+    }
 })
 
 const modificatorClasses = computed(() => {
@@ -24,7 +28,8 @@ const modificatorClasses = computed(() => {
 </script>
 
 <template>
-	<button 
+	<component
+		:is="props.tag" 
 		class="v-button" 
 		type="button"
 		:data-size="size"
@@ -32,7 +37,7 @@ const modificatorClasses = computed(() => {
 		:class="[...modificatorClasses]"
 	>
 		<slot />
-	</button>
+	</component>
 </template>
 
 <style src="./styles.scss" lang="scss" scoped />

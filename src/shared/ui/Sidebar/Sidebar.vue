@@ -129,14 +129,17 @@ onMounted(() => {
 						<VButton
 							size="large"
 							appearance="outline"
-							class="button-soft footer-button"
+							modificator="color-white"
+							class="footer-button"
 							@click="resetFilter"
 						>
 							Сбросить
 						</VButton>
 						<VButton
 							size="large"
-							class="button-primary footer-button"
+							class="footer-button"
+							appearance="fill"
+							modificator="color-main"
 							@click="applyFilter"
 						>
 							Применить

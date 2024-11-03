@@ -1,0 +1,180 @@
+<script setup>
+import {
+    computed,
+    ref,
+} from 'vue'
+import {
+    VButton,
+} from '@/shared/ui/VButton'
+import {
+    UISymbol,
+} from '@/shared/ui/UISymbol'
+import {
+    TrailersModal,
+} from '../MovieTrailers/ui/TrailersModal'
+import {
+    provideModal
+} from '@/shared/lib/use/useModal'
+import {
+    useWindowWidth
+} from '@/shared/lib/use/useWindowWidth'
+
+const { 
+    closeModal, 
+    isOpen, 
+    openModal 
+} = provideModal()
+
+const windowWidth = useWindowWidth()
+
+const props = defineProps({
+    item: {
+        type: Object,
+        default: () => {},
+    },
+    trailers: {
+        type: Array,
+        default: () => [],
+    }
+})
+
+const addedZeroRating = (rating) => Number.isInteger(rating) ? `${rating}.0` : rating
+
+const filmDuration = computed(() => {
+    const totalMinutes = props.item?.filmLength
+
+    if (totalMinutes === null || isNaN(totalMinutes)) return 'Длительность неизвестна'
+
+    if (totalMinutes < 60) {
+        return `${totalMinutes} мин`
+    } else {
+        const hours = Math.floor(totalMinutes / 60)
+        const minutes = totalMinutes % 60
+
+        return  minutes === 0
+            ? `${hours} ч`
+            : `${hours} ч ${minutes} мин`
+    }
+})
+
+const countries = computed(() => props.item?.countries.map((item) => item.country))
+
+const modificationAgeLimits = computed(() => {
+    const age = props.item?.ratingAgeLimits
+    const ageSlice = props.item?.ratingAgeLimits?.slice(3, age.length) || 0
+
+    return `${ageSlice}+`
+})
+
+const genres = computed(() => {
+    return props.item?.genres.map((item) => {
+        const char = item.genre.charAt(0)
+        return char.toUpperCase() + item.genre.slice(1)
+    })
+})
+</script>
+
+<template>
+	<section class="wrapper movie-header breakout">
+		<div class="movie-header__wrapper">
+			<div class="movie-header__image">
+				<img
+					:src="props.item?.coverUrl || props.item?.posterUrl" 
+					fetchpriority="high"
+					:alt="props.item.nameRu || props.item.nameEn"
+				/>
+			</div>
+			<div class="movie-header__overlay container">
+				<div class="movie-header__content">
+					<div class="movie-header__name">
+						<div class="movie-header__title">
+							{{ props.item?.nameRu }}
+						</div>
+						<div class="movie-header__original-title">
+							{{ props.item?.nameOriginal || props.item?.nameEn || 'Неизвестно' }}
+						</div>
+					</div>
+					<div class="movie-header__filters">
+						<div class="movie-rating movie-rating--kp">
+							<UISymbol name="kp" />
+							{{ addedZeroRating(props.item?.ratingKinopoisk) }}
+						</div>
+						<div class="movie-rating movie-rating--imdb">
+							<UISymbol name="imdb" />
+							{{ addedZeroRating(props.item?.ratingImdb) }}
+						</div>
+						<div class="movie-info-group">
+							<span>
+								{{ props.item?.year }}
+							</span>
+							<div class="movie-info-group__divider"/>
+							<span>
+								{{ countries[0] }}
+							</span>
+							<div class="movie-info-group__divider"/>
+							<span>
+								{{ genres[0] }}
+							</span>
+							<div class="movie-info-group__divider"/>
+							<span>
+								{{ filmDuration }}
+							</span>
+							<div class="movie-info-group__divider"/>
+							<span>
+								{{ modificationAgeLimits }}
+							</span>
+						</div>
+					</div>
+					<div class="movie-header__description">
+						<UISymbol 
+							name="full-hd"
+						/>
+						<UISymbol 
+							name="sound"
+						/>
+					</div>
+					<div class=movie-header__control>
+						<a
+							:href="props.item?.webUrl" 
+							target="_blank"
+						>
+							<VButton 
+								data-size="large"
+								modificator="color-main media-normal"
+								appearance="fill"
+								class="movie-header__control movie-header__button"
+							>
+								Перейти на кинопоиск
+							</VButton>
+						</a>
+						<VButton
+							v-if="windowWidth > 640" 
+							@click="openModal"
+							appearance="outline"
+							size="large"
+							modificator="color-white rounded media-normal"
+							class="trailer-button"
+						>
+							Трейлер
+						</VButton>
+						<VButton
+							appearance="outline"
+							size="large"
+							modificator="color-white rounded media-normal"
+							class="movie-favorite-button"
+						>
+							<UISymbol name="favorite" />
+						</VButton>
+					</div>
+					<TrailersModal
+						v-if="isOpen"
+						@close="closeModal" 
+						:seasons="props.trailers"
+					/>
+				</div>
+			</div>
+		</div>
+	</section>
+</template>
+
+<style src="./styles.scss" lang="scss" soped />

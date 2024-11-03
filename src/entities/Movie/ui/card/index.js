@@ -1,1 +1,1 @@
-export { default as Movie } from './Movie.vue'
+export { default as MovieCard } from './MovieCard.vue'

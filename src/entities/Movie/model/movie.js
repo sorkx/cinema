@@ -112,7 +112,6 @@ export const useMovieStore = defineStore('movie', () => {
     return {
         similars,
         seasons,
-
         trailers,
         genresMovie,
         state,

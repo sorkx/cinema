@@ -3,8 +3,8 @@ import {
     Post,
 } from '@/entities/MediaPost'
 import {
-    ModuleWrapper,
-} from '@/shared/ui/ModuleWrapper'
+    VWrapper,
+} from '@/shared/ui/VWrapper'
 
 const props = defineProps({
     items: {
@@ -23,12 +23,11 @@ const props = defineProps({
 </script>
 
 <template>
-	<ModuleWrapper
+	<VWrapper
 		:items="props.items"
 		:title="props.title"
 		icon="arrow-right"
 		:link="props.name"
-		swiper-type="media"
 	>
 		<template #slide="{ item }">
 			<Post 
@@ -36,5 +35,5 @@ const props = defineProps({
 				:key="item.kinopoiskId"
 			/>
 		</template>
-	</ModuleWrapper>
+	</VWrapper>
 </template>

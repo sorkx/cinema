@@ -1,6 +1,6 @@
 <script setup>
 import { 
-    Movie,
+    MovieCard,
 } from '@/entities/Movie'
 import {
     VButton,
@@ -32,6 +32,10 @@ const props = defineProps({
     backdrop: {
         type: Boolean,
         default: false
+    },
+    resize: {
+        type: Boolean,
+        default: false
     }
 })
 </script>
@@ -42,10 +46,11 @@ const props = defineProps({
 		class="infinite-container"
 		:class="{ 'disabled-backdrop': props.backdrop }"
 	>
-		<Movie
+		<MovieCard
 			v-for="item in props.movies"
 			:movie="item"
 			:key="item.id"
+			:resize="props.resize"
 		/>
 	</div>
 
@@ -64,6 +69,7 @@ const props = defineProps({
 				<VButton 
 					size="large"
 					class="empty-block__button"
+					modificator="color-main"
 				>
 					Перейти на главную
 				</VButton>

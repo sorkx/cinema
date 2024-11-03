@@ -1,0 +1,75 @@
+.movie-series {
+	--season-btn-size: 88px;
+    padding: 56px 0;
+
+	&__header {
+		display: grid;
+		gap: 64px;
+		grid-template-columns: 200px 1fr;
+		min-height: var(--season-btn-size);
+	}
+
+	&__title {
+		align-items: center;
+		color: var(--color-palette-white-base);
+		display: flex;
+		font-size: 50px;
+		font-style: normal;
+		font-weight: $fBold;
+		line-height: normal;
+	}
+
+	&__seasons {
+		min-width: 100%;
+	}
+
+	&__season-button {
+		align-items: center;
+		border: 1px solid hsla(0, 0%, 100%, .3);
+		border-radius: 100%;
+		color: var(--color-palette-white-base);
+		cursor: pointer;
+		display: flex;
+		font-size: 32px;
+		font-style: normal;
+		font-weight: 400;
+		height: var(--season-btn-size);
+		justify-content: center;
+		line-height: 26px;
+		transition: border .3s;
+		width: var(--season-btn-size);
+
+		&.active {
+			border-color: var(--color-palette-green-10);
+			border-width: 2px;
+			color: var(--color-palette-green-10);
+			font-weight: $fSemiBold;
+		}
+
+		&:hover {
+			border-color: var(--color-palette-green-10);
+		}
+	}
+}
+
+
+@media (max-width: 640px) {
+    .movie-series {
+        --season-btn-size: 40px;
+        padding: 24px 0;
+
+		&__header {
+			gap: 0;
+			grid-template-columns: 1fr;
+		}
+
+		&__title {
+			font-size: 24px;
+			line-height: 32px;
+		}
+
+		&__season-button {
+			font-size: 18px;
+		}
+    }
+}

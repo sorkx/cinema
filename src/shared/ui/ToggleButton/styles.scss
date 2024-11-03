@@ -1,0 +1,14 @@
+.toggle-btn {
+    padding-left: 0;
+    padding-right: 0;
+    width: unset;
+}
+
+.toggle-btn__icon {
+    fill: var(--color-palette-green-10);
+    transition: transform .3s
+}
+
+.toggle-btn--toggled .toggle-btn__icon {
+    transform: rotate(180deg)
+}

@@ -1,0 +1,1 @@
+export { default as TrailersModal } from './TrailersModal.vue'

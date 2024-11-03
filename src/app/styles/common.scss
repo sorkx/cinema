@@ -16,6 +16,7 @@
 
 html {
 	font-size: var(--font-size-16);
+	font-weight: normal;
 	font-family: $fMontserrat;
 }
 
@@ -36,12 +37,9 @@ body {
   }
 }
 
-.search-page {
-	overflow: hidden;
-
-	body {
-		overflow-y: scroll;
-	}
+svg {
+	display: block;
+    vertical-align: middle;
 }
 
 .sidebar-page {

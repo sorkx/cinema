@@ -1,1 +1,1 @@
-export { default as MovieSlide } from './MovieSlide.vue'
+export * from './ui'

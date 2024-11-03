@@ -1,0 +1,120 @@
+<script setup>
+import {
+    RatingStars,
+} from '@/shared/ui/Ratings'
+import {
+    ref,
+    computed,
+    onMounted,
+    onUnmounted,
+} from 'vue'
+import {
+    ToggleButton,
+} from '@/shared/ui/ToggleButton'
+
+const props = defineProps({
+    item: {
+        type: Object,
+        default: () => {},
+    }
+})
+
+const isTruncate = ref(false)
+const isExpanded = ref(false)
+const showToggleButton = ref(false)
+
+const handeResize = () => {
+    if (window.innerWidth <= 768) {
+        isTruncate.value = !isExpanded.value
+        showToggleButton.value = true
+    } else {
+        isTruncate.value = false
+        showToggleButton.value = false
+    }
+}
+
+const toggleDescription = () => {
+    isExpanded.value = !isExpanded.value
+    isTruncate.value = !isExpanded.value
+}
+
+const genres = computed(() => {
+    return props.item?.genres.map((item) => {
+        const char = item.genre.charAt(0)
+        return char.toUpperCase() + item.genre.slice(1)
+    })
+})
+
+onMounted(() => {
+    handeResize()
+    window.addEventListener('resize', handeResize)
+})
+
+onUnmounted(() => {
+    window.removeEventListener('resize', handeResize)
+})
+</script>
+
+<template>
+	<section
+		v-if="props.item?.description" 
+		class="wrapper movie-description"
+	>
+		<div class="movie-description__info">
+			<h2 class="movie-description__header">
+				Описание
+			</h2>
+			<div>
+				<p 
+					:class="[
+						'movie-description__text',
+						{ 
+							'movie-description__text--truncate': isTruncate 
+						}
+					]"
+				>
+					<span>
+						{{ props.item?.description }}
+					</span>
+				</p>
+				<ToggleButton
+					v-if="showToggleButton"
+					:toggled="isExpanded" 
+					class="movie-description__toggle-btn"
+					@click="toggleDescription" 
+				/>
+			</div>
+		</div>
+		<div class="movie-description__right">
+			<div class="movie-description__votes">
+				<h2 class="movie-description__header">
+					Рейтинг
+				</h2>
+				<div class="movie-description__vote-block">
+					<p class="movie-description__text">
+						Оценка зрителей
+					</p>
+					<RatingStars 
+						:rating="props.item?.ratingKinopoisk || props.item?.ratingImdb || 0"
+					/>
+				</div>
+			</div>
+			<div class="movie-description__genre">
+				<h2 class="movie-description__header">
+					Жанры
+				</h2>
+				<div class="movie-description__genre-inner">
+					<div 
+						v-for="genre in genres"
+						:key="genre"
+						class="movie-description__tag">
+							{{ genre }}
+					</div>
+				</div>
+			</div>	
+		</div>
+	</section>
+</template>
+
+<style src="./styles.scss" lang="scss" scoped />
+

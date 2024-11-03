@@ -1,13 +1,10 @@
 <script setup>
 import {
-    UISymbol,
-} from '@/shared/ui/UISymbol'
-import {
-    VButton,
-} from '@/shared/ui/VButton'
-import {
     VInput
 } from '@/shared/ui/VInput'
+import {
+    VModal
+} from '@/shared/ui/VModal'
 
 const props = defineProps({
     focusOnMounted: {
@@ -25,45 +22,32 @@ const closeSearch = () => {
 </script>
 
 <template>
-	<Teleport to="body">
-		<div class="search__modal">
-			<div class="search__overlay" />
-			<div
-				v-click-outside="closeSearch"
-				class="search__wrapper"
-				data-size="full"
-			>
-				<VButton
-					@click="closeSearch" 
-					class="search__close"
-					appearance="text"
-					size="icon"
-					modificator="color-white"
-				>
-					<UISymbol name="close" />
-				</VButton>
-				<div class="search__header">
-					<div class="search__panel container">
-						<h5 class="title">
-							Поиск
-						</h5>
-						<VInput 
-							placeholder="Название фильма/сериала"
-							v-model="modelValue"
-							:focus-on-mounted="props.focusOnMounted"
-						/>
-					</div>
-				</div>
-				<div class="search__content">
-					<div class="search__result container">
-						<div class="wrapper">
-							<slot />
-						</div>
-					</div>
+	<VModal 
+		:header="true" 
+		size="full"
+		@close="closeSearch"
+	>
+		<template #header>
+			<div class="search__panel container">
+				<h5 class="title">
+					Поиск
+				</h5>
+				<VInput 
+					placeholder="Название фильма/сериала"
+					v-model="modelValue"
+					:focus-on-mounted="props.focusOnMounted"
+				/>
+			</div>
+		</template>
+
+		<template #content>
+			<div class="search__result container">
+				<div class="wrapper">
+					<slot />
 				</div>
 			</div>
-		</div>
-	</Teleport>
+		</template>
+	</VModal>
 </template>
 
 <style src="./styles.scss" lang="scss" scoped />

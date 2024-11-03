@@ -16,12 +16,19 @@ import {
     VButton,
 } from '@/shared/ui/VButton'
 import {
-	LogoLink,
+    LogoLink,
 } from '@/shared/ui/LogoLink'
+import {
+    provideModal
+} from '@/shared/lib/use/useModal'
+
+const { 
+    closeModal, 
+    isOpen, 
+    openModal 
+} = provideModal()
 
 const router = useRouter()
-
-const isSearchVisible = ref(false)
 
 const items = [
     {
@@ -49,25 +56,6 @@ const items = [
         class: 'favorite-icon',
     }
 ]
-
-const toggleSearch = (force) => {
-    isSearchVisible.value = force ?? !isSearchVisible.value
-}
-
-watch(isSearchVisible, async (newVal) => {
-    if (newVal) {
-        document.documentElement.classList.add('search-page')
-    } else {
-        document.documentElement.classList.remove('search-page')
-    }
-})
-
-router.beforeEach((to, from, next) => {
-    if (isSearchVisible.value) {
-        toggleSearch(false)
-    }
-    next()
-})
 </script>
 
 <template>
@@ -105,7 +93,7 @@ router.beforeEach((to, from, next) => {
 			</ul>
 			<div class="header__spacer" />
 			<VButton
-				@click="toggleSearch()"
+				@click="openModal"
 				modificator="search rounded color-white"
 				appearance="text"
 				data-size="normal"
@@ -115,10 +103,10 @@ router.beforeEach((to, from, next) => {
 					name="search"
 				/>
 			</VButton>
-			<MovieSearch 
-				v-if="isSearchVisible"
+			<MovieSearch
+				v-if="isOpen" 
 				focus-on-mounted
-				@close="toggleSearch(false)"
+				@close="closeModal"
 			/>
 		</div>
 	</header>

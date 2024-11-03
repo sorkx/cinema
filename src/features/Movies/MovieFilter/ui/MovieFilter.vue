@@ -5,9 +5,6 @@ import {
     watch,
 } from 'vue'
 import {
-    ModuleWrapper,
-} from '@/shared/ui/ModuleWrapper'
-import {
     VButton
 } from '@/shared/ui/VButton'
 import {
@@ -22,6 +19,9 @@ import {
 import {
     VSkeleton,
 } from '@/shared/ui/VSkeleton'
+import {
+    RouletteSlider,
+} from '@/shared/ui/RouletteSlider'
 
 const props = defineProps({
     genres: {
@@ -180,9 +180,8 @@ watch(openSidebar, async (newVal) => {
 		v-else 
 		class="page-filters"
 	>
-		<ModuleWrapper
+		<RouletteSlider
 				:items="props.genres"
-				swiper-type="genres"
 				class="page-filters__genres"
 		>
 			<template #slide="{ item }">
@@ -201,7 +200,7 @@ watch(openSidebar, async (newVal) => {
 					</VButton>
 				</div>
 			</template>
-		</ModuleWrapper>
+		</RouletteSlider>
 		<div class="page-filters__selectors">
 			<div class="page-filters__selectors-wrap">
 				<VSelect
@@ -226,6 +225,7 @@ watch(openSidebar, async (newVal) => {
 			<div class="browse-filters">
 				<VButton
 					size="small"
+					modificator="color-white"
 					appearance="text"
 					class="filter-button"
 					@click="toggleDropdown()"

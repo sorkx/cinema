@@ -9,15 +9,15 @@ import {
 import { 
     movieModel,
 } from '@/entities/Movie'
-import {
-    newsModel,
-} from '@/entities/MediaPost'
+// import {
+//     newsModel,
+// } from '@/entities/MediaPost'
 import {
     MovieCategoryRow,
 } from '@/widgets/Movie'
-import {
-    PostRow,
-} from '@/widgets/Post'
+// import {
+//     PostRow,
+// } from '@/widgets/Post'
 import {
     SpinnerLoader,
 } from '@/shared/ui/loaders'
@@ -27,12 +27,12 @@ import {
 
 const isLoading = ref(true)
 
-const postStore = newsModel()
+// const postStore = newsModel()
 const movieStore = movieModel()
 
-const {
-    posts,
-} = storeToRefs(postStore)
+// const {
+//     posts,
+// } = storeToRefs(postStore)
 
 const { 
     state, 
@@ -54,7 +54,7 @@ const fetchData = async () => {
     isLoading.value = true
 
     await movieStore.fetchAllCategories(),
-    await postStore.fetchMediaPosts(1)
+    // await postStore.fetchMediaPosts(1)
 	
     isLoading.value = false
 }
@@ -63,12 +63,12 @@ onBeforeMount(async () => await fetchData())
 
 onBeforeRouteLeave(() => {
     state.collections = {}
-    posts.value = []
+    // posts.value = []
 })
 </script>
 
 <template>
-	<SpinnerLoader v-if="isLoading && !state?.collections.length && !posts.length" />
+	<SpinnerLoader v-if="isLoading && !state?.collections.length" />
 
 	<template v-else>
 		<MovieCategoryRow 
@@ -78,10 +78,10 @@ onBeforeRouteLeave(() => {
 			:title="titlesMapping[key]"
 			:name="routingMapping[key]"
 		/>
-		<PostRow
+		<!-- <PostRow
 			:items="posts"
 			title="Новости"
 			name="News"
-		/>
+		/> -->
 	</template>
 </template>

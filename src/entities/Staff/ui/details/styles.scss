@@ -1,4 +1,8 @@
-.actor {
+.person {
+	height: 100%;
+    padding-top: 78px;
+    position: relative;
+
 	&__header {
 		display: flex;
 		gap: 40px;
@@ -26,7 +30,7 @@
 			color: var(--color-palette-white-base);
 			font-size: 52px;
 			font-style: normal;
-			font-weight: 700;
+			font-weight: $fBold;
 			line-height: 60px;
 		}
 
@@ -40,26 +44,8 @@
 	}
 }
 
-.person {
-	&__image {
-		border-radius: 32px;
-		height: 362px;
-		-o-object-fit: cover;
-		object-fit: cover;
-		overflow: hidden;
-		transition: .4s;
-		width: 282px;
-	}
-
-	&__overlay, &__title {
-		position: absolute;
-		width: 100%;
-		left: 0;
-	}
-}
-
 @media (max-width: 680px) {
-    .actor__filter {
+    .person__filter {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr 1fr;
         margin-bottom: 41px;
@@ -68,7 +54,9 @@
 }
 
 @media (max-width: 640px) {
-	.actor {
+	.person {
+		padding-top: 0;
+
 		&__image {
 			border-radius: 16px;
 			height: 154px;

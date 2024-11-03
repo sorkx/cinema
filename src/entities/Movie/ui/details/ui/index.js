@@ -1,0 +1,6 @@
+export * from './MovieDescription'
+export * from './MovieHeader'
+export * from './MovieSeries'
+export * from './MovieCrew'
+export * from './MovieRelated'
+export * from './MovieTrailers'

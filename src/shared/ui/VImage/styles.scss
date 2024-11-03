@@ -1,0 +1,13 @@
+span {
+	img {
+		height: 100%;
+		-o-object-fit: cover;
+		object-fit: cover;
+		width: 100%;
+	}
+
+	svg {
+		height: var(--user-svg-size);
+		width: var(--user-svg-size);
+	}
+}

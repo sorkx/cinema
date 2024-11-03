@@ -1,0 +1,1 @@
+export { default as MovieTrailers } from './MovieTrailers.vue'

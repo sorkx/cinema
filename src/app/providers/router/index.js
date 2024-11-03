@@ -46,6 +46,10 @@ const routeOptions = [
         path: '/movies/:type',
         name: ROUTE_NAMES.MOVIES,
     },
+    {
+        path: '/movies/:filmId/similars',
+        name: ROUTE_NAMES.SIMILARS,
+    }
 ]
 
 const routes = [

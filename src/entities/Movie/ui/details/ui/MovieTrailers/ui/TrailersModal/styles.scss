@@ -1,0 +1,51 @@
+.trailers-modal {
+	display: grid;
+    gap: 32px;
+
+	&__header {
+		color: var(--color-palette-white-base);
+		font-size: 28px;
+		font-style: normal;
+		font-weight: $fBold;
+		line-height: 36px;
+		text-align: center;
+	}
+
+	&__seasons {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+
+		button {
+			padding: 5px 16px;
+			width: -moz-fit-content;
+			width: fit-content;
+		}
+	}
+
+	&__not-found {
+		height: calc(100vh - 400px);
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 18px;
+		line-height: 24px;
+		color: var(--color-palette-white-base);
+	}
+}
+
+.video-wrapper {
+	height: calc(100vh - 400px);
+}
+
+.video-wrapper iframe {
+	align-items: center;
+    display: flex;
+    height: 100% !important;
+    justify-content: center;
+    overflow: hidden;
+    position: relative !important;
+    transition: .3s;
+    width: 100% !important;
+}

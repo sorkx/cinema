@@ -1,10 +1,7 @@
 <script setup>
 import {
-    Pathway,
-} from '@/shared/ui/Pathway'
-import {
-    ModuleWrapper,
-} from '@/shared/ui/ModuleWrapper'
+    RouletteSlider,
+} from '@/shared/ui/RouletteSlider'
 import{
     VButton,
 } from '@/shared/ui/VButton'
@@ -79,19 +76,18 @@ onMounted(() => setFilter('ACTOR'))
 
 	<div 
 		v-else
-		class="container actor"
+		class="person full-width"
 	>
-		<Pathway title="Актер" />
-		<div class="actor__header">
-			<div class="actor__image">
+		<div class="person__header">
+			<div class="person__image">
 				<img 
 					:src="props.person?.posterUrl" 
 					:alt="props.person?.nameEn || props.person?.nameRu"
-					class="actor__image"
+					class="person__image"
 					loading="eager"
 				/>
 			</div>
-			<div class="actor__title">
+			<div class="person__title">
 				<a 
 					:href="props.person?.webUrl" 
 					target="_blank"
@@ -105,11 +101,8 @@ onMounted(() => setFilter('ACTOR'))
 				</span>
 			</div>
 		</div>
-		<div class="actor__filters">
-			<ModuleWrapper
-				:items="filters"
-				swiper-type="genres"
-			>
+		<div class="person__filters">
+			<RouletteSlider :items="filters">
 				<template #slide="{ item }">
 					<VButton
 						:key="item.professionKey"
@@ -121,12 +114,13 @@ onMounted(() => setFilter('ACTOR'))
 						{{ professionMapping[item.professionKey] }}
 					</VButton>
 				</template>
-			</ModuleWrapper>
+			</RouletteSlider>
 		</div>
-		<div class="actor__body">
+		<div class="person__movies">
 			<MovieLists 
 				:movies="filteredFilms"
 				:loading="props.loading"
+				:resize="true"
 			/>
 		</div>
 	</div>

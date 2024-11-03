@@ -1,0 +1,1 @@
+export { default as MovieSeries } from './MovieSeries.vue'

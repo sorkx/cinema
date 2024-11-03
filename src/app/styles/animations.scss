@@ -17,3 +17,13 @@
 .slide-fade-leave-to {
 	transform: translateY(100%);
 }
+
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
