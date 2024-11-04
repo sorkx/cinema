@@ -24,6 +24,39 @@
     width: auto;
 }
 
+.roulette-skeleton {
+	--skeleton-width: 282px;
+    --skeleton-height: 362px;
+    --skeleton-radius: 32px;
+    display: flex;
+    gap: 24px;
+    margin: 64px 0 56px;
+    overflow: hidden;
+}
+
+.roulette-skeleton--horizontal[data-appearance=series] {
+    --skeleton-width: 325px;
+    --skeleton-height: 200px;
+    --skeleton-radius: 16px;
+}
+
+.roulette-skeleton__item {
+    display: grid;
+    gap: 16px;
+}
+
+.roulette-skeleton__card {
+    background: linear-gradient(135deg, #ffffff30, #ffffff0d), #000;
+    border-radius: var(--skeleton-radius);
+    height: var(--skeleton-height);
+    width: var(--skeleton-width);
+}
+
+.roulette-skeleton__name {
+    display: grid;
+    gap: 8px;
+}
+
 @media (max-width: 640px) {
     .roulette-slider .swiper .swiper-slide {
         margin-right: 16px;
@@ -31,5 +64,16 @@
 
 	.roulette-slider .swiper .swiper-wrapper {
         margin: 24px 0;
+    }
+
+	.roulette-skeleton {
+        --skeleton-width: 156px;
+        --skeleton-height: 232px;
+        --skeleton-radius: 16px;
+    }
+
+	.roulette-skeleton--horizontal[data-appearance=series] {
+        --skeleton-width: 222px;
+        --skeleton-height: 136px;
     }
 }

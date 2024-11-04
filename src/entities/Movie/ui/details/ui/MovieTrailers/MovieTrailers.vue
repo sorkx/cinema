@@ -30,6 +30,10 @@ const props = defineProps({
     items: {
         type: Array,
         default: () => []
+    },
+    loading: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -66,33 +70,38 @@ const getYoutubeThumbnail = (url, quality = 'high') => {
 </script>
 
 <template>
-	<section
-		v-if="windowWidth < 640" 
-		class="wrapper movie-trailers full-width"
-	>
-		<VWrapper
-			title="Трейлеры"
-			:sub-header="false"
+	<template v-if="!props.loading">
+		<section
+			v-if="windowWidth < 640" 
+			class="wrapper movie-trailers full-width"
 		>
-			<template #content>
-				<RouletteSlider :items="props.items">
-					<template #slide="{ item }">
-						<SeriesCard
-							appearance="series" 
-							:item="item"
-							:img="getYoutubeThumbnail(item.url, 'medium')"
-							@click="openModal"
-						/>
-					</template>
-				</RouletteSlider>
-			</template>
-		</VWrapper>
-	</section>
-	<TrailersModal
-		v-if="isOpen"
-		@close="closeModal" 
-		:seasons="props.items"
-	/>
+			<VWrapper
+				title="Трейлеры"
+				:sub-header="true"
+			>
+				<template #content>
+					<RouletteSlider 
+						:items="props.items"
+						class="content-right movie-series__wrapper"
+					>
+						<template #slide="{ item }">
+							<SeriesCard
+								appearance="series" 
+								:item="item"
+								:img="getYoutubeThumbnail(item.url, 'medium')"
+								@click="openModal"
+							/>
+						</template>
+					</RouletteSlider>
+				</template>
+			</VWrapper>
+		</section>
+		<TrailersModal
+			v-if="isOpen"
+			@close="closeModal" 
+			:seasons="props.items"
+		/>
+	</template>
 </template>
 
 <style  src="./styles.scss" lang="scss" scoped />

@@ -1,1 +1,0 @@
-export { useMediaPosts as newsModel } from './posts'

@@ -7,14 +7,10 @@ import {
     staffModel,
 } from '@/entities/Staff'
 import {
-    SpinnerLoader,
-} from '@/shared/ui/loaders'
-import {
     storeToRefs,
 } from 'pinia'
 import {
     computed,
-    // onMounted,
     ref,
     watch,
 } from 'vue'
@@ -70,15 +66,13 @@ watch(() => route.params.id, fetchData, { immediate: true })
 </script>
 
 <template>
-	<SpinnerLoader v-if="loading" />
-
 	<MovieDetails 
-		v-else
 		:movie="selectedMovieDetails"
 		:staff="staff"
 		:similars="similars"
 		:seasons="seasons"
 		:trailers="trailers"
+		:loading="loading"
 	/>
 </template>
   

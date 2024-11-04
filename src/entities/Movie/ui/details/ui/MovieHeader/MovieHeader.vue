@@ -1,7 +1,6 @@
 <script setup>
 import {
     computed,
-    ref,
 } from 'vue'
 import {
     VButton,
@@ -13,11 +12,14 @@ import {
     TrailersModal,
 } from '../MovieTrailers/ui/TrailersModal'
 import {
-    provideModal
+    provideModal,
 } from '@/shared/lib/use/useModal'
 import {
-    useWindowWidth
+    useWindowWidth,
 } from '@/shared/lib/use/useWindowWidth'
+import {
+    VSkeleton,
+} from '@/shared/ui/VSkeleton'
 
 const { 
     closeModal, 
@@ -35,6 +37,10 @@ const props = defineProps({
     trailers: {
         type: Array,
         default: () => [],
+    },
+    loading: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -76,7 +82,76 @@ const genres = computed(() => {
 
 <template>
 	<section class="wrapper movie-header breakout">
-		<div class="movie-header__wrapper">
+		<div
+			v-if="props.loading" 
+			class="header-skeleton"
+		>
+			<div class="header-skeleton__overlay container">
+				<div class="header-skeleton__content">
+					<div class="header-skeleton__name">
+						<VSkeleton 
+							count="1"
+							max-width="88.8889%"
+							height="3.5rem"
+							radius="0.5rem"
+							gap="0.5rem"
+							skeleton-width="540px"
+						/>
+						<VSkeleton 
+							count="1"
+							max-width="74.0741%"
+							height="2rem"
+							radius="0.5rem"
+							gap="0.5rem"
+							skeleton-width="540px"
+						/>
+					</div>
+					<VSkeleton 
+						count="1"
+						max-width="100%"
+						height="3rem"
+						radius="0.5rem"
+						gap="0.5rem"
+					/>
+					<VSkeleton 
+						count="1"
+						max-width="83.3333%"
+						height="3rem"
+						radius="0.5rem"
+						gap="0.5rem"
+						skeleton-width="540px"
+					/>
+					<VSkeleton 
+						count="1"
+						max-width="74.0741%"
+						height="46px"
+						radius="0.5rem"
+						gap="0.5rem"
+						skeleton-width="540px"
+					/>
+					<div class="header-skeleton__row">
+						<VSkeleton 
+							count="1"
+							max-width="270px"
+							height="60px"
+							radius="32px"
+							gap="0.5rem"
+						/>
+						<VSkeleton 
+							count="1"
+							max-width="170px"
+							height="60px"
+							radius="32px"
+							gap="0.5rem"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div
+			v-else 
+			class="movie-header__wrapper"
+		>
 			<div class="movie-header__image">
 				<img
 					:src="props.item?.coverUrl || props.item?.posterUrl" 

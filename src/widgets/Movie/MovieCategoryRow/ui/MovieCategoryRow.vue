@@ -28,6 +28,10 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    loading: {
+        type: Boolean,
+        default: false
+    }
 })
 </script>
 
@@ -58,20 +62,19 @@ const props = defineProps({
 			</template>
 	
 			<template #content>
-				<div class="content-right">
-					<div class="swiper-top">
-						<RouletteSlider 
-							:items="props.items"
-						>
-							<template #slide="{ item }">
-								<MovieCard 
-									:movie="item"
-									:key="item.id"
-								/>
-							</template>
-						</RouletteSlider>
-					</div>
-				</div>
+				<RouletteSlider 
+					:items="props.items"
+					class="content-right slider"
+					appearance="continue"
+					:loading="props.loading"
+				>
+					<template #slide="{ item }">
+						<MovieCard 
+							:movie="item"
+							:key="item.id"
+						/>
+					</template>
+				</RouletteSlider>
 			</template>
 		</VWrapper>
 	</section>

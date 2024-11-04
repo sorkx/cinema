@@ -39,6 +39,10 @@ const props = defineProps({
     type: {
         type: String,
         default: '',
+    },
+    loading: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -49,24 +53,32 @@ const trailersFilter = computed(() => props.trailers.filter(trailer => trailer.s
 	<template v-if="props.movie"> 
 		<MovieHeader 
 			:item="props.movie"
-			:trailers="trailersFilter" 
+			:trailers="trailersFilter"
+			:loading="props.loading" 
 		/>
 		<MovieSeries
 			v-if="props.movie.type === 'TV_SERIES' && props.seasons.length" 
 			:items="props.seasons"
+			:loading="props.loading"
 		/>
-		<MovieDescription :item="props.movie" />
+		<MovieDescription 
+			:item="props.movie"
+			:loading="props.loading"  
+		/>
 		<MovieTrailers 
 			v-if="trailersFilter.length > 0" 
 			:items="trailersFilter"
+			:loading="props.loading" 
 		/>
 		<MovieCrew
 			v-if="props.staff.length > 0" 
-			:item="props.staff" 
+			:item="props.staff"
+			:loading="props.loading"  
 		/>
 		<MovieRelated 
 			v-if="props.similars.length > 0" 
 			:items="props.similars"
+			:loading="props.loading"  
 		/>
 	</template>
 </template>

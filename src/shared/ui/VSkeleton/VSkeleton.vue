@@ -23,6 +23,10 @@ const props = defineProps({
     column: {
         type: Boolean,
         default: false
+    },
+    skeletonWidth: {
+        type: [String, Number],
+        default: '',
     }
 })
 
@@ -33,6 +37,10 @@ const skeletons = Array(skeletonCount).fill(null)
 <template>
 	<span 
 		class="v-skeleton-loading"
+		:style="{
+			'max-width': props.skeletonWidth,
+			'gap': props.gap,
+		}"
 		:class="{
 			'v-skeleton-loading__column': props.column
 		}" 
@@ -40,11 +48,11 @@ const skeletons = Array(skeletonCount).fill(null)
 		<span
 			v-for="skeleton in skeletons"
 			:key="skeleton"
-			style="width: 100%"
 			:style="{
 				'height': props.height, 
 				'max-width': props.maxWidth,
 				'border-radius': props.radius,
+				'width': '100%',
 			}" 
 			class="v-skeleton-loading--chunk v-skeleton-loading__wave"
 		/>

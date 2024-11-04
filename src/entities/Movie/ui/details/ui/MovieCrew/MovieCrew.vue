@@ -21,6 +21,10 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    loading: {
+        type: Boolean,
+        default: false
+    }
 })
 
 const formatProfessionKey = {
@@ -64,7 +68,10 @@ const staffs = computed(() => [
 </script>
 
 <template>
-	<section class="wrapper movie-crew">
+	<section
+		v-if="!props.loading" 
+		class="wrapper movie-crew"
+	>
 		<VWrapper
 			:sub-header="true"
 			title="Съёмочная группа"

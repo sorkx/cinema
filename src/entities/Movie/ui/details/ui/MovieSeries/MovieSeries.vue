@@ -19,6 +19,10 @@ const props = defineProps({
     type: {
         type: String,
         default: '',
+    },
+    loading: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -40,8 +44,14 @@ onMounted(() => {
 				<h2 class="movie-series__title">
 					Сезоны
 				</h2>
-				<div class="movie-series__seasons">
-					<RouletteSlider :items="props.items">
+				<div
+					class="movie-series__seasons"
+				>
+					<RouletteSlider
+						v-if="!props.loading"
+						:items="props.items"
+						:loading="props.loading"
+					>
 						<template #slide="{ item }">
 							<div 
 								:key="item.number"
@@ -61,6 +71,8 @@ onMounted(() => {
 			>
 				<RouletteSlider 
 					:items="currentSeason.episodes"
+					appearance="series"
+					:loading="props.loading"
 				>
 					<template #slide="{ item }">
 						<SeriesCard

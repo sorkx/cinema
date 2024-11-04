@@ -50,7 +50,9 @@ const {
 				<VLoader 
 					v-else
 					modificator="series"
-					:title="props.item.name"
+					:logo-loader="true"
+					size="middle"
+					media="small"
 				/>
 			</span>
 			<span v-else>

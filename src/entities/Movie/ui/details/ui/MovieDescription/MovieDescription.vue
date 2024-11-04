@@ -11,11 +11,18 @@ import {
 import {
     ToggleButton,
 } from '@/shared/ui/ToggleButton'
+import {
+    VSkeleton,
+} from '@/shared/ui/VSkeleton'
 
 const props = defineProps({
     item: {
         type: Object,
         default: () => {},
+    },
+    loading: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -64,8 +71,22 @@ onUnmounted(() => {
 			<h2 class="movie-description__header">
 				Описание
 			</h2>
-			<div>
-				<p 
+			<p
+				v-if="props.loading" 
+				class="movie-description__text"
+			>
+				<VSkeleton
+					v-if="props.loading" 
+					count="5"
+					max-width="100%"
+					height="2rem"
+					radius="0.5rem"
+					gap="0.5rem"
+					:column="true"
+				/>
+			</p>
+			<div v-else>
+				<p
 					:class="[
 						'movie-description__text',
 						{ 
@@ -104,12 +125,14 @@ onUnmounted(() => {
 					Жанры
 				</h2>
 				<div class="movie-description__genre-inner">
-					<div 
-						v-for="genre in genres"
-						:key="genre"
-						class="movie-description__tag">
-							{{ genre }}
-					</div>
+					<template v-if="!props.loading">
+						<div 
+							v-for="genre in genres"
+							:key="genre"
+							class="movie-description__tag">
+								{{ genre }}
+						</div>
+					</template>
 				</div>
 			</div>	
 		</div>

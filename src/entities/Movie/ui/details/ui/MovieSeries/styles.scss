@@ -52,7 +52,6 @@
 	}
 }
 
-
 @media (max-width: 640px) {
     .movie-series {
         --season-btn-size: 40px;
@@ -71,5 +70,9 @@
 		&__season-button {
 			font-size: 18px;
 		}
+    }
+
+	.movie-series__seasons .roulette-slider {
+        width: 100%;
     }
 }

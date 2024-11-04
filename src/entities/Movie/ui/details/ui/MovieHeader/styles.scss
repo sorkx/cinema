@@ -165,6 +165,38 @@
 	}
 }
 
+.header-skeleton {
+	display: grid;
+    height: 100%;
+    position: relative;
+
+	&__overlay {
+		align-content: flex-end;
+		background: linear-gradient(180deg, #0a0a0a00 10.13%, #0b0b0b 85.45%), #d4d4d400 .117px .563px / 115.723% 121.735% no-repeat;
+		display: grid;
+		padding-bottom: 80px;
+		z-index: 1;
+	}
+
+	&__content {
+		display: grid;
+		gap: 26px;
+		max-width: 540px;
+		position: relative;
+		transition: 1s ease-out;
+	}
+
+	&__name {
+		display: grid;
+		gap: 20px;
+	}
+
+	&__row {
+		display: flex;
+		gap: 16px;
+	}
+}
+
 @media (max-width: 640px) {
 	.movie {
 		&-header {

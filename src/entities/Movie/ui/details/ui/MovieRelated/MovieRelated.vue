@@ -25,6 +25,10 @@ const props = defineProps({
         type: Object,
         default: () => {},
     },
+    loading: {
+        type: Boolean,
+        default: false
+    }
 })
 </script>
 
@@ -49,8 +53,11 @@ const props = defineProps({
 			</template>
 
 			<template #content>
-				<RouletteSlider 
+				<RouletteSlider
+					class="related__slider content-right" 
 					:items="props.items"
+					:loading="props.loading"
+					appearance="continue"
 				>
 					<template #slide="{ item }">
 						<MovieCard 
