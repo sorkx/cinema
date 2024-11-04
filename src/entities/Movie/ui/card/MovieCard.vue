@@ -1,13 +1,13 @@
 <script setup>
 import {
-    UISymbol,
-} from '@/shared/ui/UISymbol'
-import {
     ROUTE_NAMES,
 } from '@/shared/lib/constants'
 import { 
     useImageLoader,
 } from '@/shared/lib/use/useImageLoader'
+import {
+    VLoader,
+} from '@/shared/ui/VLoader'
 
 const props = defineProps({
     movie: {
@@ -46,16 +46,14 @@ const {
 				transitionall="true"
 				class="movie-card__image movie__image--inner"
 			/>
-			<div
-				v-else 
-				class="loader loader--movie movie__card-image"
-			>
-				<div class="logo loader-logo">
-					<UISymbol 
-						name="logo"
-					/>
-				</div>
-			</div>
+			<VLoader 
+				v-else
+				class="movie__card-image"
+				modificator="movie"
+				size="middle"
+				media="small"
+				:logo-loader="true"
+			/>
 		</span>
 		
 		<router-link

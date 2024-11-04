@@ -29,6 +29,9 @@
 	}
 }
 
+.v-skeleton-loading__column {
+    flex-direction: column;
+}
 
 @keyframes wave {
 	0% {

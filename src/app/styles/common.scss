@@ -53,6 +53,19 @@ svg {
     padding: 0 16px;
 }
 
+.logo[data-size=middle] img, .logo[data-size=middle] svg {
+	height: 60px;
+	width: 140px;
+}
+
+.mobile-header {
+    color: var(--color-palette-white-base);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
+}
+
 ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
@@ -71,4 +84,18 @@ svg {
 ::selection {
     background: var(--color-palette-green-10);
     color: var(--color-palette-black-50);
+}
+
+@media (max-width: 640px) {
+    .logo[data-media=small] img, .logo[data-media=small] svg {
+        height: 24px;
+        width: 70px;
+    }
+
+	.mobile-header {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 60%;
+    }
 }

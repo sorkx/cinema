@@ -19,6 +19,10 @@ const props = defineProps({
     gap: {
         type: [String, Number],
         default: '',
+    },
+    column: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -28,10 +32,10 @@ const skeletons = Array(skeletonCount).fill(null)
 
 <template>
 	<span 
-		class="v-skeleton-loading" 
-		:style="{
-			'gap': props.gap 
-		}"
+		class="v-skeleton-loading"
+		:class="{
+			'v-skeleton-loading__column': props.column
+		}" 
 	>
 		<span
 			v-for="skeleton in skeletons"

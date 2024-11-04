@@ -2,6 +2,9 @@
 import { 
     useImageLoader,
 } from '@/shared/lib/use/useImageLoader'
+import {
+    VLoader,
+} from '@/shared/ui/VLoader'
 
 const props = defineProps({
     item: {
@@ -43,6 +46,11 @@ const {
 					transition="fade"
 					transitionall="false"
 					class="series-card__image" 
+				/>
+				<VLoader 
+					v-else
+					modificator="series"
+					:title="props.item.name"
 				/>
 			</span>
 			<span v-else>

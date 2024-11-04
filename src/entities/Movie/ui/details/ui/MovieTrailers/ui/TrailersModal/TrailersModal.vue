@@ -63,12 +63,12 @@ const getPlayerUrl = () => {
 					>
 						{{ season.name }}
 					</VButton>
-				</div>
+				</div>	
 				<div class="trailers-modal__player">
 					<div class="video-wrapper">
 						<iframe 
 							:src="getPlayerUrl()"
-							frameborder="0"
+							frameborder="1"
 							allowfullscreen 
 						/>
 					</div>
