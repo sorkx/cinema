@@ -75,13 +75,13 @@ export const useMovieStore = defineStore('movie', () => {
         await fetchNextPage('collections', category, Api.getMovieCollections)
     }	
 
-    const fetchAllCategories = async () => {
-        await Promise.all([
-            fetchCollectionData(CINEMA_NAMES.TOP_POPULAR_ALL, 1),
-            // fetchCollectionData(CINEMA_NAMES.TOP_250_MOVIES, 1),
-            // fetchCollectionData(CINEMA_NAMES.TOP_250_TV_SHOWS, 1),
-        ])
-    }
+    // const fetchAllCategories = async () => {
+    //     await Promise.all([
+    //         fetchCollectionData(CINEMA_NAMES.TOP_POPULAR_ALL, 1),
+    //         fetchCollectionData(CINEMA_NAMES.TOP_250_MOVIES, 1),
+    //         fetchCollectionData(CINEMA_NAMES.TOP_250_TV_SHOWS, 1),
+    //     ])
+    // }
 
     const fetchMovieDetails = async (id) => {
         const data = await Api.getMovieDetails(id)
@@ -124,9 +124,9 @@ export const useMovieStore = defineStore('movie', () => {
         fetchMovieTrailers,
         fetchSerialSeasons,
         fetchMovieSimilars,
-        fetchAllCategories,
         fetchMovieDetails,
         selectedMovieDetails,
+        // fetchAllCategories,
     }
 
 })
