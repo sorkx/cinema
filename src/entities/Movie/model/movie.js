@@ -78,8 +78,8 @@ export const useMovieStore = defineStore('movie', () => {
     const fetchAllCategories = async () => {
         await Promise.all([
             fetchCollectionData(CINEMA_NAMES.TOP_POPULAR_ALL, 1),
-            fetchCollectionData(CINEMA_NAMES.TOP_250_MOVIES, 1),
-            fetchCollectionData(CINEMA_NAMES.TOP_250_TV_SHOWS, 1),
+            // fetchCollectionData(CINEMA_NAMES.TOP_250_MOVIES, 1),
+            // fetchCollectionData(CINEMA_NAMES.TOP_250_TV_SHOWS, 1),
         ])
     }
 

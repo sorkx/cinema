@@ -38,16 +38,10 @@ const items = [
         class: 'main-icon',
     },
     {
-        id: 'films',
-        title: 'Фильмы',
-        to: '/movies/films',
-        class: 'film-icon',
-    },
-    {
-        id: 'serials',
-        title: 'Сериалы',
-        to: '/movies/serials',
-        class: 'serial-icon',
+        id: 'browse',
+        title: 'Каталог',
+        to: '/browse',
+        class: 'browse-icon',
     },
     {
         id: 'favorite',

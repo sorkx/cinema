@@ -4,7 +4,6 @@ import {
     ref,
     reactive,
     watch,
-    onBeforeMount,
 } from 'vue'
 import { 
     useRoute,
@@ -12,9 +11,6 @@ import {
 import {
     MovieLists,
 } from '@/widgets/Movie'
-import {
-    Pathway,
-} from '@/shared/ui/Pathway'
 import {
     storeToRefs,
 } from 'pinia'
@@ -34,6 +30,9 @@ import {
     MovieFilter,
 } from '@/features/Movies'
 import debounce from 'lodash.debounce'
+import {
+    VWrapper,
+} from '@/shared/ui/VWrapper'
 
 const route = useRoute()
 const store = movieModel()
@@ -41,7 +40,6 @@ const store = movieModel()
 const currentResults = ref([])
 const isLoadingMore = ref(false)
 const isLoading = ref(true)
-const isLoadingFilters = ref(true)
 
 const { 
     state,
@@ -58,10 +56,10 @@ const routeMapping = {
     serials: CINEMA_NAMES.TV_SERIES,
 }
 
-const contentType = computed(() => routeMapping[route.params.type])
+const contentType = computed(() => routeMapping[movieType.value])
 
 const filterParams = reactive({
-    genres: '',
+    genres: +route.params.id || '',
     ratingFrom: '',
     ratingTo: '',
     yearTo: '',
@@ -100,58 +98,75 @@ const { scrollComponent } = useInfinityScroll({
     fetchNextPage: loadMore,
 })
 
-watch(() => [route.params.type], fetchCategoryItems)
+const movieId = computed(() => +route.params.id)
+const movieType = computed(() => route.params.type)
 
-onBeforeMount(async () => {
-    isLoadingFilters.value = true
-
-    await store.fetchMovieFilters()
-
-    isLoadingFilters.value = false
+const genres = computed(() => {
+    return genresMovie.value.map((item) => {
+        const char = item.genre.charAt(0)
+        return {
+            ...item,
+            genre: char.toUpperCase() + item.genre.slice(1)
+        }
+    })
 })
+
+const saveCurrentGenre = (genreName) => {
+    localStorage.setItem('currentGenre', genreName)
+}
+
+const getCurrentGenre = () => {
+    return localStorage.getItem('currentGenre')
+}
+
+const currentGenre = computed(() => {
+    if (contentType.value) {
+        return formattedTitle[contentType.value]
+    }
+    
+    const genre = genres.value.find(g => g.id === movieId.value)?.genre
+
+    if (genre) {
+        saveCurrentGenre(genre)
+    }
+    return genre || getCurrentGenre() || ''
+})
+
+watch(() => movieType.value, fetchCategoryItems, { immediate: true })
 </script>
 
 <template>
-	<div class="container">
-		<Pathway
-			:title="formattedTitle[contentType]"
-		/>
-
-		<section class="wrapper offset section-genres">
-			<div
-				class="wrapper-header"
-			>
-				<div class="wrapper-title">
-					{{ formattedTitle[contentType] }}
-				</div>
-			</div>
-			
+	<VWrapper
+		:title="currentGenre"
+		:sub-header="true"
+		class="offset"
+	>
+		<template #content>
 			<MovieFilter 
 				:genres="genresMovie"
-				:is-loading="isLoadingFilters"
 				v-model:selected-genre="filterParams.genres"
 				v-model:order="filterParams.order"
 				v-model:year-from="filterParams.yearFrom"
 				v-model:year-to="filterParams.yearTo"
 				v-model:rating-from="filterParams.ratingFrom"
 				v-model:rating-to="filterParams.ratingTo"
-				@update:selected-genre="updateFilterParam('genres', $event)"
 				@update:year-from="updateFilterParam('yearFrom', $event)"
 				@update:year-to="updateFilterParam('yearTo', $event)" 
 				@update:rating-fromo="updateFilterParam('ratingFrom', $event)" 
 				@update:rating-to="updateFilterParam('ratingTo', $event)" 
 				@update:order="updateFilterParam('order', $event)"
 			/>
-		</section>
 
-		<MovieLists
-			v-if="currentResults.length > 0"
-			:movies="currentResults"
-			hidden="true"
-		/>
+			<MovieLists
+				v-if="currentResults.length > 0"
+				:movies="currentResults"
+				:resize="true"
+				hidden="true"
+			/>
 
-		<CircleLoader v-if="isLoadingMore || isLoading" />
+			<CircleLoader v-if="isLoadingMore || isLoading" />
 
-		<div ref="scrollComponent" />
-	</div>
+			<div ref="scrollComponent" />
+		</template>
+	</VWrapper>
 </template>

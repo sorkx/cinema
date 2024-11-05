@@ -9,6 +9,9 @@ import {
 import {
     VRangeSlider,
 } from '@/shared/ui/VRangeSlider'
+import {
+    VCheckbox
+} from '@/shared/ui/VCheckbox'
 
 const props = defineProps({
     min: {
@@ -61,7 +64,7 @@ const updateMaxValue = (value) => {
 }
 
 const displayLabel = computed(() => {
-    if (props.selectType === 'single') {
+    if (props.selectType === 'single' || props.selectType === 'multiple') {
         return orderFormatted[props.selectedValue] || props.title
     }
 
@@ -103,6 +106,19 @@ const selectOption = (option) => {
 const isOptionSelected = (option) => {
     return orderFormatted[props.selectedValue] === option
 }
+
+const selectedType = computed(() => {
+    switch (props.selectType) {
+    case 'single':
+        return 'single'
+    case 'range':
+        return 'range'
+    case 'multiple':
+        return 'multiple'
+    default:
+        return 'single'
+    }
+})
 </script>
 
 <template>
@@ -114,7 +130,7 @@ const isOptionSelected = (option) => {
 			@click="toggleDropdown()" 
 			:class="[
 				'multiselect',
-				selectType === 'range' ? 'range' : 'single',
+				selectedType,
 				{ 
 					'selected': isSelected, 
 					'is-open': isDropdownOpen, 
@@ -127,14 +143,10 @@ const isOptionSelected = (option) => {
 				role="combobox"
 				aria-multiselectable="true"
 			>
-				<template v-if="selectType === 'single'" >
+				<template v-if="props.selectType === 'single'">
 					<div
 						class="multiselect-label single"
 					>
-						<UISymbol 
-							name="menu-left" 
-							class="multiselect-icon" 
-						/>
 						{{ displayLabel }}
 					</div>
 					<div class="multiselect-caret">
@@ -144,7 +156,7 @@ const isOptionSelected = (option) => {
 						/>
 					</div>
 				</template>	
-				<template v-else>
+				<template v-if="props.selectType === 'range'">
 					<div
 						v-if="minValue || maxValue" 
 						class="multiselect-placeholder"
@@ -168,6 +180,26 @@ const isOptionSelected = (option) => {
 						/>
 					</div>
 				</template>	
+				<template v-if="props.selectType === 'multiple'">
+					<div 
+						class="multiselect__wrapper"
+						tabindex="0"
+						role="combobox"
+						aria-multiselectable="true"
+					>
+						<div
+							class="multiselect-placeholder"
+						>
+							{{ displayLabel }}
+						</div>
+						<div class="multiselect-caret">
+							<UISymbol 
+								name="chevron" 
+								class="multiselect-icon"
+							/>
+						</div>
+					</div>
+				</template>
 			</div>
 			<div
 				v-show="isDropdownOpen" 
@@ -205,7 +237,7 @@ const isOptionSelected = (option) => {
 					</li>
 				</ul>
 				<div
-					v-else 
+					v-if="selectType === 'range'"
 					class="multiselect-range"
 				>
 					<VRangeSlider
@@ -219,6 +251,11 @@ const isOptionSelected = (option) => {
 						@update:max="updateMaxValue"
 					/>
 				</div>
+				<template v-if="selectType === 'multiple'">
+					<div class="multiselect-before-list">
+						<VCheckbox />
+					</div>
+				</template>
 			</div>
 		</div>
 	</div>

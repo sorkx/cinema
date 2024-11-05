@@ -1,0 +1,11 @@
+.section-genres  {
+	&::before {
+		background: url('@/shared/assets/images/shadow.webp') 100% no-repeat;
+		background-size: 100% 100%;
+		content: "";
+		height: 795px;
+		inset: -400px 0 0;
+		position: absolute;
+		z-index: -1;
+	}
+}

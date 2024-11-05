@@ -71,31 +71,28 @@ const getYoutubeThumbnail = (url, quality = 'high') => {
 
 <template>
 	<template v-if="!props.loading">
-		<section
+		<VWrapper
 			v-if="windowWidth < 640" 
-			class="wrapper movie-trailers full-width"
+			title="Трейлеры"
+			:sub-header="true"
+			class="movie-trailers"
 		>
-			<VWrapper
-				title="Трейлеры"
-				:sub-header="true"
-			>
-				<template #content>
-					<RouletteSlider 
-						:items="props.items"
-						class="content-right movie-series__wrapper"
-					>
-						<template #slide="{ item }">
-							<SeriesCard
-								appearance="series" 
-								:item="item"
-								:img="getYoutubeThumbnail(item.url, 'medium')"
-								@click="openModal"
-							/>
-						</template>
-					</RouletteSlider>
-				</template>
-			</VWrapper>
-		</section>
+			<template #content>
+				<RouletteSlider 
+					:items="props.items"
+					class="content-right movie-series__wrapper"
+				>
+					<template #slide="{ item }">
+						<SeriesCard
+							appearance="series" 
+							:item="item"
+							:img="getYoutubeThumbnail(item.url, 'medium')"
+							@click="openModal"
+						/>
+					</template>
+				</RouletteSlider>
+			</template>
+		</VWrapper>
 		<TrailersModal
 			v-if="isOpen"
 			@close="closeModal" 

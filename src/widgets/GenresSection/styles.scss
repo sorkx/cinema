@@ -1,0 +1,66 @@
+.section-genres {
+	margin-bottom: 76px;
+	position: relative;
+	&::before {
+		background: url('@/shared/assets/images/shadow.webp') 100% no-repeat;
+		background-size: 100% 100%;
+		content: "";
+		height: 1090px;
+		inset: -200px 0 0;
+		position: absolute;
+		z-index: -1;
+	}
+}
+
+.section-genres.roulette-slider__control {
+    height: 100%
+}
+
+.genre-card {
+	background: linear-gradient(135deg, #ffffff14, #ffffff05), #0b0b0b;
+    border-radius: 16px;
+    display: grid;
+    position: relative;
+    width: 100%;
+
+	&__image--container {
+		border-radius: 16px;
+		cursor: pointer;
+		height: 180px;
+		overflow: hidden;
+		width: 248px;
+	}
+
+	&__title {
+		color: var(--color-palette-green-10);
+		font-size: 20px; // 24px
+		font-weight: $fBold;
+		line-height: 32px;
+	}
+
+	&__overlay {
+		inset: 0;
+		padding: 16px;
+		position: absolute;
+	}
+}
+
+.skeleton-genres {
+	display: flex;
+    margin-top: 64px;
+    overflow: hidden;
+}
+
+@media (max-width: 640px) {
+    .genre-card {
+		&__title {
+			font-size: 16px;
+			font-weight: $fSemiBold;
+			line-height: 24px;
+		}
+	}
+
+	.section-genres {
+        margin-bottom:60px
+    }
+}

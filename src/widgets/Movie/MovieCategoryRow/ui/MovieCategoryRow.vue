@@ -24,7 +24,7 @@ const props = defineProps({
         type: String,
         default: '',
     },
-    name: {
+    to: {
         type: String,
         default: '',
     },
@@ -36,48 +36,42 @@ const props = defineProps({
 </script>
 
 <template>
-	<section 
-		class="wrapper indent full-width"
+	<VWrapper
+		:title="props.title"
 	>
-		<VWrapper
-			:title="props.title"
-		>
-			<template #button="slotProps">
-				<VButton
-					tag="router-link"
-					:to="{ 
-						name: props.name, 
-					}"
-					data-link="Смотреть все"
-					size="large"
-					modificator="color-main link"
-					aria-label="Смотреть все"
-					appearance="text"
-					:class="slotProps.class"
-				>
-					<UISymbol
-						name="arrow-right" 
+		<template #button="slotProps">
+			<VButton
+				tag="router-link"
+				:to="to"
+				data-link="Смотреть все"
+				size="large"
+				modificator="color-main link"
+				aria-label="Смотреть все"
+				appearance="text"
+				:class="slotProps.class"
+			>
+				<UISymbol
+					name="arrow-right" 
+				/>
+			</VButton>
+		</template>
+
+		<template #content>
+			<RouletteSlider 
+				:items="props.items"
+				class="content-right slider"
+				appearance="continue"
+				:loading="props.loading"
+			>
+				<template #slide="{ item }">
+					<MovieCard 
+						:movie="item"
+						:key="item.id"
 					/>
-				</VButton>
-			</template>
-	
-			<template #content>
-				<RouletteSlider 
-					:items="props.items"
-					class="content-right slider"
-					appearance="continue"
-					:loading="props.loading"
-				>
-					<template #slide="{ item }">
-						<MovieCard 
-							:movie="item"
-							:key="item.id"
-						/>
-					</template>
-				</RouletteSlider>
-			</template>
-		</VWrapper>
-	</section>
+				</template>
+			</RouletteSlider>
+		</template>
+	</VWrapper>
 </template>
 
 <style src="./styles.scss" lang="scss" scoped />

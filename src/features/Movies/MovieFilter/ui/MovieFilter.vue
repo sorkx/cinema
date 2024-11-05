@@ -19,9 +19,6 @@ import {
 import {
     VSkeleton,
 } from '@/shared/ui/VSkeleton'
-import {
-    RouletteSlider,
-} from '@/shared/ui/RouletteSlider'
 
 const props = defineProps({
     genres: {
@@ -54,6 +51,7 @@ const props = defineProps({
     },
     isLoading: {
         type: Boolean,
+        default: false
     },
 })
 
@@ -67,15 +65,6 @@ const emit = defineEmits([
 ])
 
 const openSidebar = ref(false)
-
-const selectGenre = (id) => {
-    localSelectedGenre.value = localSelectedGenre.value === id ? null : id
-}
-
-const localSelectedGenre = computed({
-    get: () => props.selectedGenre,
-    set: (value) => emit('update:selectedGenre', value)
-})
 
 const updateYearFrom = computed({
     get: () => props.yearFrom,
@@ -131,7 +120,6 @@ const sidebarItems = computed(() => [
     }
 ])
 
-
 const resetFilters = () => {
     updateYearFrom.value = 1925
     updateYearTo.value = new Date().getFullYear()
@@ -150,6 +138,8 @@ watch(openSidebar, async (newVal) => {
         document.documentElement.classList.remove('sidebar-page')
     }
 })
+
+// $route.params.type !== 'genre' ? 4 : 3
 </script>
 
 <template>
@@ -157,18 +147,9 @@ watch(openSidebar, async (newVal) => {
 		v-if="props.isLoading" 
 		class="skeleton-filters"
 	>
-		<div class="skeleton-filters__genres">
-			<VSkeleton 
-				count="6"
-				maxWidth="100%"
-				height="53px"
-				radius="12px"
-				gap="16px"
-			/>
-		</div>
 		<div class="skeleton-filters__selectors">
 			<VSkeleton 
-				count="6"
+				:count="3"
 				maxWidth="160px"
 				height="38px"
 				radius="0.5rem"
@@ -177,32 +158,16 @@ watch(openSidebar, async (newVal) => {
 		</div>
 	</div>
 	<div
-		v-else 
+		v-else
 		class="page-filters"
 	>
-		<RouletteSlider
-				:items="props.genres"
-				class="page-filters__genres"
-		>
-			<template #slide="{ item }">
-				<div :key="item.id">
-					<VButton
-						modificator="genre color-gray" 
-						class="genre-button"
-						@click="selectGenre(item.id)"
-						:class="{ 'active-genre': item.id === localSelectedGenre }"
-					>
-						<UISymbol 
-							:name="`genre-${item.id}`"
-							class="genre-icon"
-						/>
-						{{ item.genre }}
-					</VButton>
-				</div>
-			</template>
-		</RouletteSlider>
 		<div class="page-filters__selectors">
 			<div class="page-filters__selectors-wrap">
+				<!-- <VSelect
+					v-if="$route.params.type !== 'genre'"
+					title="Жанр"
+					select-type="multiple"
+				/> -->
 				<VSelect
 					title="Сортировка"
 					select-type="single"

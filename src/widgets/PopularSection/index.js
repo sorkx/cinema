@@ -1,0 +1,1 @@
+export { default as PopularSection } from './PopularSection.vue'

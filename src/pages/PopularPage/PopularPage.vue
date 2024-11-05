@@ -19,8 +19,10 @@ import {
 } from '@/shared/lib/use/useInfinityScroll'
 import {
     CircleLoader,
-    SpinnerLoader,
 } from '@/shared/ui/loaders'
+import {
+    VWrapper,
+} from '@/shared/ui/VWrapper'
 
 const store = movieModel()
 
@@ -38,6 +40,7 @@ const fetchDataPopularItems = async () => {
 
     isLoading.value = false
 }
+
 const fetchNextPage = async () => {
     if (isLoading.value) return
 
@@ -55,24 +58,20 @@ const { scrollComponent } = useInfinityScroll({
 </script>
 
 <template>
-	<SpinnerLoader v-if="isLoading && !state.collections.TOP_POPULAR_ALL?.data.length" />
-
-	<div
-		class="wrapper offset" 
+	<VWrapper
+		title="Популярные фильмы и сериалы"
+		:sub-header="true"
+		class="offset"
 	>
-		<div class="wrapper-header">
-			<div class="wrapper-title">
-				Популярные фильмы и сериалы
-			</div>
-		</div>
-		<div class="wrapper-subheader" />
-		
-		<MovieLists
-			:movies="state?.collections.TOP_POPULAR_ALL?.data"
-		/>
+		<template #content>
+			<MovieLists
+				:movies="state?.collections.TOP_POPULAR_ALL?.data"
+				:resize="true"
+			/>
 
-		<CircleLoader v-if="isLoadingMore" />
+			<CircleLoader v-if="isLoadingMore" />
 
-		<div ref="scrollComponent" />
-	</div>
+			<div ref="scrollComponent" />
+		</template>
+	</VWrapper>
 </template>

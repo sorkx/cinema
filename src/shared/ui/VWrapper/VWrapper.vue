@@ -12,20 +12,22 @@ const props = defineProps({
 </script>
 
 <template>
-	<div class="wrapper-header">
-		<h1 class="wrapper-title">
-			{{ props.title }}
-		</h1>
-		<slot 
-			name="button"
-			v-bind="{ class: 'wrapper-link' }"
+	<section class="wrapper full-width">
+		<div class="wrapper-header">
+			<h1 class="wrapper-title">
+				{{ props.title }}
+			</h1>
+			<slot 
+				name="button"
+				v-bind="{ class: 'wrapper-link' }"
+			/>
+		</div>
+		<div 
+			v-if="props.subHeader"
+			class="wrapper-subheader" 
 		/>
-	</div>
-	<div 
-		v-if="props.subHeader"
-		class="wrapper-subheader" 
-	/>
-	<slot name="content" />
+		<slot name="content" />
+	</section>
 </template>
 
 <style src="./styles.scss" lang="scss" scoped />

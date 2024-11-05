@@ -13,21 +13,29 @@ const routeOptions = [
         name: ROUTE_NAMES.MAIN,
     },
     {
-        path: '/popular',
+        path: '/browse',
+        name: ROUTE_NAMES.BROWSE,
+    },
+    {
+        path: '/browse/popular',
         name: ROUTE_NAMES.POPULAR,
     },
     {
-        path: '/top250-movies',
-        name: ROUTE_NAMES.TOP_MOVIES,
+        path: '/browse/:type/:id?',
+        name: ROUTE_NAMES.MOVIES,
     },
-    {
-        path: '/top250-serials',
-        name: ROUTE_NAMES.TOP_SERIALS,
-    },
-    {
-        path: '/news',
-        name: ROUTE_NAMES.NEWS,
-    },
+    // {
+    //     path: '/top250-movies',
+    //     name: ROUTE_NAMES.TOP_MOVIES,
+    // },
+    // {
+    //     path: '/top250-serials',
+    //     name: ROUTE_NAMES.TOP_SERIALS,
+    // },
+    // {
+    //     path: '/films',
+    //     name: ROUTE_NAMES.FILMS,
+    // },
     {
         path: '/favorite',
         name: ROUTE_NAMES.FAVORITE,
@@ -43,13 +51,9 @@ const routeOptions = [
         props: true,
     },
     {
-        path: '/movies/:type',
-        name: ROUTE_NAMES.MOVIES,
-    },
-    {
         path: '/movies/:filmId/similars',
         name: ROUTE_NAMES.SIMILARS,
-    }
+    },
 ]
 
 const routes = [

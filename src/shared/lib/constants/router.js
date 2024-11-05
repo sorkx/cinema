@@ -11,6 +11,8 @@ const ROUTE_NAMES = {
     MOVIES: 'Movies',
     NEWS: 'News',
     SIMILARS: 'Similars',
+    BROWSE: 'Browse',
+    BROWSE_GENRE: 'BrowseGenre',
 
 }
 

@@ -10,7 +10,8 @@
 
 	&__notifications {
 		background: rgba(9, 9, 12, .8);
-		bottom: 0;
+		inset: 0;
+		z-index: 1000;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;

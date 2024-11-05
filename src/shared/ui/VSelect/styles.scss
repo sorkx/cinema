@@ -211,3 +211,16 @@
     background: var(--color-palette-black-30);
 	color: var(--color-palette-green-10);
 }
+
+.v-selector .multiselect-before-list {
+    background: #232323;
+    color: var(--color-palette-white-base);
+    display: grid;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    padding: 16px 16px 4px;
+    position: sticky;
+    top: 0;
+}

@@ -64,14 +64,14 @@ const props = defineProps({
 			</div>
 			<router-link
 				class="empty-block__link" 
-				:to="{ name: ROUTE_NAMES.MAIN }"
+				:to="{ name: ROUTE_NAMES.BROWSE }"
 			>
 				<VButton 
 					size="large"
 					class="empty-block__button"
 					modificator="color-main"
 				>
-					Перейти на главную
+					Перейти в каталог
 				</VButton>
 			</router-link>
 		</div>

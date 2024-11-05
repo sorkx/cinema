@@ -8,6 +8,10 @@ const props = defineProps({
         type: [String, Number],
         default: '',
     },
+    minWidth: {
+        type: [String, Number],
+        default: '',
+    },
     height: {
         type: [String, Number],
         default: '',
@@ -51,6 +55,7 @@ const skeletons = Array(skeletonCount).fill(null)
 			:style="{
 				'height': props.height, 
 				'max-width': props.maxWidth,
+				'min-width': props.minWidth,
 				'border-radius': props.radius,
 				'width': '100%',
 			}" 
