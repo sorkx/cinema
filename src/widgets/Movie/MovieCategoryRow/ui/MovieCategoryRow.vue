@@ -41,14 +41,14 @@ const props = defineProps({
 	>
 		<template #button="slotProps">
 			<VButton
-				tag="router-link"
+				:class="slotProps.class"
 				:to="to"
+				tag="router-link"
 				data-link="Смотреть все"
-				size="large"
+				data-size="large"
 				modificator="color-main link"
 				aria-label="Смотреть все"
-				appearance="text"
-				:class="slotProps.class"
+				data-appearance="text"
 			>
 				<UISymbol
 					name="arrow-right" 
@@ -60,12 +60,11 @@ const props = defineProps({
 			<RouletteSlider 
 				:items="props.items"
 				class="content-right slider"
-				appearance="continue"
 				:loading="props.loading"
 			>
 				<template #slide="{ item }">
 					<MovieCard 
-						:movie="item"
+						v-bind="item"
 						:key="item.id"
 					/>
 				</template>

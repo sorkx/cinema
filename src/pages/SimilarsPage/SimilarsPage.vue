@@ -53,7 +53,8 @@ onBeforeMount(async () => {
 
 	<VWrapper 
 		title="Смотреть также"
-		:sub-header="false"
+		:sub-header="true"
+		class="offset sub-header"
 	>
 		<template #content>
 			<MovieLists

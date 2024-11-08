@@ -43,10 +43,10 @@ const props = defineProps({
 				tag="router-link"
 				:to="`/movies/${+route.params.id}/similars`"
 				data-link="Смотреть все"
-				size="large"
+				data-size="large"
 				modificator="color-main link"
 				aria-label="Смотреть все"
-				appearance="text"
+				data-appearance="text"
 				:class="slotProps.class"
 			>
 				<UISymbol
@@ -60,11 +60,10 @@ const props = defineProps({
 				class="related__slider content-right" 
 				:items="props.items"
 				:loading="props.loading"
-				appearance="continue"
 			>
 				<template #slide="{ item }">
 					<MovieCard 
-						:movie="item"
+						v-bind="item"
 						:key="item.filmId"
 					/>
 				</template>

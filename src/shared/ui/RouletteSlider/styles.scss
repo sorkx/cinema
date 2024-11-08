@@ -13,8 +13,8 @@
     margin: 64px 0 56px;
 }
 
-.swiper-slide {
-	display: flex;
+.roulette-slider .swiper .swiper-slide {
+    display: flex;
     flex-shrink: 0;
     height: -moz-fit-content;
     height: fit-content;
@@ -22,6 +22,20 @@
     max-height: 100%;
     transform: none !important;
     width: auto;
+}
+
+.swiper-slide {
+    display: block;
+    flex-shrink: 0;
+    height: 100%;
+    position: relative;
+    transition-property: transform;
+    width: 100%;
+}
+
+.swiper-backface-hidden .swiper-slide {
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 .roulette-skeleton {

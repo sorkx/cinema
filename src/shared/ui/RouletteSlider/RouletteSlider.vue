@@ -10,10 +10,6 @@ const props = defineProps({
     items: {
         type: [Array, Object],
     },
-    appearance: {
-        type: String,
-        default: '',
-    },
     loading: {
         type: Boolean,
         default: false
@@ -26,7 +22,6 @@ const props = defineProps({
 		<div
 			v-if="props.items.length === 0 || props.loading"
 			class="roulette-skeleton roulette-skeleton--horizontal"
-			:data-appearance="props.appearance"
 		>
 			<div
 				v-for="item in props.items"

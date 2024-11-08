@@ -160,7 +160,6 @@ watch(() => movieType.value, fetchCategoryItems, { immediate: true })
 			<MovieLists
 				v-if="currentResults.length > 0"
 				:movies="currentResults"
-				:resize="true"
 				hidden="true"
 			/>
 

@@ -8,18 +8,14 @@ const props = defineProps({
         type: String,
         default: '',
     },
-    size: {
-        type: String,
-        default: '',
-    },
-    appearance: {
-        type: String,
-        default: '',
-    },
     tag: {
         type: String,
         default: 'button',
     }
+})
+
+defineOptions({
+    inheritAttrs: false
 })
 
 const modificatorClasses = computed(() => {
@@ -30,11 +26,9 @@ const modificatorClasses = computed(() => {
 <template>
 	<component
 		:is="props.tag" 
-		class="v-button" 
+		:class="['v-button', ...modificatorClasses]"
 		type="button"
-		:data-size="size"
-		:data-appearance="appearance"
-		:class="[...modificatorClasses]"
+		v-bind="$attrs"
 	>
 		<slot />
 	</component>

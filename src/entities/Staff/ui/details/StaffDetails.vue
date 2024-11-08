@@ -106,10 +106,10 @@ onMounted(() => setFilter('ACTOR'))
 				<template #slide="{ item }">
 					<VButton
 						:key="item.professionKey"
-						@click="setFilter(item.professionKey)"
 						:modificator="currentFilter === item.professionKey ? 'color-main' : 'color-gray'"
-						size="normal"
-						appearance="fill"
+						data-size="normal"
+						data-appearance="fill"
+						@click="setFilter(item.professionKey)"
 					>
 						{{ professionMapping[item.professionKey] }}
 					</VButton>
@@ -120,7 +120,6 @@ onMounted(() => setFilter('ACTOR'))
 			<MovieLists 
 				:movies="filteredFilms"
 				:loading="props.loading"
-				:resize="true"
 			/>
 		</div>
 	</div>

@@ -14,7 +14,7 @@ import {
 const props = defineProps({
     movie: {
         type: Object,
-        default: () => {},
+        default: () => ({}),
     },
     staff: {
         type: Array,
@@ -61,8 +61,11 @@ const trailersFilter = computed(() => props.trailers.filter(trailer => trailer.s
 			:items="props.seasons"
 			:loading="props.loading"
 		/>
-		<MovieDescription 
-			:item="props.movie"
+		<MovieDescription
+			:genres="props.movie.genres"
+			:description="props.movie.description"
+			:rating-kinopoisk="props.movie.ratingKinopoisk"
+			:rating-imdb="props.movie.ratingImdb" 
 			:loading="props.loading"  
 		/>
 		<MovieTrailers 
@@ -72,7 +75,7 @@ const trailersFilter = computed(() => props.trailers.filter(trailer => trailer.s
 		/>
 		<MovieCrew
 			v-if="props.staff.length > 0" 
-			:item="props.staff"
+			:staff="props.staff"
 			:loading="props.loading"  
 		/>
 		<MovieRelated 

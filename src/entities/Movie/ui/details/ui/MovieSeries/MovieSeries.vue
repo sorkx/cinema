@@ -71,13 +71,15 @@ onMounted(() => {
 			>
 				<RouletteSlider 
 					:items="currentSeason.episodes"
-					appearance="series"
 					:loading="props.loading"
 				>
 					<template #slide="{ item }">
 						<SeriesCard
-							appearance="series" 
-							:item="item" 
+							:episode-number="item.episodeNumber"
+							:season-number="item.seasonNumber"
+							:name-ru="item.nameRu"
+							:name-en="item.nameEn"
+							data-appearance="series" 
 						/>
 					</template>
 				</RouletteSlider>

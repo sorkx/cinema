@@ -84,8 +84,8 @@ const getYoutubeThumbnail = (url, quality = 'high') => {
 				>
 					<template #slide="{ item }">
 						<SeriesCard
-							appearance="series" 
-							:item="item"
+							data-appearance="series" 
+							:name="item.name"
 							:img="getYoutubeThumbnail(item.url, 'medium')"
 							@click="openModal"
 						/>

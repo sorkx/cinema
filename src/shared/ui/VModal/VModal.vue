@@ -16,14 +16,14 @@ import {
 const modal = useModal()
 
 const props = defineProps({
-    size: {
-        type: String,
-        default: '',
-    },
     header: {
         type: Boolean,
         default: false
     }
+})
+
+defineOptions({
+    inheritAttrs: false
 })
 
 const emit = defineEmits(['close'])
@@ -49,37 +49,35 @@ onBeforeUnmount(() => {
 
 <template>
 	<Teleport to='body'>
-		<Transition name="modal">
+		<div 
+			v-if="modal.isOpen" 
+			class="modal"
+		>
+			<div class="modal__overlay" />
 			<div 
-				v-if="modal.isOpen" 
-				class="modal"
+				class="modal__wrapper"
+				v-bind="$attrs"
 			>
-				<div class="modal__overlay" />
-				<div 
-					class="modal__wrapper"
-					:data-size="props.size"
+				<VButton
+					data-appearance="text"
+					data-size="icon"
+					class="modal__close"
+					modificator="color-white"
+					@click="closeModal" 
 				>
-					<VButton
-						@click="closeModal" 
-						class="modal__close"
-						appearance="text"
-						size="icon"
-						modificator="color-white"
-					>
-						<UISymbol name="close" />
-					</VButton>
-					<div
-						v-if="props.header"
-						class="modal__header"
-					>
-						<slot name="header" />
-					</div>
-					<div class="modal__content">
-						<slot name="content" />
-					</div>
+					<UISymbol name="close" />
+				</VButton>
+				<div
+					v-if="props.header"
+					class="modal__header"
+				>
+					<slot name="header" />
+				</div>
+				<div class="modal__content">
+					<slot name="content" />
 				</div>
 			</div>
-		</Transition>
+		</div>
 	</Teleport>
 </template>
 

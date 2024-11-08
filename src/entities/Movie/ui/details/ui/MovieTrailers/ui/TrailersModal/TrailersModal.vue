@@ -41,7 +41,7 @@ const getPlayerUrl = () => {
 <template>
 	<VModal
 		:header="false"
-		size="extra"
+		data-size="extra"
 		@close="closeModal"
 	>
 		<template #content>
@@ -56,9 +56,9 @@ const getPlayerUrl = () => {
 					<VButton
 						v-for="season in props.seasons"
 						:key="season.name"
-						size="small"
-						appearance="fill"
 						:modificator="currentSeason === season ? 'color-main' : 'color-gray'"
+						data-size="small"
+						data-appearance="fill"
 						@click="changeSeason(season)"
 					>
 						{{ season.name }}

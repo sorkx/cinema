@@ -17,9 +17,9 @@ import {
 } from '@/shared/ui/VImage'
 
 const props = defineProps({
-    item: {
-        type: Array,
-        default: () => [],
+    staff: {
+        type: Object,
+        default: () => ({}),
     },
     loading: {
         type: Boolean,
@@ -34,8 +34,8 @@ const formatProfessionKey = {
 
 const showAllStaff = ref(false)
 
-const directors = computed(() => props.item.filter(member => member.professionKey === 'DIRECTOR'))
-const actors = computed(() => props.item.filter(member => member.professionKey === 'ACTOR'))
+const directors = computed(() => props.staff.filter(member => member.professionKey === 'DIRECTOR'))
+const actors = computed(() => props.staff.filter(member => member.professionKey === 'ACTOR'))
 
 const directorsDisplayed = computed(() => {
     if (showAllStaff.value) {

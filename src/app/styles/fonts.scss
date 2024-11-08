@@ -5,7 +5,7 @@
     url('@/shared/assets/fonts/#{$fileName}.woff') format('woff');
     font-weight: $fontWeight;
     font-style: $fontStyle;
-    font-display: optional;
+    font-display: swap;
   }
 }
 

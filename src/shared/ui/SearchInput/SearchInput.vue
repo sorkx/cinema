@@ -24,7 +24,7 @@ const closeSearch = () => {
 <template>
 	<VModal 
 		:header="true" 
-		size="full"
+		data-size="full"
 		@close="closeSearch"
 	>
 		<template #header>
