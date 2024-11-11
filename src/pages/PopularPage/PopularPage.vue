@@ -66,7 +66,6 @@ const { scrollComponent } = useInfinityScroll({
 		<template #content>
 			<MovieLists
 				:movies="state?.collections.TOP_POPULAR_ALL?.data"
-				:resize="true"
 			/>
 
 			<CircleLoader v-if="isLoadingMore" />

@@ -8,6 +8,11 @@ import {
 import {
     ROUTE_NAMES,
 } from '@/shared/lib/constants'
+import {
+    useModal
+} from '@/shared/lib/use/useModal'
+
+const modal = useModal()
 
 const props = defineProps({
     movies: {
@@ -33,10 +38,6 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
-    resize: {
-        type: Boolean,
-        default: false
-    }
 })
 </script>
 
@@ -48,9 +49,10 @@ const props = defineProps({
 	>
 		<MovieCard
 			v-for="item in props.movies"
-			:movie="item"
+			v-bind="item"
 			:key="item.id"
-			:resize="props.resize"
+			class="resize"
+			@click="modal.close()"
 		/>
 	</div>
 
@@ -67,7 +69,8 @@ const props = defineProps({
 				:to="{ name: ROUTE_NAMES.BROWSE }"
 			>
 				<VButton 
-					size="large"
+					data-size="large"
+					data-appearance="fill"
 					class="empty-block__button"
 					modificator="color-main"
 				>

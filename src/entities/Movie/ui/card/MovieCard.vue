@@ -10,14 +10,38 @@ import {
 } from '@/shared/ui/VLoader'
 
 const props = defineProps({
-    movie: {
-        type: Object,
-        default: () => {},
+    nameRu: {
+        type: String,
+        default: '',
     },
-    resize: {
-        type: Boolean,
-        default: false
+    nameEn: {
+        type: String,
+        default: '',
+    },
+    kinopoiskId: {
+        type: [String, Number],
+        default: '',
+    },
+    filmId: {
+        type: [String, Number],
+        default: '',
+    },
+    imdbId: {
+        type: [String, Number],
+        default: '',
+    },
+    nameOriginal: {
+        type: String,
+        default: '',
+    },
+    posterUrlPreview: {
+        type: String,
+        default: '',
     }
+})
+
+defineOptions({
+    inheritAttrs: false
 })
 
 const { 
@@ -25,13 +49,13 @@ const {
     imageSrc, 
     isLoading, 
     imageRef
-} = useImageLoader(props.movie.posterUrlPreview)
+} = useImageLoader(props.posterUrlPreview)
 </script>
 
 <template>
 	<div 
 		class="movie-card"
-		:class="{ 'resize': props.resize }"
+		v-bind="$attrs"
 	>
 		<span
 			ref="imageRef" 
@@ -40,7 +64,7 @@ const {
 			<img
 				v-if="!isLoading && imageLoaded"
 				:src="imageSrc"
-				:alt="props.movie.nameRu || props.movie.nameEn"
+				:alt="props.nameRu || props.nameEn"
 				loading="eager"
 				transition="fade"
 				transitionall="true"
@@ -48,10 +72,10 @@ const {
 			/>
 			<VLoader 
 				v-else
-				class="movie__card-image"
+				class="movie-card__image"
 				modificator="movie"
-				size="middle"
-				media="small"
+				dara-size="middle"
+				data-media="small"
 				:logo-loader="true"
 			/>
 		</span>
@@ -61,14 +85,14 @@ const {
 				name: ROUTE_NAMES.CONTENT_DETAILS, 
 				params: { 
 					type: 'movie', 
-					id: props.movie.kinopoiskId || props.movie.imdbId || props.movie.filmId,
+					id: props.kinopoiskId || props.imdbId || props.filmId,
 				} 
 			}"
 			class="movie-card__overlay"
 		/>
 		<div class="movie-card__info">
 			<p class="movie-card__title">
-				{{ props.movie.nameRu || props.movie.nameOriginal }}
+				{{ props.nameRu || props.nameOriginal }}
 			</p>
 		</div>
 	</div>

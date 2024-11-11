@@ -215,8 +215,8 @@ const genres = computed(() => {
 						>
 							<VButton 
 								data-size="large"
+								data-appearance="fill"
 								modificator="color-main media-normal"
-								appearance="fill"
 								class="movie-header__control movie-header__button"
 							>
 								Перейти на кинопоиск
@@ -225,16 +225,16 @@ const genres = computed(() => {
 						<VButton
 							v-if="windowWidth > 640" 
 							@click="openModal"
-							appearance="outline"
-							size="large"
+							data-appearance="outline"
+							data-size="large"
 							modificator="color-white rounded media-normal"
 							class="trailer-button"
 						>
 							Трейлер
 						</VButton>
 						<VButton
-							appearance="outline"
-							size="large"
+							data-appearance="outline"
+							data-size="large"
 							modificator="color-white rounded media-normal"
 							class="movie-favorite-button"
 						>

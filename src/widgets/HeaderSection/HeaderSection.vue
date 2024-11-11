@@ -59,8 +59,8 @@ const items = [
 				<template v-if="router.currentRoute.value.path !== '/'">
 					<VButton
 						@click="router.go(-1)"
-						appearance="text"
-						size="normal"
+						data-appearance="text"
+						data-size="normal"
 						modificator="mobile rounded color-white"
 					>
 						<UISymbol name="arrow-left" />
@@ -89,9 +89,9 @@ const items = [
 			<VButton
 				@click="openModal"
 				modificator="search rounded color-white"
-				appearance="text"
+				data-appearance="text"
 				data-size="normal"
-				class="search__icon"
+				title="Поиск"
 			>
 				<UISymbol 
 					name="search"

@@ -127,8 +127,8 @@ onMounted(() => {
 					</div>
 					<div class="sidebar-filters__footer">
 						<VButton
-							size="large"
-							appearance="outline"
+							data-size="large"
+							data-appearance="outline"
 							modificator="color-white"
 							class="footer-button"
 							@click="resetFilter"
@@ -136,9 +136,9 @@ onMounted(() => {
 							Сбросить
 						</VButton>
 						<VButton
-							size="large"
+							data-size="large"
+							data-appearance="fill"
 							class="footer-button"
-							appearance="fill"
 							modificator="color-main"
 							@click="applyFilter"
 						>

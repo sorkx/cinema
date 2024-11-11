@@ -32,7 +32,6 @@ export function provideModal() {
 
 export function useModal() {
     const modal = inject(modalSymbol)
-    if (!modal) throw new Error('No modal provided!')
   
     return modal
 }

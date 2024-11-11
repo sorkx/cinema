@@ -8,14 +8,6 @@ const props = defineProps({
         type: String,
         default: '',
     },
-    size: {
-        type: String,
-        default: '',
-    },
-    media: {
-        type: String,
-        default: '',
-    },
     logoLoader: {
         type: Boolean,
         default: false
@@ -28,15 +20,11 @@ const props = defineProps({
 </script>
 
 <template>
-	<div 
-		class="loader"
-		:class="`loader--${props.modificator}`"
-	>
+	<div :class="['loader', `loader--${props.modificator}`]">
 		<div
 			v-if="props.logoLoader" 
 			class="logo loader__logo"
-			:data-size="props.size"
-			:data-media="props.media"
+			v-bind="$attrs"
 		>
 			<UISymbol 
 				name="logo"

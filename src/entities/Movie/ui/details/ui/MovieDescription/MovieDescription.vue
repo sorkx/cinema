@@ -16,9 +16,21 @@ import {
 } from '@/shared/ui/VSkeleton'
 
 const props = defineProps({
-    item: {
-        type: Object,
-        default: () => {},
+    genres: {
+        type: Array,
+        default: () => [],
+    },
+    description: {
+        type: String,
+        default: '',
+    },
+    ratingKinopoisk: {
+        type: [String, Number],
+        default: '',
+    },
+    ratingImdb: {
+        type: [String, Number],
+        default: '',
     },
     loading: {
         type: Boolean,
@@ -46,7 +58,7 @@ const toggleDescription = () => {
 }
 
 const genres = computed(() => {
-    return props.item?.genres.map((item) => {
+    return props.genres.map((item) => {
         const char = item.genre.charAt(0)
         return char.toUpperCase() + item.genre.slice(1)
     })
@@ -64,7 +76,7 @@ onUnmounted(() => {
 
 <template>
 	<section
-		v-if="props.item?.description" 
+		v-if="props.description" 
 		class="wrapper movie-description"
 	>
 		<div class="movie-description__info">
@@ -95,7 +107,7 @@ onUnmounted(() => {
 					]"
 				>
 					<span>
-						{{ props.item?.description }}
+						{{ props.description }}
 					</span>
 				</p>
 				<ToggleButton
@@ -116,7 +128,7 @@ onUnmounted(() => {
 						Оценка зрителей
 					</p>
 					<RatingStars 
-						:rating="props.item?.ratingKinopoisk || props.item?.ratingImdb || 0"
+						:rating="props.ratingKinopoisk || props.ratingImdb || 0"
 					/>
 				</div>
 			</div>

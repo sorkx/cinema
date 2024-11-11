@@ -7,11 +7,24 @@ import {
 } from '@/shared/ui/VLoader'
 
 const props = defineProps({
-    item: {
-        type: Object,
-    },
-    appearance: {
+    nameRu: {
         type: String,
+        default: '',
+    },
+    nameEn: {
+        type: String,
+        default: '',
+    },
+    name: {
+        type: String,
+        default: '',
+    },
+    episodeNumber: {
+        type: [String, Number],
+        default: '',
+    },
+    seasonNumber: {
+        type: [String, Number],
         default: '',
     },
     img: {
@@ -31,7 +44,6 @@ const {
 <template>
 	<div 
 		class="series-card"
-		:data-appearance="props.appearance"
 	>
 		<div class="series-card__body">
 			<div class="series-card__overlay" />
@@ -49,10 +61,10 @@ const {
 				/>
 				<VLoader 
 					v-else
-					modificator="series"
 					:logo-loader="true"
-					size="middle"
-					media="small"
+					modificator="series"
+					data-size="middle"
+					data-media="small"
 				/>
 			</span>
 			<span v-else>
@@ -61,13 +73,13 @@ const {
 		</div>
 		<div class="series-card__namespace">
 			<div class="series-card__title">
-				{{ props.item.nameRu || props.item.nameEn || props.item.name }}
+				{{ props.nameRu || props.nameEn || props.name }}
 			</div>
 			<span
-				v-if="props.item.seasonNumber && props.item.episodeNumber" 
+				v-if="props.seasonNumber && props.episodeNumber" 
 				class="series-card__info"
 			>
-				{{ props.item.seasonNumber }} сезон, {{ props.item.episodeNumber}} серия
+				{{ props.seasonNumber }} сезон, {{ props.episodeNumber}} серия
 			</span>
 		</div>
 	</div>

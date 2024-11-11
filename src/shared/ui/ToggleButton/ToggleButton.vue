@@ -21,11 +21,10 @@ const toggleText = computed(() => props.toggled ? 'Свернуть' : 'Разв
 
 <template>
 	<VButton
+		data-size="small"
+		data-appearance="text"
 		modificator="color-main"
-		size="small"
-		appearance="text"
-		class="toggle-btn"
-		:class="{ 'toggle-btn--toggled': props.toggled }"
+		:class="['toggle-btn', { 'toggle-btn--toggled': props.toggled }]"
 	>
 		{{ toggleText }}
 		<UISymbol 
