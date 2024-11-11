@@ -63,8 +63,12 @@ const props = defineProps({
 			>
 				<template #slide="{ item }">
 					<MovieCard 
-						v-bind="item"
 						:key="item.filmId"
+						:film-id="item.filmId"
+						:name-en="item.nameEn"
+						:name-ru="item.nameRu"
+						:name-original="item.nameOriginal"
+						:poster-url-preview="item.posterUrlPreview"
 					/>
 				</template>
 			</RouletteSlider>

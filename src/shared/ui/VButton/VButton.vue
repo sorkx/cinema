@@ -14,10 +14,6 @@ const props = defineProps({
     }
 })
 
-defineOptions({
-    inheritAttrs: false
-})
-
 const modificatorClasses = computed(() => {
     return props.modificator.split(' ').map(mod => `v-button--${mod}`);
 })
@@ -28,7 +24,6 @@ const modificatorClasses = computed(() => {
 		:is="props.tag" 
 		:class="['v-button', ...modificatorClasses]"
 		type="button"
-		v-bind="$attrs"
 	>
 		<slot />
 	</component>

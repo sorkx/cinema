@@ -31,7 +31,11 @@ export function provideModal() {
 }
 
 export function useModal() {
-    const modal = inject(modalSymbol)
+    const modal = inject(modalSymbol, {
+        isOpen: ref(false),
+        open: () => {},
+        close: () => {}
+    })
   
     return modal
 }

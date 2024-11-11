@@ -40,10 +40,6 @@ const props = defineProps({
     }
 })
 
-defineOptions({
-    inheritAttrs: false
-})
-
 const { 
     imageLoaded, 
     imageSrc, 
@@ -53,10 +49,7 @@ const {
 </script>
 
 <template>
-	<div 
-		class="movie-card"
-		v-bind="$attrs"
-	>
+	<div class="movie-card">
 		<span
 			ref="imageRef" 
 			class="movie-card__image-container"
@@ -74,7 +67,7 @@ const {
 				v-else
 				class="movie-card__image"
 				modificator="movie"
-				dara-size="middle"
+				data-size="middle"
 				data-media="small"
 				:logo-loader="true"
 			/>

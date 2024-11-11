@@ -49,8 +49,14 @@ const props = defineProps({
 	>
 		<MovieCard
 			v-for="item in props.movies"
-			v-bind="item"
 			:key="item.id"
+			:name-ru="item.nameRu"
+			:name-en="item.nameEn"
+			:name-original="item.nameOriginal"
+			:film-id="item.filmId"
+			:imdb-id="item.imdbId"
+			:kinopoisk-id="item.kinopoiskId"
+			:poster-url-preview="item.posterUrlPreview"
 			class="resize"
 			@click="modal.close()"
 		/>

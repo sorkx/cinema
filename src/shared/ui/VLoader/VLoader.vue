@@ -17,6 +17,10 @@ const props = defineProps({
         default: '',
     }
 })
+
+defineOptions({
+    inheritAttrs: false
+})
 </script>
 
 <template>
