@@ -14,7 +14,7 @@ import {
 const props = defineProps({
     movie: {
         type: Object,
-        default: () => {},
+        default: () => ({}),
     },
     staff: {
         type: Array,
