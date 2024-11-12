@@ -31,11 +31,17 @@ const props = defineProps({
 				<div class="roulette-skeleton__card " />
 				<div class="roulette-skeleton__name">
 					<VSkeleton
-						count="1" 
-						maxWidth="100%"
-						height="2rem"
-						radius="0.5rem"
-						gap="0.5rem"
+						:config="{
+							count: 1,
+							container: {
+								gap: '0.5rem',
+							},
+							item: {
+								height: '2rem',
+								maxWidth: '100%',
+								borderRadius: '0.5rem'
+							}
+						}" 
 					/>
 				</div>
 			</div>

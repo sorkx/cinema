@@ -89,60 +89,102 @@ const genres = computed(() => {
 			<div class="header-skeleton__overlay container">
 				<div class="header-skeleton__content">
 					<div class="header-skeleton__name">
-						<VSkeleton 
-							count="1"
-							max-width="88.8889%"
-							height="3.5rem"
-							radius="0.5rem"
-							gap="0.5rem"
-							skeleton-width="540px"
+						<VSkeleton
+						:config="{
+							count: 1,
+							container: {
+								maxWidth: '540px',
+								gap: '0.5rem',
+							},
+							item: {
+								height: '3.5rem',
+								maxWidth: '88.8889%',
+								borderRadius: '0.5rem'
+							}
+						}" 
 						/>
-						<VSkeleton 
-							count="1"
-							max-width="74.0741%"
-							height="2rem"
-							radius="0.5rem"
-							gap="0.5rem"
-							skeleton-width="540px"
+						<VSkeleton
+							:config="{
+								count: 1,
+								container: {
+									maxWidth: '540px',
+									gap: '0.5rem',
+								},
+								item: {
+									height: '2rem',
+									maxWidth: '74.0741%',
+									borderRadius: '0.5rem'
+								}
+							}"  
 						/>
 					</div>
-					<VSkeleton 
-						count="1"
-						max-width="100%"
-						height="3rem"
-						radius="0.5rem"
-						gap="0.5rem"
+					<VSkeleton
+						:config="{
+							count: 1,
+							container: {
+								gap: '0.5rem',
+							},
+							item: {
+								height: '3rem',
+								maxWidth: '100%',
+								borderRadius: '0.5rem'
+							}
+						}"  
 					/>
-					<VSkeleton 
-						count="1"
-						max-width="83.3333%"
-						height="3rem"
-						radius="0.5rem"
-						gap="0.5rem"
-						skeleton-width="540px"
+					<VSkeleton
+						:config="{
+							count: 1,
+							container: {
+								maxWidth: '540px',
+								gap: '0.5rem',
+							},
+							item: {
+								height: '3rem',
+								maxWidth: '83.3333%',
+								borderRadius: '0.5rem'
+							}
+						}" 
 					/>
-					<VSkeleton 
-						count="1"
-						max-width="74.0741%"
-						height="46px"
-						radius="0.5rem"
-						gap="0.5rem"
-						skeleton-width="540px"
+					<VSkeleton
+						:config="{
+							count: 1,
+							container: {
+								maxWidth: '540px',
+								gap: '0.5rem',
+							},
+							item: {
+								height: '46px',
+								maxWidth: '74.0741%',
+								borderRadius: '0.5rem'
+							}
+						}" 
 					/>
 					<div class="header-skeleton__row">
-						<VSkeleton 
-							count="1"
-							max-width="270px"
-							height="60px"
-							radius="32px"
-							gap="0.5rem"
+						<VSkeleton
+							:config="{
+								count: 1,
+								container: {
+									gap: '0.5rem',
+								},
+								item: {
+									height: '60px',
+									maxWidth: '270px',
+									borderRadius: '32px'
+								}
+							}" 
 						/>
 						<VSkeleton 
-							count="1"
-							max-width="170px"
-							height="60px"
-							radius="32px"
-							gap="0.5rem"
+							:config="{
+								count: 1,
+								container: {
+									gap: '0.5rem',
+								},
+								item: {
+									height: '60px',
+									maxWidth: '170px',
+									borderRadius: '32px'
+								}
+							}" 
 						/>
 					</div>
 				</div>

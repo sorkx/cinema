@@ -1,7 +1,7 @@
 <script setup>
 import {
-    ref,
-    watch,
+    reactive,
+    computed,
 } from 'vue'
 import {
     UISymbol,
@@ -11,6 +11,7 @@ import {
 } from '@/features/Movies/MovieSearch'
 import { 
     useRouter,
+    useRoute,
 } from 'vue-router'
 import {
     VButton,
@@ -21,6 +22,12 @@ import {
 import {
     provideModal
 } from '@/shared/lib/use/useModal'
+import { 
+    toggleSidebar,
+} from '@/shared/lib/use/useSidebar'
+import {
+    useWindowWidth,
+} from '@/shared/lib/use/useWindowWidth'
 
 const { 
     closeModal, 
@@ -28,9 +35,11 @@ const {
     openModal 
 } = provideModal()
 
+const windowWidth = useWindowWidth()
 const router = useRouter()
+const route = useRoute()
 
-const items = [
+const items = reactive([
     {
         id: 'main',
         title: 'Главная',
@@ -49,7 +58,11 @@ const items = [
         to: '/favorite',
         class: 'favorite-icon',
     }
-]
+])
+
+const visibleBrowseFilter = computed(() => {
+    return route.path.includes('genre') || route.path.includes('films') || route.path.includes('serials')
+})
 </script>
 
 <template>
@@ -78,6 +91,7 @@ const items = [
 					<router-link
 						:to="item.to"
 						active-class="active-link"
+						exact-active-class="active-link"
 						class="header-menu__link"
 						aria-current="page"
 					>
@@ -86,6 +100,18 @@ const items = [
 				</li>
 			</ul>
 			<div class="header__spacer" />
+			<VButton
+				v-if="visibleBrowseFilter"
+				data-size="normal"
+				data-appearance="text"
+				modificator="color-white rounded"
+				class="browse-filter"
+				@click="toggleSidebar()"
+			>
+				<UISymbol 
+					name="slider"
+				/>
+			</VButton>
 			<VButton
 				@click="openModal"
 				modificator="search rounded color-white"

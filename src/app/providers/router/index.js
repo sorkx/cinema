@@ -13,7 +13,7 @@ const routeOptions = [
         name: ROUTE_NAMES.MAIN,
     },
     {
-        path: '/browse',
+        path: '/browse/',
         name: ROUTE_NAMES.BROWSE,
     },
     {
@@ -44,6 +44,9 @@ const routeOptions = [
         path: '/:type/:id',
         name: ROUTE_NAMES.CONTENT_DETAILS,
         props: true,
+        meta: {
+            title: 'Подробнее',
+        }
     },
     {
         path: '/staff/:id',

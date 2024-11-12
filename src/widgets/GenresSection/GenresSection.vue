@@ -58,13 +58,19 @@ onBeforeMount(async () => {
 						v-if="isLoadingFilters"
 						class="skeleton-genres"
 					>
-						<VSkeleton 
-							:count="1"
-							max-width="248px"
-							min-width="200px"
-							height="180px"
-							radius="16px"
-							gap="16px"
+						<VSkeleton
+							:config="{
+								count: 1,
+								container: {
+									gap: '16px',
+								},
+								item: {
+									height: '180px',
+									maxWidth: '249px',
+									minWidth: '200px',
+									borderRadius: '16px'
+								}
+							}"  
 						/>
 					</div>
 					<div

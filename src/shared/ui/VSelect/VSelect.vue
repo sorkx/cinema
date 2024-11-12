@@ -10,8 +10,8 @@ import {
     VRangeSlider,
 } from '@/shared/ui/VRangeSlider'
 import {
-    VCheckbox
-} from '@/shared/ui/VCheckbox'
+    VRadio,
+} from '@/shared/ui/VRadio'
 
 const props = defineProps({
     min: {
@@ -38,7 +38,17 @@ const props = defineProps({
         type: [String, Number],
         default: null,
     },
+    items: {
+        type: Array,
+        default: () => [],
+    },
+    labelKey: { 
+        type: String,
+        default: ''
+    },
 })
+
+const selectedModelValue = defineModel('selectedValue', { default: '' })
 
 const orderFormatted = {
     RATING: 'По рейтингу',
@@ -52,7 +62,6 @@ const minValue = ref(props.min)
 const maxValue = ref(props.max)
 const resetKey = ref(0)
 
-
 const isDropdownOpen = ref(false)
 
 const updateMinValue = (value) => {
@@ -63,8 +72,17 @@ const updateMaxValue = (value) => {
     emit('update:max', value)
 }
 
+const selectedItemName = computed(() => {
+    const selected = props.items.find(item => item.id === selectedModelValue.value)
+    return selected ? selected[props.labelKey] : ''
+})
+
 const displayLabel = computed(() => {
-    if (props.selectType === 'single' || props.selectType === 'multiple') {
+    if (props.selectType === 'radio') {
+        return selectedItemName.value || props.title
+    }
+
+    if (props.selectType === 'single') {
         return orderFormatted[props.selectedValue] || props.title
     }
 
@@ -113,8 +131,8 @@ const selectedType = computed(() => {
         return 'single'
     case 'range':
         return 'range'
-    case 'multiple':
-        return 'multiple'
+    case 'radio':
+        return 'radio'
     default:
         return 'single'
     }
@@ -127,18 +145,19 @@ const selectedType = computed(() => {
 	>
 		<div
 			v-click-outside="() => toggleDropdown(false)"
-			@click="toggleDropdown()" 
+			@click="toggleDropdown()"
+			v-bind="$attrs" 
 			:class="[
 				'multiselect',
 				selectedType,
 				{ 
-					'selected': isSelected, 
+					'selected': isSelected || selectedItemName, 
 					'is-open': isDropdownOpen, 
 				}
 			]"
 		>
 			<div 
-				class="multiselect__wrapper"
+				class="multiselect-wrapper"
 				tabindex="0"
 				role="combobox"
 				aria-multiselectable="true"
@@ -180,12 +199,11 @@ const selectedType = computed(() => {
 						/>
 					</div>
 				</template>	
-				<template v-if="props.selectType === 'multiple'">
+				<template v-if="props.selectType === 'radio'">
 					<div 
-						class="multiselect__wrapper"
+						class="multiselect-wrapper"
 						tabindex="0"
 						role="combobox"
-						aria-multiselectable="true"
 					>
 						<div
 							class="multiselect-placeholder"
@@ -198,12 +216,22 @@ const selectedType = computed(() => {
 								class="multiselect-icon"
 							/>
 						</div>
+						<div
+							@click="selectedModelValue = null"
+							v-if="selectedItemName" 
+							class="multiselect-clear"
+						>
+							<UISymbol 
+								name="cross" 
+								class="multiselect-icon"
+							/>
+						</div>
 					</div>
 				</template>
 			</div>
 			<div
 				v-show="isDropdownOpen" 
-				class="multiselect__dropdown"
+				class="multiselect-dropdown"
 				tabindex="-1"
 			>
 				<ul
@@ -251,10 +279,29 @@ const selectedType = computed(() => {
 						@update:max="updateMaxValue"
 					/>
 				</div>
-				<template v-if="selectType === 'multiple'">
+				<template v-if="selectType === 'radio'">
 					<div class="multiselect-before-list">
-						<VCheckbox />
+						{{ props.title }} : {{ selectedItemName || 'Не выбрано' }}
+						<span class="multiselect-divider" />
 					</div>
+					<ul
+						v-if="selectType === 'radio'"
+						role="listbox"
+						class="multiselect-options"
+					>
+						<li
+							v-for="item in items"
+							:key="item.id"
+							role="option"
+							class="multiselect-option"
+						>
+							<VRadio
+								v-model="selectedModelValue"
+								:value="item.id"
+								:label="item[props.labelKey]"
+							/>
+						</li>
+					</ul>
 				</template>
 			</div>
 		</div>

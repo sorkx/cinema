@@ -91,6 +91,18 @@ img {
     color: var(--color-palette-black-50);
 }
 
+input {
+	color: inherit;
+    font-family: inherit;
+    font-feature-settings: inherit;
+    font-size: 100%;
+    font-variation-settings: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+}
+
 @media (max-width: 640px) {
     .logo[data-media=small] img, .logo[data-media=small] svg {
         height: 24px;

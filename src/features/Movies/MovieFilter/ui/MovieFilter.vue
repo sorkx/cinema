@@ -3,13 +3,14 @@ import {
     computed,
     ref,
     watch,
+    inject,
 } from 'vue'
-import {
-    VButton
-} from '@/shared/ui/VButton'
-import {
-    UISymbol,
-} from '@/shared/ui/UISymbol'
+// import {
+//     VButton
+// } from '@/shared/ui/VButton'
+// import {
+//     UISymbol,
+// } from '@/shared/ui/UISymbol'
 import {
     Sidebar,
 } from '@/shared/ui/Sidebar'
@@ -19,11 +20,28 @@ import {
 import {
     VSkeleton,
 } from '@/shared/ui/VSkeleton'
+import {
+    useRoute,
+} from 'vue-router'
+import { 
+    sidebarOpen,
+    toggleSidebar,
+} from '@/shared/lib/use/useSidebar'
+
+const route = useRoute()
 
 const props = defineProps({
     genres: {
         type: Array,
         default: () => [],
+    },
+    countries: {
+        type: Array,
+        default: () => [],
+    },
+    selectedCountry: {
+        type: [Number, String],
+        default: '',
     },
     selectedGenre: {
         type: [Number, String],
@@ -49,47 +67,19 @@ const props = defineProps({
         type: [Number, String],
         default: '',
     },
-    isLoading: {
+    isLoadingFilters: {
         type: Boolean,
         default: false
     },
 })
 
-const emit = defineEmits([
-    'update:selectedGenre',  
-    'update:yearFrom', 
-    'update:yearTo',
-    'update:ratingFrom',  
-    'update:ratingTo', 
-    'update:order'
-])
-
-const openSidebar = ref(false)
-
-const updateYearFrom = computed({
-    get: () => props.yearFrom,
-    set: (value) => emit('update:yearFrom', value)
-})
-
-const updateYearTo = computed({
-    get: () => props.yearTo,
-    set: (value) => emit('update:yearTo', value)
-})
-
-const updateRatingFrom = computed({
-    get: () => props.ratingFrom,
-    set: (value) => emit('update:ratingFrom', value)
-})
-
-const updateRatingTo = computed({
-    get: () => props.ratingTo,
-    set: (value) => emit('update:ratingTo', value)
-})
-
-const selectedSort = computed({
-    get: () => props.order,
-    set: (value) => emit('update:order', value)
-})
+const genreValue = defineModel('selectedGenre', { default: '' })
+const countriesValue = defineModel('selectedCountry', { default: '' })
+const yearFromValue = defineModel('yearFrom', { default: '' })
+const yearToValue = defineModel('yearTo', { default: '' })
+const ratingFromValue = defineModel('ratingFrom', { default: '' })
+const ratingToValue = defineModel('ratingTo', { default: '' })
+const sortValue = defineModel('order', { default: '' })
 
 const sidebarItems = computed(() => [
     {
@@ -99,11 +89,11 @@ const sidebarItems = computed(() => [
         type: 'range',
         step: 1,
         range: {
-            from: updateYearFrom.value,
-            to: updateYearTo.value
+            from: yearFromValue.value,
+            to: yearToValue.value
         },
-        updateFrom: (value) => updateYearFrom.value = value,
-        updateTo: (value) => updateYearTo.value = value
+        updateFrom: (value) => yearFromValue.value = value,
+        updateTo: (value) => yearToValue.value = value
     },
     {
         title: 'Рейтинг',
@@ -112,48 +102,65 @@ const sidebarItems = computed(() => [
         type: 'range',
         step: 0.1,
         range: {
-            from: updateRatingFrom.value,
-            to: updateRatingTo.value
+            from: ratingFromValue.value,
+            to: ratingToValue.value
         },
-        updateFrom: (value) => updateRatingFrom.value = value,
-        updateTo: (value) => updateRatingTo.value = value
+        updateFrom: (value) => ratingFromValue.value = value,
+        updateTo: (value) => ratingToValue.value = value
     }
 ])
 
+const visibleFilters = computed(() => route.params.type !== 'genre')
+
 const resetFilters = () => {
-    updateYearFrom.value = 1925
-    updateYearTo.value = new Date().getFullYear()
-    updateRatingFrom.value = 0
-    updateRatingTo.value = 10
+    yearFromValue.value = 1925
+    yearToValue.value = new Date().getFullYear()
+    ratingFromValue.value = 0
+    ratingToValue.value = 10
 }
 
-const toggleDropdown = (force) => {
-    openSidebar.value = force ?? !openSidebar.value
-}
-
-watch(openSidebar, async (newVal) => {
+watch(sidebarOpen, async (newVal) => {
     if (newVal) {
         document.documentElement.classList.add('sidebar-page')
     } else {
         document.documentElement.classList.remove('sidebar-page')
     }
 })
-
-// $route.params.type !== 'genre' ? 4 : 3
 </script>
 
 <template>
 	<div
-		v-if="props.isLoading" 
+		v-if="props.isLoadingFilters" 
 		class="skeleton-filters"
 	>
 		<div class="skeleton-filters__selectors">
 			<VSkeleton 
-				:count="3"
-				maxWidth="160px"
-				height="38px"
-				radius="0.5rem"
-				gap="0.5rem"
+				:config="{
+					count: 3,
+					container: {
+						gap: '0.5rem',
+					},
+					item: {
+						height: '38px',
+						maxWidth: '160px',
+						borderRadius: '0.5rem'
+					}
+				}"
+			/>
+			<div class="skeleton-filters__spacer" />
+			<VSkeleton 
+				:config="{
+					count: 1,
+					container: {
+						maxWidth: '200px',
+						gap: '0.5rem',
+					},
+					item: {
+						height: '38px',
+						maxWidth: '100%',
+						borderRadius: '0.5rem'
+					}
+				}"
 			/>
 		</div>
 	</div>
@@ -163,51 +170,51 @@ watch(openSidebar, async (newVal) => {
 	>
 		<div class="page-filters__selectors">
 			<div class="page-filters__selectors-wrap">
-				<!-- <VSelect
-					v-if="$route.params.type !== 'genre'"
-					title="Жанр"
-					select-type="multiple"
-				/> -->
-				<VSelect
-					title="Сортировка"
-					select-type="single"
-					v-model:selected-value="selectedSort"
-				/>
-				<div class="page-filters__selectors-wrap__slider">
+				<template v-if="visibleFilters">
 					<VSelect
-						v-for="item in sidebarItems"
-						:key="item.title"
-						:step="item.step"
-						:title="item.title"
-						:select-type="item.type"
-						:min="item.min"
-						:max="item.max" 
-						@update:min="item.updateFrom($event)"
-						@update:max="item.updateTo($event)" 
-					/> 
-				</div>
-			</div>
-			<div class="browse-filters">
-				<VButton
-					data-size="small"
-					data-appearance="text"
-					modificator="color-white"
-					class="filter-button"
-					@click="toggleDropdown()"
-				>
-					<UISymbol 
-						name="slider"
+						:items="props.genres"
+						class="multiselect--left"
+						title="Жанр"
+						select-type="radio"
+						label-key="genre"
+						v-model:selected-value="genreValue"
 					/>
-				</VButton>
+				</template>
+				<VSelect
+					:items="props.countries"
+					class="multiselect--left"
+					title="Страна"
+					select-type="radio"
+					label-key="country"
+					v-model:selected-value="countriesValue"
+				/>
+				<VSelect
+					v-for="item in sidebarItems"
+					:key="item.title"
+					:step="item.step"
+					:title="item.title"
+					:select-type="item.type"
+					:min="item.min"
+					:max="item.max" 
+					@update:min="item.updateFrom"
+					@update:max="item.updateTo"
+					class="multiselect--left" 
+				/> 
 			</div>
+			<VSelect
+				title="Сортировка"
+				class="multiselect--right"
+				select-type="single"
+				v-model:selected-value="sortValue"
+			/>
 		</div>
 	</div>
 	<Sidebar
 		:items="sidebarItems"
-		v-show="openSidebar"
-		:animation="openSidebar"
+		v-show="sidebarOpen"
+		:animation="sidebarOpen"
 		@reset="resetFilters"
-		@close="toggleDropdown(false)"
+		@close="toggleSidebar(false)"
 	/>
 </template>
 

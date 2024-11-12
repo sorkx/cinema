@@ -89,12 +89,18 @@ onUnmounted(() => {
 			>
 				<VSkeleton
 					v-if="props.loading" 
-					count="5"
-					max-width="100%"
-					height="2rem"
-					radius="0.5rem"
-					gap="0.5rem"
-					:column="true"
+					:config="{
+						count: 5,
+						column: true,
+						container: {
+							gap: '0.5rem',
+						},
+						item: {
+							height: '2rem',
+							maxWidth: '100%',
+							borderRadius: '0.5rem'
+						}
+					}"
 				/>
 			</p>
 			<div v-else>

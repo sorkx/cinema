@@ -4,6 +4,7 @@ import {
     ref,
     reactive,
     watch,
+    onMounted,
 } from 'vue'
 import { 
     useRoute,
@@ -40,10 +41,12 @@ const store = movieModel()
 const currentResults = ref([])
 const isLoadingMore = ref(false)
 const isLoading = ref(true)
+const isLoadingFilters = ref(false)
 
 const { 
     state,
     genresMovie,
+    countriesMovie,
 } = storeToRefs(store)
 
 const formattedTitle = {
@@ -60,6 +63,7 @@ const contentType = computed(() => routeMapping[movieType.value])
 
 const filterParams = reactive({
     genres: +route.params.id || '',
+    countries: '',
     ratingFrom: '',
     ratingTo: '',
     yearTo: '',
@@ -88,11 +92,6 @@ const fetchCategoryItems = async () => {
     isLoading.value = false
 }
 
-const updateFilterParam = debounce((param, value) => {
-    filterParams[param] = value
-    fetchCategoryItems()
-}, 500)
-
 const { scrollComponent } = useInfinityScroll({
     fetchData: fetchCategoryItems,
     fetchNextPage: loadMore,
@@ -100,6 +99,14 @@ const { scrollComponent } = useInfinityScroll({
 
 const movieId = computed(() => +route.params.id)
 const movieType = computed(() => route.params.type)
+
+const getMovieFilters = async () => {
+    isLoadingFilters.value = true
+
+    await store.fetchMovieFilters()
+
+    isLoadingFilters.value = false
+}
 
 const genres = computed(() => {
     return genresMovie.value.map((item) => {
@@ -132,7 +139,11 @@ const currentGenre = computed(() => {
     return genre || getCurrentGenre() || ''
 })
 
-watch(() => movieType.value, fetchCategoryItems, { immediate: true })
+const debouncedFetch = debounce(fetchCategoryItems, 500)
+
+watch(filterParams, () => debouncedFetch())
+
+onMounted(async () => await getMovieFilters())
 </script>
 
 <template>
@@ -143,18 +154,16 @@ watch(() => movieType.value, fetchCategoryItems, { immediate: true })
 	>
 		<template #content>
 			<MovieFilter 
-				:genres="genresMovie"
+				:genres="genres"
+				:countries="countriesMovie"
+				:is-loading-filters="isLoadingFilters"
+				v-model:selected-country="filterParams.countries"
 				v-model:selected-genre="filterParams.genres"
 				v-model:order="filterParams.order"
 				v-model:year-from="filterParams.yearFrom"
 				v-model:year-to="filterParams.yearTo"
 				v-model:rating-from="filterParams.ratingFrom"
 				v-model:rating-to="filterParams.ratingTo"
-				@update:year-from="updateFilterParam('yearFrom', $event)"
-				@update:year-to="updateFilterParam('yearTo', $event)" 
-				@update:rating-fromo="updateFilterParam('ratingFrom', $event)" 
-				@update:rating-to="updateFilterParam('ratingTo', $event)" 
-				@update:order="updateFilterParam('order', $event)"
 			/>
 
 			<MovieLists

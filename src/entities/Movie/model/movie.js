@@ -17,6 +17,7 @@ export const useMovieStore = defineStore('movie', () => {
     const seasons = ref([])
     const trailers = ref([])
     const genresMovie = ref([])
+    const countriesMovie = ref([])
     const selectedMovieDetails = ref(null)
     const state = reactive({
         categories: {},
@@ -55,15 +56,15 @@ export const useMovieStore = defineStore('movie', () => {
         }
     }
 
-    const fetchCategoryData = async (category, page = 1, genres, ratingFrom, ratingTo, yearFrom, yearTo, order) => {
+    const fetchCategoryData = async (category, page = 1, genres, countries,ratingFrom, ratingTo, yearFrom, yearTo, order) => {
         await fetchData('categories', category, page, (category, page) => 
-            Api.getCategories(category, page, genres, ratingFrom, ratingTo, yearFrom, yearTo, order)
+            Api.getCategories(category, page, genres, countries, ratingFrom, ratingTo, yearFrom, yearTo, order)
 		  )
     }
 	
-    const fetchCategoryNextPage = async (category, genres, ratingFrom, ratingTo, yearFrom, yearTo, order) => {
+    const fetchCategoryNextPage = async (category, genres, countries, ratingFrom, ratingTo, yearFrom, yearTo, order) => {
         await fetchNextPage('categories', category, (category, page) => 
-		  Api.getCategories(category, page, genres, ratingFrom, ratingTo, yearFrom, yearTo, order)
+		  Api.getCategories(category, page, genres, countries, ratingFrom, ratingTo, yearFrom, yearTo, order)
         )
     }
 	
@@ -104,9 +105,10 @@ export const useMovieStore = defineStore('movie', () => {
     }
 
     const fetchMovieFilters = async () => {
-        const { genres } = await Api.getMovieFilters()
+        const { genres, countries } = await Api.getMovieFilters()
 
         genresMovie.value = genres.filter(genre => genre.id <= 24)
+        countriesMovie.value = countries.filter(country => country.id <= 75)
     }
 
     return {
@@ -114,6 +116,7 @@ export const useMovieStore = defineStore('movie', () => {
         seasons,
         trailers,
         genresMovie,
+        countriesMovie,
         state,
         fetchMovieFilters,
         fetchCategoryData,

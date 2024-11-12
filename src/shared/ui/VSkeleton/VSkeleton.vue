@@ -1,62 +1,41 @@
 <script setup>
 const props = defineProps({
-    count: {
-        type: [String, Number],
-        default: '',
-    },
-    maxWidth: {
-        type: [String, Number],
-        default: '',
-    },
-    minWidth: {
-        type: [String, Number],
-        default: '',
-    },
-    height: {
-        type: [String, Number],
-        default: '',
-    },
-    radius: {
-        type: [String, Number],
-        default: '',
-    },
-    gap: {
-        type: [String, Number],
-        default: '',
-    },
-    column: {
-        type: Boolean,
-        default: false
-    },
-    skeletonWidth: {
-        type: [String, Number],
-        default: '',
+    config: {
+        type: Object,
+        default: () => ({
+            count: '',
+            column: false,
+            container: {
+                maxWidth: '',
+                gap: ''
+            },
+            item: {
+                height: '',
+                maxWidth: '',
+                minWidth: '',
+                radius: ''
+            }
+        })
     }
 })
 
-const skeletonCount = Math.max(0, Math.ceil(Number(props.count)))
+const skeletonCount = Math.max(0, Math.ceil(Number(props.config.count)))
 const skeletons = Array(skeletonCount).fill(null)
 </script>
 
 <template>
 	<span 
 		class="v-skeleton-loading"
-		:style="{
-			'max-width': props.skeletonWidth,
-			'gap': props.gap,
-		}"
+		:style="config.container"
 		:class="{
-			'v-skeleton-loading__column': props.column
+			'v-skeleton-loading__column': config.column
 		}" 
 	>
 		<span
 			v-for="skeleton in skeletons"
 			:key="skeleton"
 			:style="{
-				'height': props.height, 
-				'max-width': props.maxWidth,
-				'min-width': props.minWidth,
-				'border-radius': props.radius,
+ 				...config.item,
 				'width': '100%',
 			}" 
 			class="v-skeleton-loading--chunk v-skeleton-loading__wave"

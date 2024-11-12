@@ -1,5 +1,5 @@
 .v-selector {
-	--color-label: #fff;
+	--color-label: var(--color-palette-white-base);
 }
 
 .multiselect-range {
@@ -33,7 +33,7 @@
     width: fit-content;
 }
 
-.v-selector .multiselect.range .multiselect__dropdown {
+.v-selector .multiselect.range .multiselect-dropdown {
     width: 470px;
 }
 
@@ -91,7 +91,7 @@
     transform: rotate(180deg)
 }
 
-.multiselect__wrapper {
+.multiselect-wrapper {
 	align-items: center;
     box-sizing: border-box;
     cursor: pointer;
@@ -123,7 +123,7 @@
     white-space: nowrap;
 }
 
-.v-selector .multiselect__dropdown {
+.v-selector .multiselect-dropdown {
 	background: var(--color-palette-black-30);
     border: none;
     border-radius: 16px;
@@ -138,7 +138,7 @@
     width: max-content;
 }
 
-.multiselect__dropdown {
+.multiselect-dropdown {
 	-webkit-overflow-scrolling: touch;
     background: var(--color-palette-white-base);
     border: 1px solid var(--color-palette-gray-6);
@@ -195,7 +195,7 @@
     width: 100%;
 }
 
-.v-selector .multiselect.single .multiselect__dropdown {
+.v-selector .multiselect.single .multiselect-dropdown {
     padding: 8px 0;
 }
 
@@ -212,6 +212,10 @@
 	color: var(--color-palette-green-10);
 }
 
+.v-selector .multiselect--right .multiselect-dropdown {
+    left: auto;
+}
+
 .v-selector .multiselect-before-list {
     background: #232323;
     color: var(--color-palette-white-base);
@@ -223,4 +227,34 @@
     padding: 16px 16px 4px;
     position: sticky;
     top: 0;
+}
+
+.v-selector .multiselect-divider {
+    background: #9d9d9d;
+    height: 1px;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.v-selector .multiselect-caret {
+    background: none;
+    color: var(--color-label);
+    height: unset;
+    margin: unset;
+    -webkit-mask-image: unset;
+    mask-image: unset;
+    position: unset;
+    width: unset;
+}
+
+.multiselect-caret {
+    background-color: #999;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin: 0 .875rem 0 0;
+    pointer-events: none;
+    position: relative;
+    transform: rotate(0deg);
+    transition: transform .3s;
+    z-index: 10;
 }
