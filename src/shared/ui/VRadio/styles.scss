@@ -4,10 +4,10 @@
 		cursor: pointer;
 		display: flex;
 		gap: 8px;
-	}
 
-	&.readonly {
-		pointer-events: none;
+		&.readonly {
+			pointer-events: none;
+		}
 	}
 }
 

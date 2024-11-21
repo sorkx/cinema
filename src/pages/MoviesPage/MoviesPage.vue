@@ -2,7 +2,6 @@
 import {
     computed,
     ref,
-    reactive,
     watch,
     onMounted,
 } from 'vue'
@@ -25,21 +24,21 @@ import {
     useInfinityScroll
 } from '@/shared/lib/use/useInfinityScroll'
 import {
-    CircleLoader,
-} from '@/shared/ui/loaders'
-import {
     MovieFilter,
 } from '@/features/Movies'
-import debounce from 'lodash.debounce'
 import {
     VWrapper,
 } from '@/shared/ui/VWrapper'
+import {
+    VButton,
+} from '@/shared/ui/VButton'
+import debounce from 'lodash.debounce'
 
 const route = useRoute()
 const store = movieModel()
 
+const childElement = ref(null)
 const currentResults = ref([])
-const isLoadingMore = ref(false)
 const isLoading = ref(true)
 const isLoadingFilters = ref(false)
 
@@ -60,9 +59,11 @@ const routeMapping = {
 }
 
 const contentType = computed(() => routeMapping[movieType.value])
+const movieId = computed(() => +route.params.id)
+const movieType = computed(() => route.params.type)
 
-const filterParams = reactive({
-    genres: +route.params.id || '',
+const filterParams = ref({
+    genres: movieId.value || '',
     countries: '',
     ratingFrom: '',
     ratingTo: '',
@@ -74,31 +75,26 @@ const filterParams = reactive({
 const loadMore = async () => {
     if (isLoading.value) return
 
-    isLoadingMore.value = true
-
-    await store.fetchCategoryNextPage(contentType.value, filterParams)
+    await store.fetchCategoryNextPage(contentType.value, filterParams.value)
     currentResults.value = state.value.categories[contentType.value]?.data
-
-    isLoadingMore.value = false
 }
 
 const fetchCategoryItems = async () => {
     isLoading.value = true
 
     currentResults.value = []
-    await store.fetchCategoryData(contentType.value, 1, filterParams)
+    await store.fetchCategoryData(contentType.value, 1, filterParams.value)
     currentResults.value = state.value.categories[contentType.value]?.data
 
     isLoading.value = false
 }
 
-const { scrollComponent } = useInfinityScroll({
+const { scrollComponent, isLoading: isLoadingMore } = useInfinityScroll({
     fetchData: fetchCategoryItems,
     fetchNextPage: loadMore,
 })
 
-const movieId = computed(() => +route.params.id)
-const movieType = computed(() => route.params.type)
+const resetFilters = () => childElement.value.resetFilters()
 
 const getMovieFilters = async () => {
     isLoadingFilters.value = true
@@ -118,30 +114,11 @@ const genres = computed(() => {
     })
 })
 
-const saveCurrentGenre = (genreName) => {
-    localStorage.setItem('currentGenre', genreName)
-}
-
-const getCurrentGenre = () => {
-    return localStorage.getItem('currentGenre')
-}
-
-const currentGenre = computed(() => {
-    if (contentType.value) {
-        return formattedTitle[contentType.value]
-    }
-    
-    const genre = genres.value.find(g => g.id === movieId.value)?.genre
-
-    if (genre) {
-        saveCurrentGenre(genre)
-    }
-    return genre || getCurrentGenre() || ''
-})
+const currentGenre = computed(() => genres.value.find(g => g.id === movieId.value)?.genre || formattedTitle[contentType.value])
 
 const debouncedFetch = debounce(fetchCategoryItems, 500)
 
-watch(filterParams, () => debouncedFetch())
+watch(filterParams, () => debouncedFetch(), { deep: true })
 
 onMounted(async () => await getMovieFilters())
 </script>
@@ -153,7 +130,8 @@ onMounted(async () => await getMovieFilters())
 		class="offset"
 	>
 		<template #content>
-			<MovieFilter 
+			<MovieFilter
+				ref="childElement" 
 				:genres="genres"
 				:countries="countriesMovie"
 				:is-loading-filters="isLoadingFilters"
@@ -167,12 +145,23 @@ onMounted(async () => await getMovieFilters())
 			/>
 
 			<MovieLists
-				v-if="currentResults.length > 0"
 				:movies="currentResults"
 				hidden="true"
-			/>
-
-			<CircleLoader v-if="isLoadingMore || isLoading" />
+				:empty="currentResults.length === 0"
+				:loading="isLoadingMore || isLoading"
+			>
+				<template #button>
+					<VButton
+						data-size="large"
+						data-appearance="fill"
+						class="empty-block__button"
+						modificator="color-main"
+						@click="resetFilters"
+					>
+						Сбросить фильтры
+					</VButton>
+				</template>
+			</MovieLists>
 
 			<div ref="scrollComponent" />
 		</template>

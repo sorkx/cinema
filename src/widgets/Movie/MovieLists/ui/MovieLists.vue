@@ -3,14 +3,11 @@ import {
     MovieCard,
 } from '@/entities/Movie'
 import {
-    VButton,
-} from '@/shared/ui/VButton'
-import {
-    ROUTE_NAMES,
-} from '@/shared/lib/constants'
-import {
     useModal
 } from '@/shared/lib/use/useModal'
+import {
+    CircleLoader,
+} from '@/shared/ui/loaders'
 
 const modal = useModal()
 
@@ -23,10 +20,6 @@ const props = defineProps({
         type: String,
         default: '',
     },
-    loading: {
-        type: Boolean,
-        default: false,
-    },
     hidden: {
         type: String,
     },
@@ -38,12 +31,16 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    loading: {
+        type: Boolean,
+        default: false
+    }
 })
 </script>
 
 <template>
 	<div
-		v-if="props.movies.length && props.movies" 
+		v-show="props.movies && !props.loading"
 		class="infinite-container"
 		:class="{ 'disabled-backdrop': props.backdrop }"
 	>
@@ -61,28 +58,18 @@ const props = defineProps({
 			@click="modal.close()"
 		/>
 	</div>
+	
+	<CircleLoader v-if="props.loading" />
 
 	<div 
-		v-if="!props.movies.length && props.empty"
+		v-if="props.empty && !props.loading"
 		class="infinite-container__empty"
 	>
 		<div class="empty-block">
 			<div class="empty-block__header">
 				Поиск не дал результата
 			</div>
-			<router-link
-				class="empty-block__link" 
-				:to="{ name: ROUTE_NAMES.BROWSE }"
-			>
-				<VButton 
-					data-size="large"
-					data-appearance="fill"
-					class="empty-block__button"
-					modificator="color-main"
-				>
-					Перейти в каталог
-				</VButton>
-			</router-link>
+			<slot name="button" />
 		</div>
 	</div>
 </template>

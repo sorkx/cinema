@@ -1,16 +1,9 @@
 <script setup>
 import {
     computed,
-    ref,
     watch,
-    inject,
+    ref,
 } from 'vue'
-// import {
-//     VButton
-// } from '@/shared/ui/VButton'
-// import {
-//     UISymbol,
-// } from '@/shared/ui/UISymbol'
 import {
     Sidebar,
 } from '@/shared/ui/Sidebar'
@@ -73,6 +66,8 @@ const props = defineProps({
     },
 })
 
+const childElements = ref([])
+
 const genreValue = defineModel('selectedGenre', { default: '' })
 const countriesValue = defineModel('selectedCountry', { default: '' })
 const yearFromValue = defineModel('yearFrom', { default: '' })
@@ -113,11 +108,21 @@ const sidebarItems = computed(() => [
 const visibleFilters = computed(() => route.params.type !== 'genre')
 
 const resetFilters = () => {
-    yearFromValue.value = 1925
-    yearToValue.value = new Date().getFullYear()
-    ratingFromValue.value = 0
-    ratingToValue.value = 10
+    sortValue.value = ''
+    countriesValue.value = ''
+	
+    if (route.params.type !== 'genre') {
+        genreValue.value = ''
+    }
+
+    childElements.value.forEach(element => {
+        element?.clearData()
+    })
 }
+
+defineExpose({
+    resetFilters
+})
 
 watch(sidebarOpen, async (newVal) => {
     if (newVal) {
@@ -189,13 +194,14 @@ watch(sidebarOpen, async (newVal) => {
 					v-model:selected-value="countriesValue"
 				/>
 				<VSelect
-					v-for="item in sidebarItems"
+					v-for="(item, index) in sidebarItems"
+					:ref="el => childElements[index] = el"
 					:key="item.title"
 					:step="item.step"
 					:title="item.title"
 					:select-type="item.type"
 					:min="item.min"
-					:max="item.max" 
+					:max="item.max"
 					@update:min="item.updateFrom"
 					@update:max="item.updateTo"
 					class="multiselect--left" 

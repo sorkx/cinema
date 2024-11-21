@@ -1,5 +1,10 @@
 <script setup>
 import {
+    computed,
+    onMounted,
+    ref,
+} from 'vue'
+import {
     RouletteSlider,
 } from '@/shared/ui/RouletteSlider'
 import{
@@ -8,19 +13,31 @@ import{
 import {
     MovieLists,
 } from '@/widgets/Movie/MovieLists'
-import {
-    SpinnerLoader,
-} from '@/shared/ui/loaders'
-import {
-    computed,
-    onMounted,
-    ref,
-} from 'vue'
 
 const props = defineProps({
-    person: {
-        type: [Object, Array],
-        default: () => ({})
+    films: {
+        type: Array,
+        default: () => [],
+    },
+    nameEn: {
+        type: String,
+        default: '',
+    },
+    nameRu: {
+        type: String,
+        default: '',
+    },
+    webUrl: {
+        type: String,
+        default: '',
+    },
+    profession: {
+        type: String,
+        default: '',
+    },
+    posterUrl: {
+        type: String,
+        default: '',
     },
     loading: {
         type: Boolean,
@@ -32,22 +49,25 @@ const professionMapping ={
     'ACTOR': 'Актер',
     'ACTRESS': 'Актриса',
     'HIMSELF': 'Сам себя',
-    'PRODUCER': 'Продюсер',
-    'WRITER': 'Сценарист',
+    'HERSELF': 'Сама себя',
     'VOICE_MALE': 'Мужской голос',
     'VOICE_FEMALE': 'Женский голос',
-    'DIRECTOR': 'Режиссер',
     'HRONO_TITR_MALE': 'Указан в титрах',
+    'HRONO_TITR_FEMALE': 'Указана в титрах',
+    'PRODUCER': 'Продюсер',
+    'WRITER': 'Сценарист',
+    'EDITOR': 'Редактор',
+    'DIRECTOR': 'Режиссер',
 }
 
 const currentFilter = ref('')
 
 const filters = computed(() => {
-    if (!Array.isArray(props.person.films)) {
+    if (!Array.isArray(props.films)) {
         return []
     }
 
-    const professionMap = props.person.films.reduce((acc, film) => {
+    const professionMap = props.films.reduce((acc, film) => {
         const key = film.professionKey || 'UNKNOWN'
         acc[key] = (acc[key] || 0) + 1
         return acc
@@ -60,61 +80,71 @@ const filters = computed(() => {
     }))
 })
 
-const setFilter = (key) => {
-    currentFilter.value = key
-}
+const setFilter = (key) => currentFilter.value = key
 
 const filteredFilms = computed(() => {
-    return props.person.films.filter(film => film.professionKey === currentFilter.value)
+    if (!props.films) {
+        return []
+    }
+
+    return props.films.filter(film => film.professionKey === currentFilter.value)
+})
+
+defineOptions({
+    inheritAttrs: false
 })
 
 onMounted(() => setFilter('ACTOR'))
 </script>
 
 <template>
-	<SpinnerLoader v-if="props.loading" />
-
-	<div 
-		v-else
+	<div
 		class="person full-width"
 	>
-		<div class="person__header">
+		<div
+			v-if="!props.loading" 
+			class="person__header"
+		>
 			<div class="person__image">
-				<img 
-					:src="props.person?.posterUrl" 
-					:alt="props.person?.nameEn || props.person?.nameRu"
+				<img
+					:src="posterUrl"
+					:alt="props.nameEn || props.nameRu"
 					class="person__image"
 					loading="eager"
+					transition="fade"
+					transitionall="true"
 				/>
 			</div>
 			<div class="person__title">
 				<a 
-					:href="props.person?.webUrl" 
+					:href="props.webUrl" 
 					target="_blank"
 				>
 					<h2>
-						{{ props.person?.nameEn || props.person?.nameRu }}
+						{{ props.nameEn || props.nameRu }}
 					</h2>
 				</a>
 				<span>
-					{{ props.person?.profession }}
+					{{ props.profession }}
 				</span>
 			</div>
 		</div>
-		<div class="person__filters">
-			<RouletteSlider :items="filters">
-				<template #slide="{ item }">
-					<VButton
-						:key="item.professionKey"
-						:modificator="currentFilter === item.professionKey ? 'color-main' : 'color-gray'"
-						data-size="normal"
-						data-appearance="fill"
-						@click="setFilter(item.professionKey)"
-					>
-						{{ professionMapping[item.professionKey] }}
-					</VButton>
-				</template>
-			</RouletteSlider>
+		<div>
+			<div class="person__filters">
+				<RouletteSlider :items="filters">
+					<template #slide="{ item }">
+						<VButton
+							:key="item.professionKey"
+							:modificator="currentFilter === item.professionKey ? 'color-main' : 'color-gray'"
+							data-size="normal"
+							data-appearance="fill"
+							@click="setFilter(item.professionKey)"
+						>
+							{{ professionMapping[item.professionKey] }}
+						</VButton>
+					</template>
+				</RouletteSlider>
+			</div>
 		</div>
 		<div class="person__movies">
 			<MovieLists 

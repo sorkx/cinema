@@ -40,7 +40,7 @@ onBeforeMount(async () => {
 
 <template>
 	<StaffDetails 
-		:person="person"
+		v-bind="person"
 		:loading="loading"
 	/>
 </template>

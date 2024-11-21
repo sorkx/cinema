@@ -17,6 +17,7 @@
 		"@vueuse/components": "^11.1.0",
 		"@vueuse/core": "11.1.0",
 		"lodash.debounce": "4.0.8",
+		"lodash.throttle": "^4.1.1",
 		"nprogress": "0.2.0",
 		"pinia": "2.1.7",
 		"sass": "1.79.3",

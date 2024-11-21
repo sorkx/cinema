@@ -2,6 +2,7 @@
 import {
     watch,
     onBeforeUnmount,
+    computed,
     ref,
 } from 'vue'
 import {
@@ -17,12 +18,24 @@ import {
     MovieLists,
 } from '@/widgets/Movie'
 import {
-    CircleLoader,
-} from '@/shared/ui/loaders'
+    ROUTE_NAMES,
+} from '@/shared/lib/constants'
+import {
+    VButton,
+} from '@/shared/ui/VButton'
 import {
     useInfinityScroll
 } from '@/shared/lib/use/useInfinityScroll'
+import {
+    CircleLoader,
+} from '@/shared/ui/loaders'
+import {
+    useModal
+} from '@/shared/lib/use/useModal'
 import debounce from 'lodash.debounce'
+
+const modal = useModal()
+const searchStore = searchModel()
 
 const props = defineProps({
     focusOnMounted: {
@@ -30,17 +43,15 @@ const props = defineProps({
     }
 })
 
-const searchStore = searchModel()
-
 const {
     keywordMovies,
     currentPage,
     searchMovies,
     searchCount,
-    isLoading,
+    searchMoviesResult,
+    isLoading: storeLoading,
 } = storeToRefs(searchStore)
 
-const loading = ref(false)
 const searchPerformed = ref(false)
 
 const emit = defineEmits(['close'])
@@ -51,40 +62,41 @@ const closeSearch = () => {
     searchPerformed.value = false
 }
 
-const debouncedFetch = debounce(async (key) => {
+const visibleEmptyElement = computed(() => !storeLoading.value && searchMoviesResult.value === 0 && searchPerformed.value)
+
+const debouncedFetch = debounce(async () => {
     try {
-        await searchStore.fetchKeywordMovie(key, 1)
+        await searchStore.fetchKeywordMovie(1)
         searchPerformed.value = true
-    } finally {
-        loading.value = false
+    } catch(error) {
+        console.error(error)
     }
 }, 1000)
 
 const fetchMovies = async () => {
-    if (!isLoading.value && currentPage.value < searchCount.value) {
-        loading.value = true
+    if (currentPage.value < searchCount.value) {
         try {
-            await searchStore.fetchKeywordMovie(keywordMovies.value, currentPage.value)
-        } finally {
-            loading.value = false
+            await searchStore.fetchKeywordMovie(currentPage.value)
+        } catch(error) {
+            console.error(error)
         }
     }
 }
 
-const fetchNextPage = async () => await searchStore.fetchNextPageMovies(keywordMovies.value)
+const fetchNextPage = async () => await searchStore.fetchNextPageMovies()
 
-const { scrollComponent } = useInfinityScroll({
+const { scrollComponent, isLoading: isLoadingMore } = useInfinityScroll({
     fetchData: fetchMovies,
     fetchNextPage: fetchNextPage,
 })
 
 watch(keywordMovies, (newKeyword) => {
     if (newKeyword) {
-        loading.value = true
-        debouncedFetch(newKeyword)
+        storeLoading.value = true
+        debouncedFetch()
     } else {
         debouncedFetch.cancel()
-        loading.value = false
+        storeLoading.value = false
         searchPerformed.value = false
         searchStore.resetSearch()
     }
@@ -102,17 +114,29 @@ onBeforeUnmount(() => {
 		v-model="keywordMovies" 
 		@close="closeSearch"
 	>
-		<CircleLoader v-if="loading" />
 
 		<MovieLists
-			v-else
 			:movies="searchMovies"
-			:key="searchMovies.length"
-			:empty="searchPerformed"
+			:empty="visibleEmptyElement"
 			:backdrop="true"
-		/>
+			:loading="storeLoading && !isLoadingMore"
+		>
+			<template #button>
+				<VButton
+					tag="router-link"
+					:to="{ name: ROUTE_NAMES.BROWSE }" 
+					data-size="large"
+					data-appearance="fill"
+					class="empty-block__button"
+					modificator="color-main"
+					@click="modal.close()"
+				>
+					Перейти в каталог
+				</VButton>
+			</template>	
+		</MovieLists>
 
-		<CircleLoader v-if="isLoading && !loading" />
+		<CircleLoader v-if="isLoadingMore" />
 
 		<div ref="scrollComponent" />
 	</SearchInput>

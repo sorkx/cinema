@@ -26,7 +26,6 @@ import {
 
 const store = movieModel()
 
-const isLoadingMore = ref(false)
 const isLoading = ref(true)
 
 const { 
@@ -44,14 +43,10 @@ const fetchDataPopularItems = async () => {
 const fetchNextPage = async () => {
     if (isLoading.value) return
 
-    isLoadingMore.value = true
-
     await store.fetchCollectionNextPage(CINEMA_NAMES.TOP_POPULAR_ALL)
-
-    isLoadingMore.value = false
 }
 
-const { scrollComponent } = useInfinityScroll({
+const { scrollComponent, isLoading: isLoadingMore } = useInfinityScroll({
     fetchData: fetchDataPopularItems,
     fetchNextPage: fetchNextPage,
 })
@@ -66,10 +61,11 @@ const { scrollComponent } = useInfinityScroll({
 		<template #content>
 			<MovieLists
 				:movies="state?.collections.TOP_POPULAR_ALL?.data"
+				:loading="isLoading && !isLoadingMore"
 			/>
 
 			<CircleLoader v-if="isLoadingMore" />
-
+			
 			<div ref="scrollComponent" />
 		</template>
 	</VWrapper>

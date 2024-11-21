@@ -59,6 +59,7 @@ onBeforeMount(async () => {
 		<template #content>
 			<MovieLists
 				:movies="similars"
+				:loading="isLoading"
 			/>
 		</template>
 	</VWrapper>

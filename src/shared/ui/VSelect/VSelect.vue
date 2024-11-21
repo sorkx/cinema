@@ -109,9 +109,11 @@ const clearData = () => {
     resetKey.value++
 }
 
-const displayOptions = computed(() => {
-    return Object.values(orderFormatted)
+defineExpose({
+    clearData
 })
+
+const displayOptions = computed(() => Object.values(orderFormatted))
 
 const selectOption = (option) => {
     const key = Object.keys(orderFormatted).find(k => orderFormatted[k] === option)
@@ -137,6 +139,10 @@ const selectedType = computed(() => {
         return 'single'
     }
 })
+
+defineOptions({
+    inheritAttrs: false
+})
 </script>
 
 <template>
@@ -159,8 +165,6 @@ const selectedType = computed(() => {
 			<div 
 				class="multiselect-wrapper"
 				tabindex="0"
-				role="combobox"
-				aria-multiselectable="true"
 			>
 				<template v-if="props.selectType === 'single'">
 					<div
@@ -200,32 +204,26 @@ const selectedType = computed(() => {
 					</div>
 				</template>	
 				<template v-if="props.selectType === 'radio'">
-					<div 
-						class="multiselect-wrapper"
-						tabindex="0"
-						role="combobox"
+					<div
+						class="multiselect-placeholder"
 					>
-						<div
-							class="multiselect-placeholder"
-						>
-							{{ displayLabel }}
-						</div>
-						<div class="multiselect-caret">
-							<UISymbol 
-								name="chevron" 
-								class="multiselect-icon"
-							/>
-						</div>
-						<div
-							@click="selectedModelValue = null"
-							v-if="selectedItemName" 
-							class="multiselect-clear"
-						>
-							<UISymbol 
-								name="cross" 
-								class="multiselect-icon"
-							/>
-						</div>
+						{{ displayLabel }}
+					</div>
+					<div class="multiselect-caret">
+						<UISymbol 
+							name="chevron" 
+							class="multiselect-icon"
+						/>
+					</div>
+					<div
+						@click="selectedModelValue = null"
+						v-if="selectedItemName" 
+						class="multiselect-clear"
+					>
+						<UISymbol 
+							name="cross" 
+							class="multiselect-icon"
+						/>
 					</div>
 				</template>
 			</div>
@@ -286,7 +284,6 @@ const selectedType = computed(() => {
 					</div>
 					<ul
 						v-if="selectType === 'radio'"
-						role="listbox"
 						class="multiselect-options"
 					>
 						<li

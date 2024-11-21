@@ -2,10 +2,6 @@
 	--color-label: var(--color-palette-white-base);
 }
 
-.multiselect-range {
-	padding: 24px;
-}
-
 .multiselect {
 	align-items: center;
     background: var(--color-palette-white-base);
@@ -21,6 +17,98 @@
     outline: none;
     position: relative;
     width: 100%;
+
+	&-wrapper {
+		align-items: center;
+		box-sizing: border-box;
+		cursor: pointer;
+		display: flex;
+		justify-content: flex-end;
+		margin: 0 auto;
+		min-height: calc(1px * 2 + 1rem * 1.375 + .5rem * 2);
+		outline: none;
+		position: relative;
+		width: 100%;
+	}
+
+	&-range {
+		padding: 24px;
+	}
+
+	&-icon {
+		display: block;
+		width: 24px;
+		height: 24px;
+		fill: none;
+	}
+
+	&-clear {
+		display: flex;
+		flex-grow: 0;
+		flex-shrink: 0;
+		opacity: 1;
+		position: relative;
+		z-index: 10;
+	}
+
+	&-dropdown {
+		-webkit-overflow-scrolling: touch;
+		background: var(--color-palette-white-base);
+		border: 1px solid var(--color-palette-gray-6);
+		border-radius: 0 0 4px 4px;
+		bottom: 0;
+		display: flex;
+		flex-direction: column;
+		left: calc(1px * -1);
+		margin-top: calc(1px * -1);
+		max-height: 10rem;
+		outline: none;
+		overflow-y: scroll;
+		position: absolute;
+		right: calc(1px * -1);
+		transform: translateY(100%);
+		z-index: 100;
+	}
+
+	&-options {
+		display: flex;
+		flex-direction: column;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	&-option {
+		align-items: center;
+		box-sizing: border-box;
+		cursor: pointer;
+		display: flex;
+		font-size: 1rem;
+		justify-content: flex-start;
+		line-height: 1.375;
+		padding: .5rem .75rem;
+		text-align: left;
+		text-decoration: none;
+	}
+
+	&-caret {
+		background-color: #999;
+		flex-grow: 0;
+		flex-shrink: 0;
+		margin: 0 .875rem 0 0;
+		pointer-events: none;
+		position: relative;
+		transform: rotate(0deg);
+		transition: transform .3s;
+		z-index: 10;
+	}
+}
+
+.v-selector .multiselect-wrapper {
+	display: flex;
+    gap: 8px;
+    min-height: auto;
+	padding: 12px 0;
 }
 
 .v-selector .multiselect {
@@ -28,35 +116,12 @@
     border: none;
     border-radius: 32px;
     box-shadow: none;
-    padding: 12px 0;
     width: -moz-fit-content;
     width: fit-content;
 }
 
 .v-selector .multiselect.range .multiselect-dropdown {
     width: 470px;
-}
-
-.v-selector .multiselect__wrapper {
-	display: flex;
-    gap: 8px;
-    min-height: auto;
-}
-
-.multiselect-icon {
-	display: block;
-    width: 24px;
-    height: 24px;
-	fill: none;
-}
-
-.multiselect-clear {
-	display: flex;
-    flex-grow: 0;
-    flex-shrink: 0;
-    opacity: 1;
-    position: relative;
-    z-index: 10;
 }
 
 .v-selector .multiselect-clear {
@@ -91,19 +156,6 @@
     transform: rotate(180deg)
 }
 
-.multiselect-wrapper {
-	align-items: center;
-    box-sizing: border-box;
-    cursor: pointer;
-    display: flex;
-    justify-content: flex-end;
-    margin: 0 auto;
-    min-height: calc(1px * 2 + 1rem * 1.375 + .5rem * 2);
-    outline: none;
-    position: relative;
-    width: 100%;
-}
-
 .v-selector .multiselect-label.single {
     gap: 8px;
     line-height: 24px;
@@ -136,46 +188,6 @@
    	transform: translateY(calc(100% + 8px));
     width: -moz-max-content;
     width: max-content;
-}
-
-.multiselect-dropdown {
-	-webkit-overflow-scrolling: touch;
-    background: var(--color-palette-white-base);
-    border: 1px solid var(--color-palette-gray-6);
-    border-radius: 0 0 4px 4px;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    left: calc(1px * -1);
-    margin-top: calc(1px * -1);
-    max-height: 10rem;
-    outline: none;
-    overflow-y: scroll;
-    position: absolute;
-    right: calc(1px * -1);
-    transform: translateY(100%);
-    z-index: 100;
-}
-
-.multiselect-options {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.multiselect-option {
-    align-items: center;
-    box-sizing: border-box;
-    cursor: pointer;
-    display: flex;
-    font-size: 1rem;
-    justify-content: flex-start;
-    line-height: 1.375;
-    padding: .5rem .75rem;
-    text-align: left;
-    text-decoration: none;
 }
 
 .v-selector .multiselect-option {
@@ -245,16 +257,4 @@
     mask-image: unset;
     position: unset;
     width: unset;
-}
-
-.multiselect-caret {
-    background-color: #999;
-    flex-grow: 0;
-    flex-shrink: 0;
-    margin: 0 .875rem 0 0;
-    pointer-events: none;
-    position: relative;
-    transform: rotate(0deg);
-    transition: transform .3s;
-    z-index: 10;
 }
