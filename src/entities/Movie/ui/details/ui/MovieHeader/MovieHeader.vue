@@ -20,6 +20,9 @@ import {
 import {
     VSkeleton,
 } from '@/shared/ui/VSkeleton'
+import {
+    MovieFavorites as AddToFavorites,
+} from '@/features/Movies/MovieFavorites'
 
 const { 
     closeModal, 
@@ -41,6 +44,10 @@ const props = defineProps({
     loading: {
         type: Boolean,
         default: false
+    },
+    id: {
+        type: [String, Number],
+        default: null,
     }
 })
 
@@ -214,11 +221,11 @@ const genres = computed(() => {
 					<div class="movie-header__filters">
 						<div class="movie-rating movie-rating--kp">
 							<UISymbol name="kp" />
-							{{ addedZeroRating(props.item?.ratingKinopoisk) }}
+							{{ addedZeroRating(props.item?.ratingKinopoisk) || '0.0' }}
 						</div>
 						<div class="movie-rating movie-rating--imdb">
 							<UISymbol name="imdb" />
-							{{ addedZeroRating(props.item?.ratingImdb) }}
+							{{ addedZeroRating(props.item?.ratingImdb) || '0.0' }}
 						</div>
 						<div class="movie-info-group">
 							<span>
@@ -274,14 +281,9 @@ const genres = computed(() => {
 						>
 							Трейлер
 						</VButton>
-						<VButton
-							data-appearance="outline"
-							data-size="large"
-							modificator="color-white rounded media-normal"
-							class="movie-favorite-button"
-						>
-							<UISymbol name="favorite" />
-						</VButton>
+						<AddToFavorites 
+							:movie="props.item"
+						/>
 					</div>
 					<TrailersModal
 						v-if="isOpen"
@@ -294,4 +296,4 @@ const genres = computed(() => {
 	</section>
 </template>
 
-<style src="./styles.scss" lang="scss" soped />
+<style src="./styles.scss" lang="scss" scoped />

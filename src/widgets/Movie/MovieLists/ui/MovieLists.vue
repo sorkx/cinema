@@ -8,6 +8,9 @@ import {
 import {
     CircleLoader,
 } from '@/shared/ui/loaders'
+import {
+    VEmptyBlock,
+} from '@/shared/ui/VEmptyBlock'
 
 const modal = useModal()
 
@@ -65,12 +68,10 @@ const props = defineProps({
 		v-if="props.empty && !props.loading"
 		class="infinite-container__empty"
 	>
-		<div class="empty-block">
-			<div class="empty-block__header">
-				Поиск не дал результата
-			</div>
-			<slot name="button" />
-		</div>
+		<VEmptyBlock 
+			title="Поиск не дал результата"
+			@click="modal.close()"
+		/>
 	</div>
 </template>
 

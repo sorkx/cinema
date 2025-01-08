@@ -18,23 +18,13 @@ import {
     MovieLists,
 } from '@/widgets/Movie'
 import {
-    ROUTE_NAMES,
-} from '@/shared/lib/constants'
-import {
-    VButton,
-} from '@/shared/ui/VButton'
-import {
     useInfinityScroll
 } from '@/shared/lib/use/useInfinityScroll'
 import {
     CircleLoader,
 } from '@/shared/ui/loaders'
-import {
-    useModal
-} from '@/shared/lib/use/useModal'
 import debounce from 'lodash.debounce'
 
-const modal = useModal()
 const searchStore = searchModel()
 
 const props = defineProps({
@@ -120,21 +110,7 @@ onBeforeUnmount(() => {
 			:empty="visibleEmptyElement"
 			:backdrop="true"
 			:loading="storeLoading && !isLoadingMore"
-		>
-			<template #button>
-				<VButton
-					tag="router-link"
-					:to="{ name: ROUTE_NAMES.BROWSE }" 
-					data-size="large"
-					data-appearance="fill"
-					class="empty-block__button"
-					modificator="color-main"
-					@click="modal.close()"
-				>
-					Перейти в каталог
-				</VButton>
-			</template>	
-		</MovieLists>
+		/>	
 
 		<CircleLoader v-if="isLoadingMore" />
 

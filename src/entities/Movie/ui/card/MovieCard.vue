@@ -8,6 +8,12 @@ import {
 import {
     VLoader,
 } from '@/shared/ui/VLoader'
+import {
+    UISymbol,
+} from '@/shared/ui/UISymbol'
+import {
+    favoritesModel,
+} from '@/entities/Favorites'
 
 const props = defineProps({
     nameRu: {
@@ -39,6 +45,8 @@ const props = defineProps({
         default: '',
     }
 })
+
+const favoriteStore = favoritesModel()
 
 const { 
     imageLoaded, 
@@ -83,6 +91,13 @@ const {
 			}"
 			class="movie-card__overlay"
 		/>
+			<button 
+				v-if="favoriteStore.isFavorite(props.kinopoiskId)"
+				@click="favoriteStore.removeFromFavorites(props.kinopoiskId)" 
+				class="movie-card__remove"
+			>
+				<UISymbol name="cross" />
+			</button>
 		<div class="movie-card__info">
 			<p class="movie-card__title">
 				{{ props.nameRu || props.nameOriginal }}

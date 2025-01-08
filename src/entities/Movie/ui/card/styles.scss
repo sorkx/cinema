@@ -15,6 +15,30 @@
 		filter: brightness(.8);
 	}
 
+	&__remove {
+		background: #0000008f;
+		border-radius: 12px;
+		height: -moz-fit-content;
+		height: fit-content;
+		justify-self: flex-end;
+		padding: 8px;
+		position: absolute;
+		right: 20px;
+		top: 20px;
+		transition: .3s;
+		width: -moz-fit-content;
+		width: fit-content;
+		z-index: 2;
+		border: none;
+
+		svg {
+			fill: var(--color-palette-white-base);
+			color: var(--color-palette-white-base);
+			width: 24px;
+			height: 24px;
+		}
+	}
+
 	&__image {
 		height: 100%;
 		-o-object-fit: cover;

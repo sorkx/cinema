@@ -47,6 +47,32 @@ img {
     max-width: 100%;
 }
 
+[role=button], button {
+    cursor: pointer;
+}
+
+button, select {
+    text-transform: none;
+}
+
+[type=button], button {
+	-webkit-appearance: button;
+    background-color: transparent;
+    background-image: none;
+}
+
+button {
+    color: inherit;
+    font-family: inherit;
+    font-feature-settings: inherit;
+    font-size: 100%;
+    font-variation-settings: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+}
+
 .sidebar-page {
 	overflow: hidden;
 }

@@ -1,0 +1,1 @@
+export { useFavoritesStore as favoritesModel } from './favorites'

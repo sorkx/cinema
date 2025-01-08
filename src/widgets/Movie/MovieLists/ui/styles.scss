@@ -33,31 +33,6 @@
 	}
 }
 
-.empty-block {
-	display: grid;
-    gap: 24px;
-    justify-content: center;
-    padding: 56px 0;
-
-	&__header {
-		color: var(--color-palette-white-base);
-		font-size: 18px;
-		font-weight: 400;
-		line-height: 28px;
-		text-align: center;
-	}
-
-	&__link {
-		display: grid;
-	}
-
-	&__button {
-		justify-self: center;
-		width: -moz-fit-content;
-		width: fit-content;
-	}
-}
-
 @media (max-width: 1280px) {
     .infinite-container {
         grid-column-gap: 24px;
