@@ -68,13 +68,50 @@ const props = defineProps({
 
 const childElements = ref([])
 
-const genreValue = defineModel('selectedGenre', { default: '' })
-const countriesValue = defineModel('selectedCountry', { default: '' })
-const yearFromValue = defineModel('yearFrom', { default: '' })
-const yearToValue = defineModel('yearTo', { default: '' })
-const ratingFromValue = defineModel('ratingFrom', { default: '' })
-const ratingToValue = defineModel('ratingTo', { default: '' })
-const sortValue = defineModel('order', { default: '' })
+const emit = defineEmits([
+    'update:selectedGenre',
+    'update:selectedCountry',
+    'update:yearFrom',
+    'update:yearTo',
+    'update:ratingFrom',
+    'update:ratingTo',
+    'update:order'
+])
+
+const genreValue = computed({
+    get: () => props.selectedGenre,
+    set: (value) => emit('update:selectedGenre', value)
+})
+
+const countriesValue = computed({
+    get: () => props.selectedCountry,
+    set: (value) => emit('update:selectedCountry', value)
+})
+
+const yearFromValue = computed({
+    get: () => props.yearFrom,
+    set: (value) => emit('update:yearFrom', value)
+})
+
+const yearToValue = computed({
+    get: () => props.yearTo,
+    set: (value) => emit('update:yearTo', value)
+})
+
+const ratingFromValue = computed({
+    get: () => props.ratingFrom,
+    set: (value) => emit('update:ratingFrom', value)
+})
+
+const ratingToValue = computed({
+    get: () => props.ratingTo,
+    set: (value) => emit('update:ratingTo', value)
+})
+
+const sortValue = computed({
+    get: () => props.order,
+    set: (value) => emit('update:order', value)
+})
 
 const sidebarItems = computed(() => [
     {

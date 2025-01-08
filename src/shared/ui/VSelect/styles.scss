@@ -106,18 +106,18 @@
 
 .v-selector .multiselect-wrapper {
 	display: flex;
-    gap: 8px;
-    min-height: auto;
+	gap: 8px;
+	min-height: auto;
 	padding: 12px 0;
 }
 
 .v-selector .multiselect {
 	background: transparent;
-    border: none;
-    border-radius: 32px;
-    box-shadow: none;
-    width: -moz-fit-content;
-    width: fit-content;
+	border: none;
+	border-radius: 32px;
+	box-shadow: none;
+	width: -moz-fit-content;
+	width: fit-content;
 }
 
 .v-selector .multiselect.range .multiselect-dropdown {
@@ -144,8 +144,11 @@
 
 .v-selector .multiselect.selected {
 	background-color: var(--color-palette-green-10);
-    padding: 12px 16px;
     --color-label: #0b0b0b;
+}
+
+.v-selector .multiselect.selected .multiselect-wrapper {
+    padding: 12px 16px;
 }
 
 .v-selector .multiselect.is-open:not(.v-selector .multiselect.selected) {
@@ -229,7 +232,7 @@
 }
 
 .v-selector .multiselect-before-list {
-    background: #232323;
+    background: var(--color-palette-black-10);
     color: var(--color-palette-white-base);
     display: grid;
     font-size: 18px;

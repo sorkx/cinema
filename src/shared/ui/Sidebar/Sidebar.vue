@@ -25,7 +25,7 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'reset'])
 
-const localItems = ref(props.items)
+const localItems = ref([...props.items])
 const filtersChanged = ref(false)
 
 const closeSidebar = () => {
