@@ -1,0 +1,9 @@
+.header-slider {
+	height: 100%;
+	position: relative;
+	--swiper-pagination-bottom: 40px;
+	--swiper-pagination-bullet-inactive-color: #fff;
+	--swiper-pagination-bullet-horizontal-gap: 8px;
+	--swiper-pagination-bullet-height: 4px;
+	transition: opacity .6s ease, transform .3s ease;
+}

@@ -43,6 +43,14 @@ const props = defineProps({
     posterUrlPreview: {
         type: String,
         default: '',
+    },
+    ratingKinopoisk: {
+        type: [String, Number],
+        default: '',
+    },
+    ratingImdb: {
+        type: [String, Number],
+        default: '',
     }
 })
 
@@ -99,9 +107,17 @@ const {
 				<UISymbol name="cross" />
 			</button>
 		<div class="movie-card__info">
-			<p class="movie-card__title">
-				{{ props.nameRu || props.nameOriginal }}
-			</p>
+			<div class="movie-card__info-row">
+				<div class="movie-card__rating">
+					{{ props.ratingKinopoisk || props.ratingImdb || '0.0' }}
+				</div>
+				<p class="movie-card__title">
+					{{ props.nameRu || props.nameOriginal }}
+				</p>
+			</div>
+			<span class="movie-card__status">
+				Кинопоиск
+			</span>
 		</div>
 	</div>
 </template>

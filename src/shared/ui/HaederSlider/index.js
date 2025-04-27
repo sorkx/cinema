@@ -1,1 +1,0 @@
-export { default as HaederSlider } from './HaederSlider.vue'

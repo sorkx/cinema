@@ -1,7 +1,7 @@
 .container {
     --padding-inline: 1rem;
     --padding-inline-full: 0rem;
-    --content-max-width: 1200px;
+    --content-max-width: 1340px;
     --breakout-max-width: 1440px;
     --breakout-size: calc((var(--breakout-max-width) - var(--content-max-width))/2);
     --calculated-width: calc(100% - var(--padding-inline)*2);

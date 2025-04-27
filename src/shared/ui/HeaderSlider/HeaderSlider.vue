@@ -6,7 +6,7 @@ import {
 
 <template>
 	<section class="home-slider breakout">
-
+		<VSwiper />
 	</section>
 </template>
 

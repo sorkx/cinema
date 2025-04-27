@@ -71,6 +71,8 @@ const props = defineProps({
 						:film-id="item.filmId"
 						:imdb-id="item.imdbId"
 						:kinopoisk-id="item.kinopoiskId"
+						:rating-kinopoisk="item.ratingKinopoisk"
+						:ratingImdb="item.ratingImdb"
 						:poster-url-preview="item.posterUrlPreview"
 					/>
 				</template>
