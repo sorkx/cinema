@@ -15,7 +15,7 @@
 		filter: brightness(.8);
 	}
 
-	&__status {
+	&__source {
 		font-size: var(--font-size-16_2);
     font-weight: 600;
     line-height: var(--font-lh-16_2);
@@ -124,7 +124,7 @@
 } 
 
 @media (max-width: 640px) {
-	.movie-card__status {
+	.movie-card__source {
 		font-size: var(--font-size-12_2);
 		line-height: 16px;
 	}

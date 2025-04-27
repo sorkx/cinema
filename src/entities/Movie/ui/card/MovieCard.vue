@@ -115,7 +115,7 @@ const {
 					{{ props.nameRu || props.nameOriginal }}
 				</p>
 			</div>
-			<span class="movie-card__status">
+			<span class="movie-card__source">
 				Кинопоиск
 			</span>
 		</div>
