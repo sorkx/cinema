@@ -8,7 +8,7 @@
 
 - **Routing**: [`vue-router`](https://router.vuejs.org/)
 - **Lint**: [`eslint`](https://eslint.org/), [`prettier`](https://prettier.io/)
-- **Architecture**: [`feature-sliced`](https://feature-sliced.design/)
+- **Architecture**: [`feature-sliced`](https://feature-sliced.github.io/documentation/ru/docs/get-started/overview)
 
 # Feature Sliced Design
 
