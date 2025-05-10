@@ -71,5 +71,12 @@ export const Api = {
         } catch(e) {
             console.error('Error fetching movie filters:', e)
         }
+    },
+    getMoviePremieres: async (month, year) => {
+        try {
+            return await fetchInstance(API_URL, '/premieres', { month, year })
+        } catch(e) {
+            console.error('Error fetching movie premieres:', e)
+        }
     }
 }

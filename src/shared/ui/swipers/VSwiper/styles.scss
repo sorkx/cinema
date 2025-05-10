@@ -1,5 +1,5 @@
 .v-swiper {
-	box-sizing: content-box;
+		box-sizing: content-box;
     display: flex;
     height: 100%;
     position: relative;
@@ -7,20 +7,47 @@
     z-index: 1;
 }
 
+.swiper-pagination {
+	position: absolute;
+	text-align: center;
+	transform: translateZ(0);
+	transition: opacity .3s;
+	z-index: 10;
+}
+
+.swiper-pagination-bullet {
+	background: #000;
+	border-radius: 50%;
+	display: inline-block;
+	height: 8px;
+	opacity: .2;
+	width: 8px;
+}
+
+.swiper-pagination-clickable .swiper-pagination-bullet {
+	cursor: pointer;
+}
+
+.swiper-horizontal>.swiper-pagination-bullets 
+.swiper-pagination-bullet, 
+.swiper-pagination-horizontal.swiper-pagination-bullets 
+.swiper-pagination-bullet {
+	margin: 0 4px;
+}
+
 .slider-control {
-	display: grid;
-    align-content: center;
-    justify-content: center;
-    place-content: center;
-    position: absolute;
-    width: 60px;
-    height: 100%;
-    z-index: 100;
-    top: 0;
+		align-items: center;
+		display: flex;
+		height: 90%;
+		position: absolute;
+		z-index: 2;
     cursor: pointer;
+		top: 0;
 
 	&.right {
-		right: 0;
+		justify-content: flex-end;
+    right: 0;
+    width: 100px;
 	}
 
 	&.left {

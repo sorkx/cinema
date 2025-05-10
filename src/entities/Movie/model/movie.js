@@ -18,6 +18,7 @@ export const useMovieStore = defineStore('movie', () => {
     const trailers = ref([])
     const genresMovie = ref([])
     const countriesMovie = ref([])
+    const premieres = ref([])
     const selectedMovieDetails = ref(null)
     const state = reactive({
         categories: {},
@@ -111,6 +112,12 @@ export const useMovieStore = defineStore('movie', () => {
         countriesMovie.value = countries.filter(country => country.id <= 75)
     }
 
+    const fetchMoviePremieres = async (month, year) => {
+        const { items } = await Api.getMoviePremieres(month, year)
+
+        premieres.value = items.slice(0, 10)
+    }
+
     return {
         similars,
         seasons,
@@ -118,6 +125,7 @@ export const useMovieStore = defineStore('movie', () => {
         genresMovie,
         countriesMovie,
         state,
+        premieres,
         fetchMovieFilters,
         fetchCategoryData,
         fetchCategoryNextPage,
@@ -128,6 +136,7 @@ export const useMovieStore = defineStore('movie', () => {
         fetchSerialSeasons,
         fetchMovieSimilars,
         fetchMovieDetails,
+        fetchMoviePremieres,
         selectedMovieDetails,
         // fetchAllCategories,
     }

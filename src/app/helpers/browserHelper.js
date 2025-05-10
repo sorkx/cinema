@@ -1,0 +1,1 @@
+export const isGeckoEngine = 'MozAppearance' in (document?.documentElement?.style || {})

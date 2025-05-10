@@ -1,5 +1,8 @@
 <script setup>
 import {
+    computed
+} from 'vue'
+import {
     ROUTE_NAMES,
 } from '@/shared/lib/constants'
 import { 
@@ -62,6 +65,26 @@ const {
     isLoading, 
     imageRef
 } = useImageLoader(props.posterUrlPreview)
+
+const modifiedRating = computed(() => {
+    let rating
+    
+    if (props.ratingKinopoisk) {
+        rating = props.ratingKinopoisk
+    } else if (props.ratingImdb) {
+        rating = props.ratingImdb
+    } else {
+        return 0
+    }
+
+    const isInteger = Number.isInteger(Number(rating))
+
+    if (isInteger) {
+        return `${rating}.0`
+    } else {
+        return String(rating)
+    }
+})
 </script>
 
 <template>
@@ -109,7 +132,7 @@ const {
 		<div class="movie-card__info">
 			<div class="movie-card__info-row">
 				<div class="movie-card__rating">
-					{{ props.ratingKinopoisk || props.ratingImdb || '0.0' }}
+					{{ modifiedRating }}
 				</div>
 				<p class="movie-card__title">
 					{{ props.nameRu || props.nameOriginal }}

@@ -29,16 +29,3 @@
 		height: 24px;
 	}
 }
-
-.slider-control {
-	display: grid;
-    align-content: center;
-    justify-content: center;
-    place-content: center;
-    position: absolute;
-    width: 60px;
-    height: 100%;
-    z-index: 100;
-    top: 0;
-    cursor: pointer;
-}

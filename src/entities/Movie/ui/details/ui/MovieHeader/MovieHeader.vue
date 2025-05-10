@@ -23,6 +23,12 @@ import {
 import {
     MovieFavorites as AddToFavorites,
 } from '@/features/Movies/MovieFavorites'
+import {
+    MovieRating
+} from '@/entities/Movie/ui/details/ui/MovieRating'
+import {
+    MovieInfoGroup
+} from '@/entities/Movie/ui/details/ui/MovieInfoGroup'
 
 const { 
     closeModal, 
@@ -219,35 +225,15 @@ const genres = computed(() => {
 						</div>
 					</div>
 					<div class="movie-header__filters">
-						<div class="movie-rating movie-rating--kp">
-							<UISymbol name="kp" />
-							{{ addedZeroRating(props.item?.ratingKinopoisk) || '0.0' }}
-						</div>
-						<div class="movie-rating movie-rating--imdb">
-							<UISymbol name="imdb" />
-							{{ addedZeroRating(props.item?.ratingImdb) || '0.0' }}
-						</div>
-						<div class="movie-info-group">
-							<span>
-								{{ props.item?.year }}
-							</span>
-							<div class="movie-info-group__divider"/>
-							<span>
-								{{ countries[0] }}
-							</span>
-							<div class="movie-info-group__divider"/>
-							<span>
-								{{ genres[0] }}
-							</span>
-							<div class="movie-info-group__divider"/>
-							<span>
-								{{ filmDuration }}
-							</span>
-							<div class="movie-info-group__divider"/>
-							<span>
-								{{ modificationAgeLimits }}
-							</span>
-						</div>
+						<MovieRating :rating="addedZeroRating(props.item?.ratingKinopoisk)" name="kp" />
+						<MovieRating :rating="addedZeroRating(props.item?.ratingImdb)" name="imdb" />
+						<MovieInfoGroup>
+							<span v-if="props.item?.year">{{ props.item?.year }}</span>
+							<span v-if="countries[0]">{{ countries[0] }}</span>
+							<span v-if="genres[0]">{{ genres[0] }}</span>
+							<span v-if="filmDuration">{{ filmDuration }}</span>
+							<span v-if="modificationAgeLimits">{{ modificationAgeLimits }}</span>
+						</MovieInfoGroup>
 					</div>
 					<div class="movie-header__description">
 						<UISymbol 

@@ -1,0 +1,1 @@
+export { default as MovieInfoGroup } from './MovieInfoGroup.vue'

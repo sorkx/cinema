@@ -11,7 +11,7 @@ import {
 </script>
 
 <template>
-	<!-- <HeaderSliderSection /> -->
+	<HeaderSliderSection />
 	<PopularSection style="margin-top: 60px"/>
 	<GenresSection 
 		title="Жанры"

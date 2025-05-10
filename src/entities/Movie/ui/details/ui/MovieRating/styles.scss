@@ -1,0 +1,49 @@
+.movie-rating {
+	align-items: center;
+	background: hsla(0, 0%, 100%, 0.161);
+	border-radius: 10px;
+	color: var(--color-palette-white-base);
+	display: flex;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 600;
+	gap: 8px;
+	height: 36px;
+	line-height: 20px;
+	padding: 0 11px;
+
+	&--imdb {
+		svg {
+			width: 32px;
+			height: 16px;
+		}
+	}
+
+	&--kp {
+		svg {
+			width: 16px;
+			height: 16px;
+		}
+	}
+
+	&[data-size='small'] {
+		font-size: var(--font-size-12);
+		svg {
+			height: 12px;
+		}
+	}
+}
+
+@media (max-width: 640px) {
+	.movie-rating {
+		border-radius: 8px;
+		font-size: 12px;
+		font-weight: 400;
+		gap: 4px;
+		height: 28px;
+
+		svg {
+			height: 12px;
+		}
+	}
+}
