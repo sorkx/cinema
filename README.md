@@ -20,4 +20,4 @@ Feature-Sliced Design (FSD) is an architectural methodology for scaffolding fron
 
 ![how fsd looks like](https://habrastorage.org/r/w1560/getpro/habr/upload_files/8c5/378/1d0/8c53781d0d87170c013d212e05365a62.png)
 
-[Official website](https://feature-sliced.design/docs/get-started/overview)
+[Official website](https://feature-sliced.github.io/documentation/ru/docs/get-started/overview)
