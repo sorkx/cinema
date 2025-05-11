@@ -57,8 +57,6 @@ const props = defineProps({
     }
 })
 
-const addedZeroRating = (rating) => Number.isInteger(rating) ? `${rating}.0` : rating
-
 const filmDuration = computed(() => {
     const totalMinutes = props.item?.filmLength
 
@@ -225,8 +223,8 @@ const genres = computed(() => {
 						</div>
 					</div>
 					<div class="movie-header__filters">
-						<MovieRating :rating="addedZeroRating(props.item?.ratingKinopoisk)" name="kp" />
-						<MovieRating :rating="addedZeroRating(props.item?.ratingImdb)" name="imdb" />
+						<MovieRating :rating="props.item?.ratingKinopoisk" name="kp" />
+						<MovieRating :rating="props.item?.ratingImdb" name="imdb" />
 						<MovieInfoGroup>
 							<span v-if="props.item?.year">{{ props.item?.year }}</span>
 							<span v-if="countries[0]">{{ countries[0] }}</span>

@@ -1,13 +1,14 @@
 <script setup>
 import {
-    ROUTE_NAMES,
-} from '@/shared/lib/constants'
-import {
     VButton,
 } from '@/shared/ui/VButton'
 
 const props = defineProps({
     title: {
+        type: String,
+        default: '',
+    },
+    name: {
         type: String,
         default: '',
     }
@@ -22,20 +23,23 @@ const onClick = () => {
 
 <template>
 	<div class="empty-block">
-		<h2 class="empty-block__header">
-			{{ props.title }}
-		</h2>
-		<VButton
-			tag="router-link"
-			:to="{ name: ROUTE_NAMES.BROWSE }" 
-			data-size="large"
-			data-appearance="fill"
-			class="empty-block__button"
-			modificator="color-main"
-			@click="onClick"
-		>
-			Перейти в каталог
-		</VButton>
+		<slot>
+			<h2 class="empty-block__header">
+				{{ props.title }}
+			</h2>
+			<slot name="button">
+				<VButton
+					tag="router-link"
+					data-size="large"
+					data-appearance="fill"
+					class="empty-block__button"
+					modificator="color-main"
+					@click="onClick"
+				>
+					{{ props.name }}
+				</VButton>
+			</slot>
+		</slot>
 	</div>
 </template>
 

@@ -1,0 +1,42 @@
+.movie-card-preview {
+	height: 100%;
+	position: relative;
+
+	&__image {
+		object-fit: cover;
+		height: 100%;
+		width: 100%;
+	}
+
+	&__rating {
+		position: absolute;
+		display: grid;
+		place-content: center;
+		top: 20px;
+		left: 20px;
+		border-radius: 23px;
+		background: rgba(0, 0, 0, 0.5);
+		height: 2rem;
+		padding: 0 1rem;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 24px;
+		color: var(--color-palette-white-base);
+		z-index: 20;
+	}
+
+	&__trailer {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		color: var(--color-palette-white-base);
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 24px;
+		z-index: 20;
+	}
+}

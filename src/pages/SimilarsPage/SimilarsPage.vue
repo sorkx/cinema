@@ -5,9 +5,6 @@ import {
     onBeforeMount,
 } from 'vue'
 import {
-    MovieLists,
-} from '@/widgets/Movie'
-import {
     storeToRefs,
 } from 'pinia'
 import { 
@@ -20,8 +17,11 @@ import {
     VWrapper,
 } from '@/shared/ui/VWrapper'
 import {
-    SpinnerLoader,
-} from '@/shared/ui/loaders'
+    VInfiniteScroll
+} from '@/shared/ui/VInfiniteScroll'
+import { 
+    MovieCard,
+} from '@/entities/Movie'
 
 const route = useRoute()
 
@@ -43,24 +43,36 @@ const fetchData = async () => {
     isLoading.value = false
 }
 
-onBeforeMount(async () => {
-    await fetchData()
-})
+onBeforeMount(async () => await fetchData())
 </script>
 
 <template>
-	<SpinnerLoader v-if="isLoading && !similars.length" />
-
 	<VWrapper 
 		title="Смотреть также"
 		:sub-header="true"
 		class="offset sub-header"
 	>
 		<template #content>
-			<MovieLists
-				:movies="similars"
-				:loading="isLoading"
-			/>
+			<VInfiniteScroll 
+				:pending="isLoading" 
+				:items="similars ?? []" 
+			>
+				<template #default="{ item }">
+					<MovieCard
+						:name-ru="item.nameRu"
+						:name-en="item.nameEn"
+						:name-original="item.nameOriginal"
+						:film-id="item.filmId"
+						:imdb-id="item.imdbId"
+						:kinopoisk-id="item.kinopoiskId"
+						:poster-url-preview="item.posterUrlPreview"
+						:rating-kinopoisk="item.ratingKinopoisk"
+						:rating-imdb="item.ratingImdb"
+						class="resize"
+						@click="modal.close()"
+					/>
+				</template>
+			</VInfiniteScroll>
 		</template>
 	</VWrapper>
 </template>

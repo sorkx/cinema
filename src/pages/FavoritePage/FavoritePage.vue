@@ -50,7 +50,11 @@ onMounted(() => favoriteStore.loadFavorites())
 						:film-id="item.filmId"
 						:imdb-id="item.imdbId"
 						:kinopoisk-id="item.kinopoiskId"
+						:rating-kinopoisk="item.ratingKinopoisk"
+						:rating-imdb="item.ratingImdb"
+						:rating-age-limits="item.ratingAgeLimits"
 						:poster-url-preview="item.posterUrlPreview"
+						remove-hover-popup
 					/>
 				</template>
 			</RouletteSlider>

@@ -8,7 +8,7 @@ import {
 } from 'swiper/modules'
 import {
     isGeckoEngine
-} from '@/app/helpers/browserHelper'
+} from '@/shared/lib/helpers/browserHelper'
 import {
     toRefs,
     reactive,

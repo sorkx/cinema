@@ -1,0 +1,1 @@
+export { default as MovieCardPreview } from './MovieCardPreview.vue'

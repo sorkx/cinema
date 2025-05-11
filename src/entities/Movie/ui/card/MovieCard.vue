@@ -17,6 +17,12 @@ import {
 import {
     favoritesModel,
 } from '@/entities/Favorites'
+import {
+    MovieCardHover
+} from '@/entities/Movie/ui/card/ui/MovieCardHover'
+import {
+    useHover
+} from '@/shared/lib/use/useHover'
 
 const props = defineProps({
     nameRu: {
@@ -54,6 +60,30 @@ const props = defineProps({
     ratingImdb: {
         type: [String, Number],
         default: '',
+    },
+    type: {
+        type: String,
+        default: '',
+    },
+    year: {
+        type: String,
+        default: '',
+    },
+    genres: {
+        type: Array,
+        default: () => [],
+    },
+    countries: {
+        type: Array,
+        default: () => [],
+    },
+    ratingAgeLimits: {
+        type: String,
+        default: '',
+    },
+    removeHoverPopup: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -80,15 +110,25 @@ const modifiedRating = computed(() => {
     const isInteger = Number.isInteger(Number(rating))
 
     if (isInteger) {
-        return `${rating}.0`
+        // return `${rating}.0`
+				 return rating
     } else {
         return String(rating)
     }
 })
+
+const emit = defineEmits(['on-card-click'])
+
+const { isVisible, hover, blur, coordinates } = useHover(0, props.removeHoverPopup);
 </script>
 
 <template>
-	<div class="movie-card">
+	<div
+		class="movie-card"
+		@mouseover="hover"
+    @mouseleave="blur(false)" 
+		@click="emit('on-card-click')"
+	>
 		<span
 			ref="imageRef" 
 			class="movie-card__image-container"
@@ -143,6 +183,33 @@ const modifiedRating = computed(() => {
 			</span>
 		</div>
 	</div>
+	<Transition name="bounce">
+		<Teleport to="body">
+			<MovieCardHover 
+				@hide="blur(true)" 
+				v-if="isVisible" 
+				:name-ru="props.nameRu"
+				:name-en="props.nameEn"
+				:kinopoisk-id="props.kinopoiskId"
+				:imdb-id="props.imdbId"
+				:rating-imdb="props.ratingImdb"
+				:rating-kinopoisk="props.ratingKinopoisk"
+				:year="props.year"
+				:genres="props.genres"
+				:countries="props.countries"
+				:type="props.type"
+				:rating-age-limits="props.ratingAgeLimits"
+				:coordinates="coordinates" 
+			/>
+		</Teleport>
+	</Transition>
+	<Teleport to="body">
+    <div 
+			v-if="isVisible" 
+			@mousemove="blur(true)" 
+			class="movie-card-holder" 
+		/>
+  </Teleport>
 </template>
 
 <style src="./styles.scss" lang="scss" scoped />

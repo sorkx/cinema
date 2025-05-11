@@ -73,6 +73,11 @@ const props = defineProps({
 						:kinopoisk-id="item.kinopoiskId"
 						:rating-kinopoisk="item.ratingKinopoisk"
 						:ratingImdb="item.ratingImdb"
+						:type="item.type"
+						:year="item.year"
+						:genres="item.genres"
+						:countries="item.countries"
+						:rating-age-limits="item.ratingAgeLimits"
 						:poster-url-preview="item.posterUrlPreview"
 					/>
 				</template>

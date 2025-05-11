@@ -17,6 +17,8 @@ const props = defineProps({
         default: 'normal' | 'small',
     },
 })
+
+const addedZeroRating = (rating) => Number.isInteger(rating) ? `${rating}.0` : rating
 </script>
 
 <template>
@@ -26,7 +28,7 @@ const props = defineProps({
 		:data-size="size"
 	>
 		<UISymbol v-if="props.name" :name="props.name" />
-		{{ props.rating || '0.0' }}
+		{{ addedZeroRating(props.rating) || '0.0' }}
 	</div>
 </template>
 

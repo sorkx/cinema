@@ -1,10 +1,8 @@
 <script setup>
 import { 
+    onMounted,
     ref,
 } from 'vue'
-import {
-    MovieLists,
-} from '@/widgets/Movie'
 import {
     storeToRefs,
 } from 'pinia'
@@ -15,14 +13,14 @@ import {
     CINEMA_NAMES,
 } from '@/shared/lib/constants'
 import {
-    useInfinityScroll
-} from '@/shared/lib/use/useInfinityScroll'
-import {
-    CircleLoader,
-} from '@/shared/ui/loaders'
-import {
     VWrapper,
 } from '@/shared/ui/VWrapper'
+import {
+    VInfiniteScroll
+} from '@/shared/ui/VInfiniteScroll'
+import { 
+    MovieCard,
+} from '@/entities/Movie'
 
 const store = movieModel()
 
@@ -43,13 +41,19 @@ const fetchDataPopularItems = async () => {
 const fetchNextPage = async () => {
     if (isLoading.value) return
 
-    await store.fetchCollectionNextPage(CINEMA_NAMES.TOP_POPULAR_ALL)
+    if (!isLoading.value) {
+        try {
+            isLoading.value = true
+            await store.fetchCollectionNextPage(CINEMA_NAMES.TOP_POPULAR_ALL)
+        } catch (error) {
+            console.error('Error loading more items:', error)
+        } finally {
+            isLoading.value = false
+        }
+    }
 }
 
-const { scrollComponent, isLoading: isLoadingMore } = useInfinityScroll({
-    fetchData: fetchDataPopularItems,
-    fetchNextPage: fetchNextPage,
-})
+onMounted(async () => await fetchDataPopularItems())
 </script>
 
 <template>
@@ -59,14 +63,27 @@ const { scrollComponent, isLoading: isLoadingMore } = useInfinityScroll({
 		class="offset"
 	>
 		<template #content>
-			<MovieLists
-				:movies="state?.collections.TOP_POPULAR_ALL?.data"
-				:loading="isLoading && !isLoadingMore"
-			/>
-
-			<CircleLoader v-if="isLoadingMore" />
-			
-			<div ref="scrollComponent" />
+			<VInfiniteScroll 
+				:pending="isLoading" 
+				:items="state?.collections?.TOP_POPULAR_ALL?.data ?? []" 
+				@loadNext="fetchNextPage"
+			>
+				<template #default="{ item }">
+					<MovieCard
+						:name-ru="item.nameRu"
+						:name-en="item.nameEn"
+						:name-original="item.nameOriginal"
+						:film-id="item.filmId"
+						:imdb-id="item.imdbId"
+						:kinopoisk-id="item.kinopoiskId"
+						:poster-url-preview="item.posterUrlPreview"
+						:rating-kinopoisk="item.ratingKinopoisk"
+						:rating-imdb="item.ratingImdb"
+						class="resize"
+						@click="modal.close()"
+					/>
+				</template>
+			</VInfiniteScroll>
 		</template>
 	</VWrapper>
 </template>

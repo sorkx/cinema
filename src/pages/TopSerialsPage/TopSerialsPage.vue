@@ -1,10 +1,8 @@
 <script setup>
 import {
     ref,
+    onMounted
 } from 'vue'
-import {
-    MovieLists,
-} from '@/widgets/Movie'
 import {
     storeToRefs,
 } from 'pinia'
@@ -15,16 +13,14 @@ import {
     CINEMA_NAMES,
 } from '@/shared/lib/constants'
 import {
-    useInfinityScroll
-} from '@/shared/lib/use/useInfinityScroll'
-import {
-    CircleLoader,
-    SpinnerLoader,
-} from '@/shared/ui/loaders'
+    VInfiniteScroll
+} from '@/shared/ui/VInfiniteScroll'
+import { 
+    MovieCard,
+} from '@/entities/Movie'
 
 const store = movieModel()
 
-const isLoadingMore = ref(false)
 const isLoading = ref(true)
 
 const { 
@@ -32,7 +28,6 @@ const {
 } = storeToRefs(store)
 
 const fetchDataSerialItems = async () => {
-
     isLoading.value = true
 
     await store.fetchCollectionData(CINEMA_NAMES.TOP_250_TV_SHOWS, 1)
@@ -43,22 +38,22 @@ const fetchDataSerialItems = async () => {
 const fetchNextPage = async () => {
     if (isLoading.value) return
 
-    isLoadingMore.value = true
-
-    await store.fetchCollectionNextPage(CINEMA_NAMES.TOP_250_TV_SHOWS)
-
-    isLoadingMore.value = false
+		    if (!isLoading.value) {
+        try {
+            isLoading.value = true
+            await store.fetchCollectionNextPage(CINEMA_NAMES.TOP_250_TV_SHOWS)
+        } catch (error) {
+            console.error('Error loading more items:', error)
+        } finally {
+            isLoading.value = false
+        }
+    }
 }
 
-const { scrollComponent } = useInfinityScroll({
-    fetchData: fetchDataSerialItems,
-    fetchNextPage: fetchNextPage,
-})
+onMounted(async () => await fetchDataSerialItems())
 </script>
 
 <template>
-	<SpinnerLoader v-if="isLoading && !state.collections.TOP_250_TV_SHOWS?.data.length" />
-
 	<div class="wrapper offset">
 		<div class="wrapper-header">
 			<div class="wrapper-title">
@@ -67,13 +62,26 @@ const { scrollComponent } = useInfinityScroll({
 		</div>
 		<div class="wrapper-subheader" />
 
-		<MovieLists
-			:movies="state?.collections.TOP_250_TV_SHOWS?.data"
-			title="Топ 250 сериалов"
-		/>
-
-		<CircleLoader v-if="isLoadingMore" />
-
-		<div ref="scrollComponent" />
+		<VInfiniteScroll 
+			:pending="isLoading" 
+			:items="state.collections.TOP_250_TV_SHOWS?.data.length ?? []" 
+			@loadNext="fetchNextPage"
+		>
+			<template #default="{ item }">
+				<MovieCard
+					:name-ru="item.nameRu"
+					:name-en="item.nameEn"
+					:name-original="item.nameOriginal"
+					:film-id="item.filmId"
+					:imdb-id="item.imdbId"
+					:kinopoisk-id="item.kinopoiskId"
+					:poster-url-preview="item.posterUrlPreview"
+					:rating-kinopoisk="item.ratingKinopoisk"
+					:rating-imdb="item.ratingImdb"
+					class="resize"
+					@click="modal.close()"
+				/>
+			</template>
+		</VInfiniteScroll>
 	</div>
 </template>

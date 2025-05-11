@@ -2,8 +2,7 @@
 import {
     watch,
     onBeforeUnmount,
-    computed,
-    ref,
+    onMounted
 } from 'vue'
 import {
     SearchInput,
@@ -15,15 +14,25 @@ import {
     searchModel,
 } from '@/entities/Search'
 import {
-    MovieLists,
-} from '@/widgets/Movie'
+    VInfiniteScroll
+} from '@/shared/ui/VInfiniteScroll'
+import { 
+    MovieCard,
+} from '@/entities/Movie'
 import {
-    useInfinityScroll
-} from '@/shared/lib/use/useInfinityScroll'
-import {
-    CircleLoader,
-} from '@/shared/ui/loaders'
+    useRoute,
+    useRouter,
+} from 'vue-router'
 import debounce from 'lodash.debounce'
+import {
+    VButton,
+} from '@/shared/ui/VButton'
+import {
+    ROUTE_NAMES,
+} from '@/shared/lib/constants'
+
+const route = useRoute()
+const router = useRouter()
 
 const searchStore = searchModel()
 
@@ -38,29 +47,18 @@ const {
     currentPage,
     searchMovies,
     searchCount,
-    searchMoviesResult,
     isLoading: storeLoading,
 } = storeToRefs(searchStore)
-
-const searchPerformed = ref(false)
 
 const emit = defineEmits(['close'])
 
 const closeSearch = () => {
     emit('close')
     searchStore.resetSearch()
-    searchPerformed.value = false
 }
 
-const visibleEmptyElement = computed(() => !storeLoading.value && searchMoviesResult.value === 0 && searchPerformed.value)
-
 const debouncedFetch = debounce(async () => {
-    try {
-        await searchStore.fetchKeywordMovie(1)
-        searchPerformed.value = true
-    } catch(error) {
-        console.error(error)
-    }
+    await searchStore.fetchKeywordMovie(1)
 }, 1000)
 
 const fetchMovies = async () => {
@@ -73,12 +71,29 @@ const fetchMovies = async () => {
     }
 }
 
-const fetchNextPage = async () => await searchStore.fetchNextPageMovies()
+const fetchNextPage = async () => {
+		    if (!storeLoading.value) {
+        try {
+            storeLoading.value = true
+            await searchStore.fetchNextPageMovies()
+        } catch (error) {
+            console.error('Error loading more items:', error)
+        } finally {
+            storeLoading.value = false
+        }
+    }
+}
 
-const { scrollComponent, isLoading: isLoadingMore } = useInfinityScroll({
-    fetchData: fetchMovies,
-    fetchNextPage: fetchNextPage,
-})
+const checkIsMovieAlreadyOpened = (movieSlug) => {
+    if (route?.params?.slug === movieSlug) {
+        emit('close')
+    }
+}
+
+const routeBrowse = () => {
+    router.push({ name: ROUTE_NAMES.BROWSE })
+    emit('close')
+}
 
 watch(keywordMovies, (newKeyword) => {
     if (newKeyword) {
@@ -87,10 +102,11 @@ watch(keywordMovies, (newKeyword) => {
     } else {
         debouncedFetch.cancel()
         storeLoading.value = false
-        searchPerformed.value = false
         searchStore.resetSearch()
     }
 })
+
+onMounted(async () => await fetchMovies())
 
 onBeforeUnmount(() => {
     debouncedFetch.cancel()
@@ -104,16 +120,42 @@ onBeforeUnmount(() => {
 		v-model="keywordMovies" 
 		@close="closeSearch"
 	>
-
-		<MovieLists
-			:movies="searchMovies"
-			:empty="visibleEmptyElement"
-			:backdrop="true"
-			:loading="storeLoading && !isLoadingMore"
-		/>	
-
-		<CircleLoader v-if="isLoadingMore" />
-
-		<div ref="scrollComponent" />
+		<VInfiniteScroll 
+			empty="search"
+			:pending="storeLoading" 
+			:items="searchMovies ?? []"
+			:hide-empty="keywordMovies.length === 0" 
+			:disabled-backdrop="true"
+			@loadNext="fetchNextPage"
+			@close="emit('close')"
+		>
+			<template #default="{ item }">
+				<MovieCard
+					:name-ru="item.nameRu"
+					:name-en="item.nameEn"
+					:name-original="item.nameOriginal"
+					:film-id="item.filmId"
+					:imdb-id="item.imdbId"
+					:kinopoisk-id="item.kinopoiskId"
+					:poster-url-preview="item.posterUrlPreview"
+					:rating-kinopoisk="item.rating"
+					class="resize"
+					remove-hover-popup
+					@on-card-click="checkIsMovieAlreadyOpened(item.kinopoiskId)"
+					@click="modal.close()"
+				/>
+			</template>
+			<template #empty-button>
+				<VButton
+					data-size="large"
+					data-appearance="fill"
+					class="empty-block__button"
+					modificator="color-main"
+					@click="routeBrowse"
+				>
+					Перейти в каталог
+				</VButton>
+			</template>
+		</VInfiniteScroll>
 	</SearchInput>
 </template>

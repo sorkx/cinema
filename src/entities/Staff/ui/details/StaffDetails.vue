@@ -11,8 +11,11 @@ import{
     VButton,
 } from '@/shared/ui/VButton'
 import {
-    MovieLists,
-} from '@/widgets/Movie/MovieLists'
+    VInfiniteScroll
+} from '@/shared/ui/VInfiniteScroll'
+import { 
+    MovieCard,
+} from '@/entities/Movie'
 
 const props = defineProps({
     films: {
@@ -147,10 +150,21 @@ onMounted(() => setFilter('ACTOR'))
 			</div>
 		</div>
 		<div class="person__movies">
-			<MovieLists 
-				:movies="filteredFilms"
-				:loading="props.loading"
-			/>
+			<VInfiniteScroll 
+				:pending="props.loading" 
+				:items="filteredFilms ?? []" 
+			>
+				<template #default="{ item }">
+					<MovieCard
+						:name-ru="item.nameRu"
+						:name-en="item.nameEn"
+						:kinopoisk-id="item.filmId"
+						:rating-kinopoisk="item.rating"
+						class="resize"
+						@click="modal.close()"
+					/>
+				</template>
+			</VInfiniteScroll>
 		</div>
 	</div>
 </template>

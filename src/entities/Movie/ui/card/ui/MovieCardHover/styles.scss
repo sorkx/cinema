@@ -1,0 +1,73 @@
+.movie-card-hover {
+	position: absolute;
+	display: grid;
+	width: 560px;
+	border-radius: 32px;
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.19) 0%, rgba(255, 255, 255, 0.05) 100%), #000;
+	overflow: hidden;
+	z-index: 10033;
+
+	&__body {
+		cursor: pointer;
+		height: 348px;
+	}
+
+	&__info {
+		padding: 16px 24px 0;
+	}
+
+	&__controls {
+		display: flex;
+		gap: 12px;
+		padding: 0 24px 24px;
+
+		button {
+			padding: 12px;
+		}
+	}
+
+	&__button {
+		width: 100%;
+	}
+
+	&__footer, &__info {
+		display: grid;
+		gap: 16px;
+	}
+
+	&__title {
+		color: var(--color-palette-white-base);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		font-size: var(--font-size-28);
+		font-style: normal;
+		font-weight: 700;
+		line-height: var(--font-lh-28);
+	}
+
+	&__labels {
+		display: flex;
+		gap: 16px;
+	}
+
+	&__group {
+		font-size: var(--font-size-18);
+		font-style: normal;
+		font-weight: 400;
+		line-height: var(--font-lh-18);
+	}
+
+	&__divider {
+		width: 1px;
+		height: 16px;
+		background-color: var(--color-palette-white-base);
+		opacity: 0.5;
+	}
+}
+
+@media (max-width: 640px) {
+	.movie-card-hover {
+		display: none;
+	}
+}

@@ -9,9 +9,6 @@ import {
     useRoute,
 } from 'vue-router'
 import {
-    MovieLists,
-} from '@/widgets/Movie'
-import {
     storeToRefs,
 } from 'pinia'
 import { 
@@ -21,9 +18,6 @@ import {
     CINEMA_NAMES,
 } from '@/shared/lib/constants'
 import {
-    useInfinityScroll
-} from '@/shared/lib/use/useInfinityScroll'
-import {
     MovieFilter,
 } from '@/features/Movies'
 import {
@@ -32,6 +26,12 @@ import {
 import {
     VButton,
 } from '@/shared/ui/VButton'
+import {
+    VInfiniteScroll
+} from '@/shared/ui/VInfiniteScroll'
+import { 
+    MovieCard,
+} from '@/entities/Movie'
 import debounce from 'lodash.debounce'
 
 const route = useRoute()
@@ -75,8 +75,17 @@ const filterParams = ref({
 const loadMore = async () => {
     if (isLoading.value) return
 
-    await store.fetchCategoryNextPage(contentType.value, filterParams.value)
-    currentResults.value = state.value.categories[contentType.value]?.data
+    if (!isLoading.value) {
+        try {
+            isLoading.value = true
+            await store.fetchCategoryNextPage(contentType.value, filterParams.value)
+            currentResults.value = state.value.categories[contentType.value]?.data
+        } catch (error) {
+            console.error('Error loading more items:', error)
+        } finally {
+            isLoading.value = false
+        }
+    }
 }
 
 const fetchCategoryItems = async () => {
@@ -88,12 +97,7 @@ const fetchCategoryItems = async () => {
 
     isLoading.value = false
 }
-
-const { scrollComponent, isLoading: isLoadingMore } = useInfinityScroll({
-    fetchData: fetchCategoryItems,
-    fetchNextPage: loadMore,
-})
-
+ 
 const resetFilters = () => childElement.value.resetFilters()
 
 const getMovieFilters = async () => {
@@ -116,11 +120,14 @@ const genres = computed(() => {
 
 const currentGenre = computed(() => genres.value.find(g => g.id === movieId.value)?.genre || formattedTitle[contentType.value])
 
-const debouncedFetch = debounce(fetchCategoryItems, 500)
+const debouncedFetch = debounce(fetchCategoryItems, 200)
 
 watch(filterParams, () => debouncedFetch(), { deep: true })
 
-onMounted(async () => await getMovieFilters())
+onMounted(async () => {
+    await getMovieFilters()
+    await fetchCategoryItems()
+})
 </script>
 
 <template>
@@ -144,13 +151,28 @@ onMounted(async () => await getMovieFilters())
 				v-model:rating-to="filterParams.ratingTo"
 			/>
 
-			<MovieLists
-				:movies="currentResults"
-				hidden="true"
-				:empty="currentResults.length === 0"
-				:loading="isLoadingMore || isLoading"
+			<VInfiniteScroll 
+				:pending="isLoading" 
+				:items="currentResults ?? []" 
+				empty="cheels"
+				@loadNext="loadMore"
 			>
-				<template #button>
+				<template #default="{ item }">
+					<MovieCard
+						:name-ru="item.nameRu"
+						:name-en="item.nameEn"
+						:name-original="item.nameOriginal"
+						:film-id="item.filmId"
+						:imdb-id="item.imdbId"
+						:kinopoisk-id="item.kinopoiskId"
+						:poster-url-preview="item.posterUrlPreview"
+						:rating-imdb="item.ratingImdb"
+						:rating-kinopoisk="item.ratingKinopoisk"
+						class="resize"
+						@click="modal.close()"
+					/>
+				</template>
+				<template #empty-button>
 					<VButton
 						data-size="large"
 						data-appearance="fill"
@@ -161,9 +183,7 @@ onMounted(async () => await getMovieFilters())
 						Сбросить фильтры
 					</VButton>
 				</template>
-			</MovieLists>
-
-			<div ref="scrollComponent" />
+			</VInfiniteScroll>
 		</template>
 	</VWrapper>
 </template>

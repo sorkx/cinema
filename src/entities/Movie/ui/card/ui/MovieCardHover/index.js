@@ -1,0 +1,1 @@
+export { default as MovieCardHover } from './MovieCardHover.vue'
